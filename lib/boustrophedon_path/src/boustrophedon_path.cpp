@@ -9,6 +9,8 @@ boustrophedon_path::boustrophedon_path ()
     nh.param(this_node::getName() + "/fov", fov, 1.2);
     double overlap;
     nh.param(this_node::getName() + "/overlap", overlap, 0.0);
+    double margin;
+    nh.param(this_node::getName() + "/margin", margin, 1.0);
 
     // optimal distance between paths according to covered fov
     this->fov = altitude * tan(fov / 2) * 2 - overlap;
@@ -23,6 +25,18 @@ boustrophedon_path::boustrophedon_path ()
     else {
         ROS_ERROR("Failed to get area coordinates");
         return;
+    }
+
+    // shrink area by safety margin
+    for (int i=0; i<area.size(); ++i) {
+        if (area[i].x > 0)
+            area[i].x -= margin;
+        else
+            area[i].x += margin;
+        if (area[i].y > 0)
+            area[i].y -= margin;
+        else
+            area[i].y += margin;
     }
 
     // one intermediate waypoint between parallel paths
