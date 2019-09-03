@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="1" />
+    <arg name="x" default="0" />
+    <arg name="y" default="0" />
+    <arg name="pos_type" default="local" />
+    <arg name="setpoint_type" default="velocity" />
+    <arg name="output" default="log" />
+
+    <!-- Flocking tracking algorithm -->
+    <node pkg="uav_flocking" type="uav_flocking_tracking" name="uav_tracking_$(arg id)" output="$(arg output)" required="true">
+        <param name="x" value="$(arg x)" />
+        <param name="y" value="$(arg y)" />
+        <param name="pos_type" value="$(arg pos_type)" />
+        <param name="setpoint_type" value="$(arg setpoint_type)" />
+        <rosparam file="$(find uav_flocking)/param/uav_flocking.yaml" command="load" />
+        <rosparam file="$(find swarm_kinematics)/param/swarm_kinematics.yaml" command="load" />
+        <rosparam file="$(find position)/param/position.yaml" command="load" />
+        <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
+        <rosparam file="$(find targets)/param/targets.yaml" command="load" />
+    </node>
+
+</launch>

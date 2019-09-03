@@ -1,0 +1,2 @@
+goal_tolerance: 0.1     # The distance that the CPS can be away from a goal while still being considered to have reached that goal.
+yaw_tolerance:  0.1     # The angle that the CPS can be away from a goal while still being considered to have reached that goal.

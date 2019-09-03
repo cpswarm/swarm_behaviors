@@ -1,0 +1,9 @@
+loop_rate:   5.0  # The frequency in Hz at which to run the swarm behavior loops.
+queue_size:  1    # The size of the message queue used for publishing and subscribing to topics.
+altitude:    1.5  # The altitude above ground at which all UAVs operate. It is used to compute the path of the drone.
+fov_hor:     0.64 # Horizontal camera field of view in radian. It is used to compute the path of the drone.
+fov_ver:     0.64 # Vertical camera field of view in radian. It is used to compute the path of the drone.
+local_steps: 30   # Number of steps to do in the local coverage behavior.
+
+# camera specification: hor 1.236, ver 0.970
+# https://openmv.io/collections/cams/products/openmv-cam-m7

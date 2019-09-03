@@ -1,0 +1,2 @@
+pose_variation: 0.1   # The distance in meters which describes the uncertainty radius of the pose.
+sample_hist:    1     # The number of previous data samples to keep.

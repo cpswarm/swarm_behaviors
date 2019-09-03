@@ -1,0 +1,7 @@
+tracking_timeout:     1.0            # The time in seconds after which a target transistions into the state TARGET_LOST when no target information is received.
+target_tolerance:     0.5            # Minimum distance between two consecutive target positions such that a target update event is published.
+fov:                  0.64           # The field of view of the target tracking camera in radian (measured). It is used to simulate target detection.
+target_found_event:   target_found   # Name of the target found event.
+target_lost_event:    target_lost    # Name of the target lost event.
+target_update_event:  target_update  # Name of the target position update event.
+target_rescued_event: target_rescued # Name of the target rescued event.

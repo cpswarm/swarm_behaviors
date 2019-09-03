@@ -1,0 +1,92 @@
+#include "lib/uav_local_coverage.h"
+
+uav_local_coverage::uav_local_coverage() : uav_coverage()
+{
+    // read parameters
+    nh.param(this_node::getName() + "/altitude", altitude, 5.0);
+    nh.param(this_node::getName() + "/fov_hor", fov_hor, 1.236);
+    nh.param(this_node::getName() + "/fov_ver", fov_ver, 0.970);
+    nh.param(this_node::getName() + "/local_steps", max_steps, 20);
+
+    // init number of search steps
+    steps = 0;
+
+    // init local coordinate origin
+    // it is the center of the circle that defines the involute
+    double distance, direction;
+    compute_involute(distance, direction);
+    // invert direction to reach origin from current pose
+    // the current pose is the 0th step on the involute (x = radius a, y = 0)
+    direction += M_PI;
+    origin = pos->get_pose();
+}
+
+behavior_state_t uav_local_coverage::step ()
+{
+    // update position information
+    spinOnce();
+
+    // update information about tracking targets
+    sar_targets->update();
+
+    if (state == STATE_ACTIVE) {
+        // next search step
+        ++steps;
+
+        // next goal
+        geometry_msgs::Pose goal;
+
+        // reached maximum number of steps, stop local coverage
+        if (steps >= max_steps)
+            state = STATE_ABORTED;
+
+        // compute new goal
+        else {
+            goal = select_goal();
+
+            // reached environment boundary, stop local coverage
+            if (pos->out_of_bounds(goal))
+                state = STATE_ABORTED;
+        }
+
+        // move to new goal
+        if (state == STATE_ACTIVE) {
+            move(goal);
+        }
+    }
+
+    // return state to action server
+    return state;
+}
+
+void uav_local_coverage::compute_involute (double &distance, double &direction)
+{
+    // parameters for circle involute
+    double a = altitude * tan(fov_hor / 2) / M_PI; // radius
+    double b = altitude * tan(fov_ver / 2) * 2;    // step size
+
+    // compute local coordinates using involute
+    double s = b * steps; // arc length
+    double t = sqrt(2 * s / a); // tangential angle
+    double x = a * (cos(t) + t * sin(t));
+    double y = a * (sin(t) - t * cos(t));
+
+    // compute distance and heading from local origin
+    distance = hypot(x, y);
+    direction = atan2(y, x);
+}
+
+void uav_local_coverage::obstacle_avoidance ()
+{
+    state = STATE_ABORTED;
+}
+
+geometry_msgs::Pose uav_local_coverage::select_goal ()
+{
+    // compute heading and distance for current step
+    double distance, direction;
+    compute_involute(distance, direction);
+
+    // compute gps coordinats of goal position
+    return pos->compute_goal(origin, distance, direction);
+}
