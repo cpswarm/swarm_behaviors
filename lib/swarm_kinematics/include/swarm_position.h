@@ -3,6 +3,7 @@
 
 #include <ros/ros.h>
 #include <ros/console.h>
+#include <geometry_msgs/Point.h>
 #include <cpswarm_msgs/ArrayOfPositions.h>
 #include <cpswarm_msgs/Position.h>
 #include <cpswarm_msgs/ArrayOfVectors.h>
@@ -22,6 +23,12 @@ public:
      * @brief Constructor that initializes the private member variables.
      */
     swarm_position ();
+
+    /**
+     * @brief Get the geometric mean of all swarm member positions.
+     * @return The x and y coordinates of the swarm center.
+     */
+     geometry_msgs::Point center () const;
 
     /**
      * @brief Check if the CPS is far enough from other CPSs.

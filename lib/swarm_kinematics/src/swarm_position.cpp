@@ -32,6 +32,26 @@ swarm_position::swarm_position ()
     swarm_pose_rel_sub = nh.subscribe("swarm_position_rel", queue_size, &swarm_position::swarm_pose_rel_callback, this);
 }
 
+geometry_msgs::Point swarm_position::center () const
+{
+    // initialize mean
+    geometry_msgs::Point mean;
+    mean.x = 0;
+    mean.y = 0;
+
+    // accumulate latest poses
+    for (auto pose : poses[t]) {
+        mean.x += pose.pose.position.x;
+        mean.y += pose.pose.position.y;
+    }
+
+    // normalize
+    mean.x /= poses[t].size();
+    mean.y /= poses[t].size();
+
+    return mean;
+}
+
 bool swarm_position::clear () const
 {
     // check current cps positions
