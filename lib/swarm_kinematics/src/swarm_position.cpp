@@ -14,11 +14,12 @@ swarm_position::swarm_position ()
 
     // initialize parameters
     t = 0;
+    t_rel = 0;
 
     // initialize swarm position vectors
     for (int i = 0; i < hist; ++i) {
         // absolute
-        vector<pair<string,cpswarm_msgs::Position>> vop;
+        vector<cpswarm_msgs::Position> vop;
         poses.push_back(vop);
 
         // relative
@@ -27,13 +28,14 @@ swarm_position::swarm_position ()
     }
 
     // publishers and subscribers
-    swarm_pose_sub = nh.subscribe("swarm_position", queue_size, &swarm_position::swarm_pose_rel_callback, this);
+    swarm_pose_sub = nh.subscribe("swarm_position", queue_size, &swarm_position::swarm_pose_callback, this);
+    swarm_pose_rel_sub = nh.subscribe("swarm_position_rel", queue_size, &swarm_position::swarm_pose_rel_callback, this);
 }
 
 bool swarm_position::clear () const
 {
     // check current cps positions
-    for (auto pose : poses_rel[t]) {
+    for (auto pose : poses_rel[t_rel]) {
         // cps is close enough to start avoidance procedure
         if (pose.vector.magnitude < avoidance_dist) {
             return false;
@@ -52,7 +54,7 @@ bool swarm_position::clear_ahead (double heading) const
     ROS_DEBUG("Sector to be clear [%.2f, %.2f]", sec.min(), sec.max());
 
     // check current cps positions
-    for (auto pose : poses_rel[t]) {
+    for (auto pose : poses_rel[t_rel]) {
         ROS_DEBUG("Checking pose [%.2f, %.2f]", pose.vector.magnitude, pose.vector.direction);
         // cps is close enough to start avoidance procedure
         if (pose.vector.magnitude < avoidance_dist) {
@@ -69,7 +71,7 @@ bool swarm_position::clear_ahead (double heading) const
 double swarm_position::danger () const
 {
     // check current cps positions
-    for (auto pose : poses_rel[t]) {
+    for (auto pose : poses_rel[t_rel]) {
         // cps is dangerously close
         if (pose.vector.magnitude < critical_dist) {
             return critical_dist - pose.vector.magnitude ;
@@ -80,14 +82,14 @@ double swarm_position::danger () const
     return 0.0;
 }
 
-const vector<pair<string,cpswarm_msgs::Position>>& swarm_position::get_poses () const
+const vector<cpswarm_msgs::Position>& swarm_position::get_poses () const
 {
     return poses[t];
 }
 
 const vector<cpswarm_msgs::VectorStamped>& swarm_position::get_poses_rel () const
 {
-    return poses_rel[t];
+    return poses_rel[t_rel];
 }
 
 sector swarm_position::inflated_region () const
@@ -123,7 +125,7 @@ sector swarm_position::occupied_region () const
     double swarm_max = 0;
 
     // take latest poses
-    for (auto pose : poses_rel[t]) {
+    for (auto pose : poses_rel[t_rel]) {
         ROS_DEBUG("Checking pose [%.2f, %.2f]", pose.vector.magnitude, pose.vector.direction);
         if (pose.vector.magnitude <= avoidance_dist) {
             double swarm_min_temp = pose.vector.direction - bearing_tolerance(pose);
@@ -146,7 +148,7 @@ sector swarm_position::occupied_region (double heading) const
     double swarm_max = 0;
 
     // take latest poses
-    for (auto pose : poses_rel[t]) {
+    for (auto pose : poses_rel[t_rel]) {
         ROS_DEBUG("Checking pose [%.2f, %.2f]", pose.vector.magnitude, pose.vector.direction);
         if (pose.vector.magnitude <= avoidance_dist) {
             double swarm_min_temp = pose.vector.direction - bearing_tolerance(pose);
@@ -167,17 +169,22 @@ double swarm_position::bearing_tolerance (cpswarm_msgs::VectorStamped pose) cons
     return asin(pose_variation / pose.vector.magnitude);
 }
 
-void swarm_position::swarm_pose_callback (const cpswarm_msgs::Position::ConstPtr& msg)
+void swarm_position::swarm_pose_callback (const cpswarm_msgs::ArrayOfPositions::ConstPtr& msg)
 {
-    // TODO
+    // increase current index of positions vector
+    t++;
+    t %= poses.size();
+
+    // save positions
+    poses[t] = msg->positions;
 }
 
 void swarm_position::swarm_pose_rel_callback (const cpswarm_msgs::ArrayOfVectors::ConstPtr& msg)
 {
     // increase current index of positions vector
-    t++;
-    t %= poses_rel.size();
+    t_rel++;
+    t_rel %= poses_rel.size();
 
     // save positions
-    poses_rel[t] = msg->vectors;
+    poses_rel[t_rel] = msg->vectors;
 }

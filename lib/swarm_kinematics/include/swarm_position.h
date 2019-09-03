@@ -3,6 +3,7 @@
 
 #include <ros/ros.h>
 #include <ros/console.h>
+#include <cpswarm_msgs/ArrayOfPositions.h>
 #include <cpswarm_msgs/Position.h>
 #include <cpswarm_msgs/ArrayOfVectors.h>
 #include <cpswarm_msgs/VectorStamped.h>
@@ -44,9 +45,8 @@ public:
     /**
      * @brief Get the latest absolute positions of the other CPSs.
      * @return A const reference to the poses vector.
-     * @note Not implemented yet!
      */
-    const vector<pair<string,cpswarm_msgs::Position>>& get_poses () const;
+    const vector<cpswarm_msgs::Position>& get_poses () const;
 
     /**
      * @brief Get the latest relative positions of the other CPSs.
@@ -88,9 +88,9 @@ private:
 
     /**
      * @brief Callback function to receive the absolute positions of the other CPSs.
-     * @param msg GPS coordinates of the other CPSs.
+     * @param msg Local coordinates of the other CPSs.
      */
-    void swarm_pose_callback (const cpswarm_msgs::Position::ConstPtr& msg);
+    void swarm_pose_callback (const cpswarm_msgs::ArrayOfPositions::ConstPtr& msg);
 
     /**
      * @brief Callback function to receive the relative positions of the other CPSs.
@@ -114,9 +114,9 @@ private:
     Subscriber swarm_pose_rel_sub;
 
     /**
-     * @brief The absolute positions of the other CPSs (GPS coordinates).
+     * @brief The absolute positions of the other CPSs (local coordinates).
      */
-    vector<vector<pair<string,cpswarm_msgs::Position>>> poses;
+    vector<vector<cpswarm_msgs::Position>> poses;
 
     /**
      * @brief The relative positions of the other swarm members (distance and bearing).
@@ -147,6 +147,11 @@ private:
      * @brief The index of the latest position in the poses vectors.
      */
     unsigned int t;
+
+    /**
+     * @brief The index of the latest position in the relative poses vectors.
+     */
+    unsigned int t_rel;
 };
 
 #endif // SWARM_POSITION_H

@@ -49,13 +49,10 @@
     <!--   <doc_depend>doxygen</doc_depend> -->
     <buildtool_depend>catkin</buildtool_depend>
 
-    <build_depend>roscpp</build_depend>
-    <build_depend>cpswarm_msgs</build_depend>
-    <build_depend>sector</build_depend>
-
-    <exec_depend>roscpp</exec_depend>
-    <exec_depend>cpswarm_msgs</exec_depend>
-    <exec_depend>sector</exec_depend>
+    <depend>roscpp</depend>
+    <depend>geometry_msgs</depend>
+    <depend>cpswarm_msgs</depend>
+    <depend>sector</depend>
 
     <test_depend>rostest</test_depend>
 
