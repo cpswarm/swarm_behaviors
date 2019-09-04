@@ -22,7 +22,7 @@ uav_flocking::uav_flocking ()
     nh.param(this_node::getName() + "/accel_time", accel_time, 1.0);
 
     // init service clients
-    bound_client = nh.serviceClient<cpswarm_msgs::closest_bound>("area/closest_bound");
+    area_client = nh.serviceClient<cpswarm_msgs::get_area>("area/get_area");
 
     // init velocities and acceleration
     a_repulsion.x = 0;
@@ -189,6 +189,51 @@ void uav_flocking::formation (geometry_msgs::Point target)
     }
 }
 
+double uav_flocking::dist_bound()
+{
+    // get pose
+    geometry_msgs::Pose pose = pos.get_pose();
+
+    // get area coordinates
+    cpswarm_msgs::get_area area;
+    if (area_client.call(area) == false){
+        ROS_ERROR("Failed to get area boundary");
+        return 0.0;
+    }
+
+    // point where line from origin through pose intersects boundary
+    geometry_msgs::Point p;
+
+    // distance of point from origin
+    double dist = 0.0;
+
+    // coordinates of line segment from origin to pose
+    double x1 = 0;
+    double y1 = 0;
+    double x2 = pose.position.x;
+    double y2 = pose.position.y;
+
+    // find boundary that yields closest intersection point (i.e. the correct boundary)
+    for (int i=0; i<area.response.area.size(); ++i) {
+        // coordinates of boundary
+        double x3 = area.response.area[i].x;
+        double y3 = area.response.area[i].y;
+        double x4 = area.response.area[(i+1) % area.response.area.size()].x;
+        double y4 = area.response.area[(i+1) % area.response.area.size()].y;
+
+        // compute point based on https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection#Given_two_points_on_each_line
+        p.x = ((x1*y2 - y1*x2) * (x3 - x4) - (x1 - x2) * (x3*y4 - y3*x4)) / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+        p.y = ((x1*y2 - y1*x2) * (y3 - y4) - (y1 - y2) * (x3*y4 - y3*x4)) / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+
+        // found closer point
+        if (hypot(p.x, p.y) < dist || dist == 0.0)
+            dist = hypot(p.x, p.y);
+    }
+
+    // return distance
+    return dist;
+}
+
 void uav_flocking::repulsion ()
 {
     // init repulsive force acceleration
@@ -235,24 +280,13 @@ void uav_flocking::wall ()
     geometry_msgs::Pose pose = pos.get_pose();
     double pose_mag = hypot(pose.position.x, pose.position.y);
 
-    // get boundary distance from origin
-    cpswarm_msgs::closest_bound cb;
-    double dist_bound;
-    if (bound_client.call(cb)){
-        dist_bound = cb.response.dist;
-    }
-    else{
-        ROS_ERROR("Failed to get area boundary");
-        return;
-    }
-
     // compute velocity requirement due to bounding area
     geometry_msgs::Vector3 v_wall;
     v_wall.x = - flock_vel * pose.position.x / pose_mag - velocity.x;
     v_wall.y = - flock_vel * pose.position.y / pose_mag - velocity.y;
 
     // compute transfer function for smooth movement
-    double tf = transfer(pose_mag, dist_bound-wall_decay, wall_decay); // subtract decay in order to stay within area bounds
+    double tf = transfer(pose_mag, dist_bound()-wall_decay, wall_decay); // subtract decay in order to stay within area bounds
 
     // total acceleration due to bounding area
     a_wall.x = wall_frict * tf * v_wall.x;

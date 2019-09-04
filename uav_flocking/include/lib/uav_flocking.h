@@ -4,7 +4,7 @@
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Vector3.h>
-#include "cpswarm_msgs/closest_bound.h"
+#include "cpswarm_msgs/get_area.h"
 #include "swarm_position.h"
 #include "swarm_velocity.h"
 #include "position.h"
@@ -66,6 +66,12 @@ private:
     void formation (geometry_msgs::Point target);
 
     /**
+     * TODO
+     * assumption: rectangular area
+     */
+    double dist_bound();
+
+    /**
      * @brief Compute acceleration from repulsive forces between CPSs.
      */
     void repulsion ();
@@ -85,9 +91,9 @@ private:
     void wall ();
 
     /**
-     * @brief Service client for determining closest mission area boundary to the current UAV position.
+     * @brief Service client to get mission area boundaries.
      */
-    ServiceClient bound_client;
+    ServiceClient area_client;
 
     /**
      * @brief TODO
