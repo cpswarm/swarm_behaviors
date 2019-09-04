@@ -42,10 +42,6 @@ uav_flocking::uav_flocking ()
     v_formation.z = 0;
 }
 
-uav_flocking::~uav_flocking ()
-{
-}
-
 geometry_msgs::Vector3 uav_flocking::coverage (geometry_msgs::Vector3 velocity)
 {
     // compute acceleration from repulsive forces between CPSs

@@ -20,7 +20,7 @@ typedef enum {
 } formation_t;
 
 /**
- * @brief A behavior library that allows to perform flocking with a swarm of UAVs.
+ * @brief A behavior library that allows to perform flocking with a swarm of unmanned areal vehicles (UAVs).
  */
 class uav_flocking
 {
@@ -31,62 +31,58 @@ public:
     uav_flocking ();
 
     /**
-     * @brief Destructor that deletes the private member objects.
-     */
-    ~uav_flocking ();
-
-    /**
-     * @brief
-     * @param
-     * @return
+     * @brief Compute the velocity to perform coverage with a flock of UAVs.
+     * @param velocity The desired velocity of the flock members in order to perform coverage.
+     * @return The velocity adjusted for the UAVs to stay in the flock.
      */
     geometry_msgs::Vector3 coverage (geometry_msgs::Vector3 velocity);
 
     /**
-     * @brief
-     * @param
-     * @return
+     * @brief Compute the velocity to perform tracking with a flock of UAVs.
+     * @param target The position of the target to track.
+     * @return The velocity to track the target while staying in the desired formation.
      */
     geometry_msgs::Vector3 tracking (geometry_msgs::Pose target);
 
 private:
     /**
-     * @brief Compute acceleration to align velocities between CPSs.
+     * @brief Compute acceleration to align velocities between UAVs.
      */
     void alignment ();
 
     /**
-     * TODO
+     * @brief Compute velocity that allows UAVs to stay in the flock.
      */
     void flocking (geometry_msgs::Vector3 vel);
 
     /**
-     * TODO
+     * @brief Compute velocity that allows UAVs to stay in the desired formation.
+     * @todo Finish implementation. TODO
      */
     void formation (geometry_msgs::Point target);
 
     /**
-     * TODO
-     * assumption: rectangular area
+     * @brief Compute the distance of the area bound to the coordinate system origin. A rectangular area is assumed.
+     * @return The distance between origin and the point on the area bound where the line from origin through the current UAV pose intersects.
      */
     double dist_bound();
 
     /**
-     * @brief Compute acceleration from repulsive forces between CPSs.
+     * @brief Compute acceleration from repulsive forces between UAVs.
      */
     void repulsion ();
 
     /**
-     * @brief TODO
-     * @param x
-     * @param r
-     * @param d
-     * @return
+     * @brief A transfer function to smooth the accelerations and velocities.
+     * @param x The x value of the transfer function, e.g., position of UAV.
+     * @param r The x value below which the transfer function is zero.
+     * @param d The width of x values in which the transfer function is active. For values above r+d, the transfer function is one, i.e., maximal.
+     * @return A value between zero and one which transfers smoothly using the sine function.
      */
     double transfer (double x, double r, double d);
 
     /**
-     * @brief Compute acceleration from repulsive forces of bounding virtual walls.
+     * @brief Compute acceleration from repulsive forces of bounding virtual walls, i.e., environment boundaries.
      */
     void wall ();
 
@@ -96,42 +92,42 @@ private:
     ServiceClient area_client;
 
     /**
-     * @brief TODO
+     * @brief The type of formation the UAVs should take on.
      */
     formation_t form;
 
     /**
-     * @brief TODO
+     * @brief A helper object for position related tasks.
      */
     position pos;
 
     /**
-     * @brief TODO
+     * @brief A helper object for velocity related tasks.
      */
     velocity vel;
 
     /**
-     * TODO
+     * @brief A helper object for swarm position related tasks.
      */
     swarm_position swarm_pos;
 
     /**
-     * TODO
+     * @brief A helper object for swarm velocity related tasks.
      */
     swarm_velocity swarm_vel;
 
     /**
-     * @brief TODO
+     * @brief The period length of one control loop.
      */
     double dt;
 
     /**
-     * @brief Acceleration from repulsive forces between CPSs.
+     * @brief Acceleration from repulsive forces between UAVs.
      */
     geometry_msgs::Vector3 a_repulsion;
 
     /**
-     * @brief Acceleration to align velocities between CPSs.
+     * @brief Acceleration to align velocities between UAVs.
      */
     geometry_msgs::Vector3 a_alignment;
 
@@ -151,7 +147,7 @@ private:
     geometry_msgs::Vector3 v_formation;
 
     /**
-     * @brief Equilibrium distance between CPSs.
+     * @brief Equilibrium distance between UAVs.
      */
     double equi_dist;
 
@@ -171,7 +167,7 @@ private:
     double repulse_spring;
 
     /**
-     * @brief Maximum repulsion between CPSs.
+     * @brief Maximum repulsion between UAVs.
      */
     double repulse_max;
 
@@ -186,7 +182,7 @@ private:
     double align_slope;
 
     /**
-     * @brief Minimum alignment between CPS.
+     * @brief Minimum alignment between UAVs.
      */
     double align_min;
 
@@ -211,7 +207,7 @@ private:
     double form_track;
 
     /**
-     * @brief Characteristic time needed by the CPS to reach the target velocity.
+     * @brief Characteristic time needed by the UAV to reach the target velocity.
      */
     double accel_time;
 };
