@@ -7,7 +7,6 @@
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/TwistStamped.h>
 #include "position.h"
-#include "angle.h"
 #include "cpswarm_msgs/Vector.h"
 #include "cpswarm_msgs/out_of_bounds.h"
 

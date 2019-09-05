@@ -34,9 +34,9 @@ geometry_msgs::Vector3 velocity::compute_velocity (geometry_msgs::Point goal, do
     // relative bearing of goal
     geometry_msgs::Pose goal_pose;
     goal_pose.position = goal;
-    angle goal_bear = pos.bearing(goal_pose);
+    double goal_bear = pos.bearing(goal_pose);
 
-    ROS_DEBUG("Goal bearing %.2f", goal_bear.rad());
+    ROS_DEBUG("Goal bearing %.2f", goal_bear);
 
     // limit velocity for small distances
     if (pos.dist(goal_pose) < M_PI / 2.0)
@@ -44,8 +44,8 @@ geometry_msgs::Vector3 velocity::compute_velocity (geometry_msgs::Point goal, do
 
     // velocity components in goal direction
     geometry_msgs::Vector3 vel;
-    vel.x = velocity * -sin(goal_bear.rad()); // bearing relative to cps heading
-    vel.y = velocity * cos(goal_bear.rad());
+    vel.x = velocity * -sin(goal_bear); // bearing relative to cps heading
+    vel.y = velocity * cos(goal_bear);
 
     ROS_DEBUG("Velocity (%.2f,%.2f)", vel.x, vel.y);
 

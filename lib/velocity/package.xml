@@ -52,7 +52,6 @@
 
   <depend>roscpp</depend>
   <depend>geometry_msgs</depend>
-  <depend>angle</depend>
   <depend>cpswarm_msgs</depend>
   <depend>position</depend>
 

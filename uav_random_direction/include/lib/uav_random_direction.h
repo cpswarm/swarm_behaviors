@@ -2,7 +2,7 @@
 #define UAV_RANDOM_DIRECTION_H
 
 #include <random_numbers/random_numbers.h>
-#include "cpswarm_msgs/get_occupied_sector.h"
+#include "cpswarm_msgs/get_sector.h"
 #include "uav_coverage.h"
 
 /**
@@ -47,9 +47,9 @@ private:
     void new_direction ();
 
     /**
-     * @brief Service client for determining the sector occupied by obstacles.
+     * @brief Service client for determining the sector clear of obstacles.
      */
-    ServiceClient occupied_sector_client;
+    ServiceClient clear_sector_client;
 
     /**
      * @brief Whether the drone still needs to turn before moving.
@@ -59,7 +59,7 @@ private:
     /**
      * @brief The direction in which the drone is travling. It is measured in radian, clockwise starting from north.
      */
-    angle direction;
+    double direction;
 
     /**
      * @brief The distance which the drone is traveling.

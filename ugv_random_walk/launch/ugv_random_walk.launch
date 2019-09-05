@@ -15,7 +15,6 @@
         <param name="pos_type" value="$(arg pos_type)" />
         <param name="setpoint_type" value="$(arg setpoint_type)" />
         <rosparam file="$(find ugv_random_walk)/param/ugv_random_walk.yaml" command="load" />
-        <rosparam file="$(find swarm_kinematics)/param/swarm_kinematics.yaml" command="load" />
         <rosparam file="$(find position)/param/position.yaml" command="load" />
         <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
         <rosparam file="$(find targets)/param/targets.yaml" command="load" />

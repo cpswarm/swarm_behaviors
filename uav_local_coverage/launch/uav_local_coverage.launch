@@ -11,7 +11,6 @@
         <param name="x" value="$(arg x)" />
         <param name="y" value="$(arg y)" />
         <rosparam file="$(find uav_local_coverage)/param/uav_local_coverage.yaml" command="load" />
-        <rosparam file="$(find swarm_kinematics)/param/swarm_kinematics.yaml" command="load" />
         <rosparam file="$(find position)/param/position.yaml" command="load" />
         <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
         <rosparam file="$(find targets)/param/targets.yaml" command="load" />

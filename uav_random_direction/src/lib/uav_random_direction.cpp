@@ -11,12 +11,12 @@ uav_random_direction::uav_random_direction (int seed) : uav_coverage()
     }
 
     // init service clients
-    occupied_sector_client = nh.serviceClient<cpswarm_msgs::get_occupied_sector>("obstacle_detection/get_occupied_sector");
+    clear_sector_client = nh.serviceClient<cpswarm_msgs::get_sector>("obstacle_detection/get_clear_sector");
 
     // inititial direction as drone is placed
-    direction.set(pos->get_yaw().rad());
+    direction = pos->get_yaw();
 
-    ROS_INFO("Initial direction %.2f", direction.rad_pos());
+    ROS_INFO("Initial direction %.2f", direction);
 }
 
 uav_random_direction::~uav_random_direction ()
@@ -82,33 +82,28 @@ void uav_random_direction::obstacle_avoidance ()
 geometry_msgs::Pose uav_random_direction::select_goal ()
 {
     // compute goal position
-    return pos->compute_goal(distance, direction.rad_pos());
+    return pos->compute_goal(distance, direction);
 }
 
 void uav_random_direction::new_direction ()
 {
     // get sector clear of obstacles and other uavs
-    sector* occ;
-    cpswarm_msgs::get_occupied_sector gos;
-    if (occupied_sector_client.call(gos)){
-        occ = new sector(gos.response.min, gos.response.max);
-    }
-    else{
-        ROS_ERROR("Failed to get occupied sector");
+    cpswarm_msgs::get_sector clear;
+    if (clear_sector_client.call(clear) == false){
+        ROS_ERROR("Failed to get clear sector");
         return;
     }
-    sector clear =occ->inverse();
-    delete occ;
 
-    ROS_DEBUG("Clear [%.2f, %.2f] size %.2f", clear.min_ord(), clear.max_ord(), clear.size());
+
+    ROS_DEBUG("Clear [%.2f, %.2f] size %.2f", clear.response.min, clear.response.max, clear.response.max - clear.response.min);
 
     // generate random direction until one is found inside of area not occupied by obstacles
     geometry_msgs::Pose goal;
     do {
-        direction.set(rng->uniformReal(clear.min_ord(), clear.max_ord()));
+        direction = rng->uniformReal(clear.response.min, clear.response.max);
         goal = select_goal();
-        ROS_DEBUG_THROTTLE(1, "Checking goal [%.2f, %.2f, %.2f] in direction %.2f...", goal.position.x, goal.position.y, goal.position.z, direction.rad_pos());
+        ROS_DEBUG_THROTTLE(1, "Checking goal [%.2f, %.2f, %.2f] in direction %.2f...", goal.position.x, goal.position.y, goal.position.z, direction);
     } while (pos->out_of_bounds(goal));
 
-    ROS_INFO("Changing direction %.2f", direction.rad_pos());
+    ROS_INFO("Changing direction %.2f", direction);
 }

@@ -3,7 +3,7 @@
 
 #include <random_numbers/random_numbers.h>
 #include "cpswarm_msgs/closest_bound.h"
-#include "cpswarm_msgs/get_occupied_sector.h"
+#include "cpswarm_msgs/get_sector.h"
 #include "ugv_coverage.h"
 
 /**
@@ -52,9 +52,9 @@ private:
     ServiceClient bound_client;
 
     /**
-     * @brief Service client for determining the sector occupied by obstacles.
+     * @brief Service client for determining the sector clear of obstacles.
      */
-    ServiceClient occupied_sector_client;
+    ServiceClient clear_sector_client;
 
     /**
      * @brief Whether the UGV still needs to turn before moving.
@@ -64,7 +64,7 @@ private:
     /**
      * @brief The direction in which the UGV is traveling. It is measured in radian, clockwise starting from north.
      */
-    angle direction;
+    double direction;
 
     /**
      * @brief The distance which the UGV is traveling in each step.

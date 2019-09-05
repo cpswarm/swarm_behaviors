@@ -7,6 +7,8 @@ uav_flocking::uav_flocking ()
     double loop_rate;
     nh.param(this_node::getName() + "/loop_rate", loop_rate, 5.0);
     dt = 1 / loop_rate;
+    int queue_size;
+    nh.param(this_node::getName() + "/queue_size", queue_size, 1);
     nh.param(this_node::getName() + "/equi_dist", equi_dist, 10.0);
     nh.param(this_node::getName() + "/flock_vel", flock_vel, 0.5);
     nh.param(this_node::getName() + "/form_vel", form_vel, 0.5);
@@ -20,6 +22,10 @@ uav_flocking::uav_flocking ()
     nh.param(this_node::getName() + "/form_shape", form_shape, 1.0);
     nh.param(this_node::getName() + "/form_track", form_track, 1.0);
     nh.param(this_node::getName() + "/accel_time", accel_time, 1.0);
+
+    // init subscribers
+    swarm_pose_sub = nh.subscribe("swarm_position_rel", queue_size, &uav_flocking::swarm_pose_callback, this);
+    swarm_vel_sub = nh.subscribe("swarm_velocity_rel", queue_size, &uav_flocking::swarm_vel_callback, this);
 
     // init service clients
     area_client = nh.serviceClient<cpswarm_msgs::get_area>("area/get_area");
@@ -93,14 +99,17 @@ void uav_flocking::alignment ()
     a_alignment.y = 0;
 
     // compute damped velocity differences for all neighbors
-    vector<cpswarm_msgs::VectorStamped> velocities = swarm_vel.get_velocities_rel();
-    for (auto pose : swarm_pos.get_poses_rel()) {
+    for (auto pose : swarm_pos) {
         // compute damping
         double damp = max(pose.vector.magnitude - (equi_dist - align_slope), align_min);
         damp *= damp;
 
+        // get velocity of this neighbor
+        cpswarm_msgs::Vector v = get_velocity(pose.swarmio.node);
+        if (v.magnitude == 0.0 && v.direction == 0.0) // no velocity data found
+            continue;
+
         // compute velocity difference
-        cpswarm_msgs::Vector v = swarm_vel.get_velocity_rel(pose.swarmio.node);
         double vx = v.magnitude * cos(v.direction);
         double vy = v.magnitude * sin(v.direction);
 
@@ -112,6 +121,51 @@ void uav_flocking::alignment ()
     // apply friction coefficient
     a_alignment.x *= align_frict;
     a_alignment.y *= align_frict;
+}
+
+double uav_flocking::dist_bound()
+{
+    // get pose
+    geometry_msgs::Pose pose = pos.get_pose();
+
+    // get area coordinates
+    cpswarm_msgs::get_area area;
+    if (area_client.call(area) == false){
+        ROS_ERROR("Failed to get area boundary");
+        return 0.0;
+    }
+
+    // point where line from origin through pose intersects boundary
+    geometry_msgs::Point p;
+
+    // distance of point from origin
+    double dist = 0.0;
+
+    // coordinates of line segment from origin to pose
+    double x1 = 0;
+    double y1 = 0;
+    double x2 = pose.position.x;
+    double y2 = pose.position.y;
+
+    // find boundary that yields closest intersection point (i.e. the correct boundary)
+    for (int i=0; i<area.response.area.size(); ++i) {
+        // coordinates of boundary
+        double x3 = area.response.area[i].x;
+        double y3 = area.response.area[i].y;
+        double x4 = area.response.area[(i+1) % area.response.area.size()].x;
+        double y4 = area.response.area[(i+1) % area.response.area.size()].y;
+
+        // compute point based on https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection#Given_two_points_on_each_line
+        p.x = ((x1*y2 - y1*x2) * (x3 - x4) - (x1 - x2) * (x3*y4 - y3*x4)) / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+        p.y = ((x1*y2 - y1*x2) * (y3 - y4) - (y1 - y2) * (x3*y4 - y3*x4)) / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+
+        // found closer point
+        if (hypot(p.x, p.y) < dist || dist == 0.0)
+            dist = hypot(p.x, p.y);
+    }
+
+    // return distance
+    return dist;
 }
 
 void uav_flocking::flocking (geometry_msgs::Vector3 velocity)
@@ -185,49 +239,16 @@ void uav_flocking::formation (geometry_msgs::Point target)
     }
 }
 
-double uav_flocking::dist_bound()
+cpswarm_msgs::Vector uav_flocking::get_velocity (string uuid) const
 {
-    // get pose
-    geometry_msgs::Pose pose = pos.get_pose();
-
-    // get area coordinates
-    cpswarm_msgs::get_area area;
-    if (area_client.call(area) == false){
-        ROS_ERROR("Failed to get area boundary");
-        return 0.0;
+    // search for uav with given uuid
+    for (auto vel : swarm_vel) {
+        if (vel.swarmio.node == uuid)
+            return vel.vector;
     }
 
-    // point where line from origin through pose intersects boundary
-    geometry_msgs::Point p;
-
-    // distance of point from origin
-    double dist = 0.0;
-
-    // coordinates of line segment from origin to pose
-    double x1 = 0;
-    double y1 = 0;
-    double x2 = pose.position.x;
-    double y2 = pose.position.y;
-
-    // find boundary that yields closest intersection point (i.e. the correct boundary)
-    for (int i=0; i<area.response.area.size(); ++i) {
-        // coordinates of boundary
-        double x3 = area.response.area[i].x;
-        double y3 = area.response.area[i].y;
-        double x4 = area.response.area[(i+1) % area.response.area.size()].x;
-        double y4 = area.response.area[(i+1) % area.response.area.size()].y;
-
-        // compute point based on https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection#Given_two_points_on_each_line
-        p.x = ((x1*y2 - y1*x2) * (x3 - x4) - (x1 - x2) * (x3*y4 - y3*x4)) / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
-        p.y = ((x1*y2 - y1*x2) * (y3 - y4) - (y1 - y2) * (x3*y4 - y3*x4)) / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
-
-        // found closer point
-        if (hypot(p.x, p.y) < dist || dist == 0.0)
-            dist = hypot(p.x, p.y);
-    }
-
-    // return distance
-    return dist;
+    // return empty vector if uuid is unknown
+    return cpswarm_msgs::Vector();
 }
 
 void uav_flocking::repulsion ()
@@ -237,7 +258,7 @@ void uav_flocking::repulsion ()
     a_repulsion.y = 0;
 
     // compute pair potentials for all neighbors
-    for (auto pose : swarm_pos.get_poses_rel()) {
+    for (auto pose : swarm_pos) {
         // repulsion only from close neighbors
         if (pose.vector.magnitude < equi_dist) {
             // compute pair potential
@@ -287,4 +308,14 @@ void uav_flocking::wall ()
     // total acceleration due to bounding area
     a_wall.x = wall_frict * tf * v_wall.x;
     a_wall.y = wall_frict * tf * v_wall.y;
+}
+
+void uav_flocking::swarm_pose_callback (const cpswarm_msgs::ArrayOfVectors::ConstPtr& msg)
+{
+    swarm_pos = msg->vectors;
+}
+
+void uav_flocking::swarm_vel_callback (const cpswarm_msgs::ArrayOfVectors::ConstPtr& msg)
+{
+    swarm_vel = msg->vectors;
 }

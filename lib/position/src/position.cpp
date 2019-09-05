@@ -30,9 +30,9 @@ position::~position ()
 {
 }
 
-angle position::bearing (geometry_msgs::Pose p) const
+double position::bearing (geometry_msgs::Pose p) const
 {
-    return angle(atan2(p.position.y - pose.position.y, p.position.x - pose.position.x) - get_yaw().rad());
+    return remainder(atan2(p.position.y - pose.position.y, p.position.x - pose.position.x) - get_yaw(), 2*M_PI);
 }
 
 geometry_msgs::Pose position::compute_goal (double distance, double direction) const
@@ -76,7 +76,7 @@ geometry_msgs::Pose position::get_pose (geometry_msgs::Transform tf) const
 {
     // compute distance and direction of target
     double distance = hypot(tf.translation.x, tf.translation.y);
-    double direction = (get_yaw() + atan2(tf.translation.y, -tf.translation.x) - M_PI / 2).rad_pos(); // x is inverted in tracking camera tf
+    double direction = get_yaw() + atan2(tf.translation.y, -tf.translation.x) - M_PI / 2; // x is inverted in tracking camera tf
 
     // compute target pose in local obstaclerdinates
     return compute_goal(pose, distance, direction);
@@ -88,17 +88,17 @@ geometry_msgs::Transform position::get_transform (geometry_msgs::Pose p) const
     double dx = p.position.x - pose.position.x;
     double dy = p.position.y - pose.position.y;
     double distance = hypot(dx, dy);
-    angle direction = angle(M_PI / 2.0) - get_yaw() + angle(atan2(dy, dx));
+    double direction = (M_PI / 2.0) - get_yaw() + atan2(dy, dx);
 
     // compute transform
     geometry_msgs::Transform tf;
-    tf.translation.x = -distance * cos(direction.rad()); // x is inverted in tracking camera tf
-    tf.translation.y = distance * sin(direction.rad());
+    tf.translation.x = -distance * cos(direction); // x is inverted in tracking camera tf
+    tf.translation.y = distance * sin(direction);
 
     return tf;
 }
 
-angle position::get_yaw () const
+double position::get_yaw () const
 {
     return get_yaw(pose);
 }
@@ -123,14 +123,14 @@ bool position::reached (geometry_msgs::Pose goal)
 
 bool position::reached_yaw (geometry_msgs::Pose goal)
 {
-    return (get_yaw() - get_yaw(goal)).rad_pos() < yaw_tolerance;
+    return remainder(get_yaw() - get_yaw(goal), 2*M_PI) + M_PI < yaw_tolerance;
 }
 
-angle position::get_yaw (geometry_msgs::Pose pose) const
+double position::get_yaw (geometry_msgs::Pose pose) const
 {
     tf2::Quaternion orientation;
     tf2::fromMsg(pose.orientation, orientation);
-    return angle(tf2::getYaw(orientation));
+    return tf2::getYaw(orientation);
 }
 
 void position::pose_callback (const geometry_msgs::PoseStamped::ConstPtr& msg)
@@ -142,6 +142,6 @@ void position::pose_callback (const geometry_msgs::PoseStamped::ConstPtr& msg)
     // store new position and orientation in class variables
     pose = msg->pose;
 
-    ROS_DEBUG_THROTTLE(1, "Yaw %.2f", get_yaw().rad_pos());
+    ROS_DEBUG_THROTTLE(1, "Yaw %.2f", get_yaw());
     ROS_DEBUG_THROTTLE(1, "Pose [%.2f, %.2f, %.2f]", pose.position.x, pose.position.y, pose.position.z);
 }

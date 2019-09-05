@@ -4,9 +4,8 @@
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Vector3.h>
+#include <cpswarm_msgs/ArrayOfVectors.h>
 #include "cpswarm_msgs/get_area.h"
-#include "swarm_position.h"
-#include "swarm_velocity.h"
 #include "position.h"
 #include "velocity.h"
 
@@ -51,6 +50,12 @@ private:
     void alignment ();
 
     /**
+     * @brief Compute the distance of the area bound to the coordinate system origin. A rectangular area is assumed.
+     * @return The distance between origin and the point on the area bound where the line from origin through the current UAV pose intersects.
+     */
+    double dist_bound();
+
+    /**
      * @brief Compute velocity that allows UAVs to stay in the flock.
      */
     void flocking (geometry_msgs::Vector3 vel);
@@ -62,10 +67,11 @@ private:
     void formation (geometry_msgs::Point target);
 
     /**
-     * @brief Compute the distance of the area bound to the coordinate system origin. A rectangular area is assumed.
-     * @return The distance between origin and the point on the area bound where the line from origin through the current UAV pose intersects.
+     * @brief Get the relative velocity of a specific UAV.
+     * @param uuid The UUID of the UAV to get the velocity for.
+     * @return The magnitude and direction of relative velocity of given CPS. An empty vector in case the UUID is unknown.
      */
-    double dist_bound();
+    cpswarm_msgs::Vector get_velocity (string uuid) const;
 
     /**
      * @brief Compute acceleration from repulsive forces between UAVs.
@@ -85,6 +91,28 @@ private:
      * @brief Compute acceleration from repulsive forces of bounding virtual walls, i.e., environment boundaries.
      */
     void wall ();
+
+    /**
+     * @brief Callback function to receive the relative positions of the other CPSs.
+     * @param msg Distance and bearing of the other CPSs.
+     */
+    void swarm_pose_callback (const cpswarm_msgs::ArrayOfVectors::ConstPtr& msg);
+
+    /**
+     * @brief Callback function to receive the relative velocities of the other CPSs.
+     * @param msg Distance and bearing of the other CPSs.
+     */
+    void swarm_vel_callback (const cpswarm_msgs::ArrayOfVectors::ConstPtr& msg);
+
+    /**
+     * @brief Subscriber for the absolute positions of the other CPSs.
+     */
+    Subscriber swarm_pose_sub;
+
+    /**
+     * @brief Subscriber for the absolute velocities of the other CPSs.
+     */
+    Subscriber swarm_vel_sub;
 
     /**
      * @brief Service client to get mission area boundaries.
@@ -107,14 +135,14 @@ private:
     velocity vel;
 
     /**
-     * @brief A helper object for swarm position related tasks.
+     * @brief The relative positions of the other swarm members (distance and bearing).
      */
-    swarm_position swarm_pos;
+    vector<cpswarm_msgs::VectorStamped> swarm_pos;
 
     /**
-     * @brief A helper object for swarm velocity related tasks.
+     * @brief The relative velocities of the other swarm members (distance and bearing).
      */
-    swarm_velocity swarm_vel;
+    vector<cpswarm_msgs::VectorStamped> swarm_vel;
 
     /**
      * @brief The period length of one control loop.

@@ -7,7 +7,7 @@ project(position)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp tf2 std_msgs geometry_msgs angle sector cpswarm_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp tf2 std_msgs geometry_msgs cpswarm_msgs)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -101,7 +101,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp tf2 std_msgs geometry_msgs angle 
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS angle sector cpswarm_msgs
+  CATKIN_DEPENDS cpswarm_msgs
 #  DEPENDS system_lib
 )
 

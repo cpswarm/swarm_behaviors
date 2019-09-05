@@ -54,8 +54,6 @@
   <depend>tf2</depend>
   <depend>geometry_msgs</depend>
   <depend>std_msgs</depend>
-  <depend>angle</depend>
-  <depend>sector</depend>
   <depend>cpswarm_msgs</depend>
 
   <test_depend>rostest</test_depend>

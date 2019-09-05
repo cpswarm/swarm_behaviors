@@ -99,14 +99,14 @@ void boustrophedon_path::find_directions ()
     // parallel directions
     int i = closest_bound.first;
     int j = closest_bound.second;
-    dir_par_right = angle(atan2(area[j].y - area[i].y, area[j].x - area[i].x));
-    dir_par_left = dir_par_right + M_PI;
+    dir_par_right = atan2(area[j].y - area[i].y, area[j].x - area[i].x);
+    dir_par_left = remainder(dir_par_right + M_PI, 2*M_PI);
 
     // outward and inward directions (perpendicular to closest bound)
     i = closest_bound.second;
     j = (closest_bound.second + 1) % area.size();
-    dir_perp_out = angle(atan2(area[j].y - area[i].y, area[j].x - area[i].x));
-    dir_perp_in = dir_perp_out + M_PI;
+    dir_perp_out = atan2(area[j].y - area[i].y, area[j].x - area[i].x);
+    dir_perp_in = remainder(dir_perp_out + M_PI, 2*M_PI);
 
     ROS_DEBUG("Directions: right %.2f, left %.2f, up %.2f, down %.2f", dir_par_right, dir_par_left, dir_perp_out, dir_perp_in);
 }
@@ -161,8 +161,8 @@ void boustrophedon_path::find_start ()
     start.y = area[closest_bound.first].y + (area[closest_bound.second].y - area[closest_bound.first].y) / 2.0;
 
     // back off from bound
-    start.x += path_spacing / 2.0 * cos(dir_perp_out.rad());
-    start.y += path_spacing / 2.0 * sin(dir_perp_out.rad());
+    start.x += path_spacing / 2.0 * cos(dir_perp_out);
+    start.y += path_spacing / 2.0 * sin(dir_perp_out);
 
     path.push_back(start);
 }
@@ -171,8 +171,8 @@ void boustrophedon_path::generate_path ()
 {
     // starting waypoint
     geometry_msgs::Point wp = path.back();
-    wp.x += wp_spacing_par * cos(dir_par_right.rad());
-    wp.y += wp_spacing_par * sin(dir_par_right.rad());
+    wp.x += wp_spacing_par * cos(dir_par_right);
+    wp.y += wp_spacing_par * sin(dir_par_right);
     path.push_back(wp);
 
     // outward path
@@ -180,22 +180,22 @@ void boustrophedon_path::generate_path ()
         // perpendicular path
         if (turn > 0) {
             for (int i = 0; i < wp_perp; ++i) {
-                wp.x += wp_spacing_perp * cos(dir_perp_out.rad());
-                wp.y += wp_spacing_perp * sin(dir_perp_out.rad());
+                wp.x += wp_spacing_perp * cos(dir_perp_out);
+                wp.y += wp_spacing_perp * sin(dir_perp_out);
                 path.push_back(wp);
             }
         }
 
         // select direction
-        angle dir = dir_par_right;
+        double dir = dir_par_right;
         if (turn % 2)
             dir = dir_par_left;
 
         // parallel path
         for (int i = 0; i < wp_par; ++i) {
             // compute next waypoint
-            wp.x += wp_spacing_par * cos(dir.rad());
-            wp.y += wp_spacing_par * sin(dir.rad());
+            wp.x += wp_spacing_par * cos(dir);
+            wp.y += wp_spacing_par * sin(dir);
             path.push_back(wp);
         }
     }
@@ -205,22 +205,22 @@ void boustrophedon_path::generate_path ()
         // perpendicular path
         if (turn > 0) {
             for (int i = 0; i < wp_perp; ++i) {
-                wp.x += wp_spacing_perp * cos(dir_perp_in.rad());
-                wp.y += wp_spacing_perp * sin(dir_perp_in.rad());
+                wp.x += wp_spacing_perp * cos(dir_perp_in);
+                wp.y += wp_spacing_perp * sin(dir_perp_in);
                 path.push_back(wp);
             }
         }
 
         // select direction
-        angle dir = dir_par_left;
+        double dir = dir_par_left;
         if (turn % 2)
             dir = dir_par_right;
 
         // parallel path
         for (int i = 0; i < wp_par; ++i) {
             // compute next waypoint
-            wp.x += wp_spacing_par * cos(dir.rad());
-            wp.y += wp_spacing_par * sin(dir.rad());
+            wp.x += wp_spacing_par * cos(dir);
+            wp.y += wp_spacing_par * sin(dir);
             path.push_back(wp);
         }
     }

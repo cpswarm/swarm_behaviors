@@ -49,25 +49,14 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
 
-  <build_depend>roscpp</build_depend>
-  <build_depend>actionlib</build_depend>
-  <build_depend>random_numbers</build_depend>
-  <build_depend>geometry_msgs</build_depend>
-  <build_depend>cpswarm_msgs</build_depend>
-  <build_depend>uav_coverage</build_depend>
-  <build_depend>uav_tracking</build_depend>
-  <build_depend>boustrophedon_path</build_depend>
-  <build_depend>swarm_kinematics</build_depend>
-
-  <exec_depend>roscpp</exec_depend>
-  <exec_depend>actionlib</exec_depend>
-  <exec_depend>random_numbers</exec_depend>
-  <exec_depend>geometry_msgs</exec_depend>
-  <exec_depend>cpswarm_msgs</exec_depend>
-  <exec_depend>uav_coverage</exec_depend>
-  <exec_depend>uav_tracking</exec_depend>
-  <exec_depend>boustrophedon_path</exec_depend>
-  <exec_depend>swarm_kinematics</exec_depend>
+  <depend>roscpp</depend>
+  <depend>actionlib</depend>
+  <depend>random_numbers</depend>
+  <depend>geometry_msgs</depend>
+  <depend>cpswarm_msgs</depend>
+  <depend>uav_coverage</depend>
+  <depend>uav_tracking</depend>
+  <depend>boustrophedon_path</depend>
 
   <test_depend>rostest</test_depend>
 

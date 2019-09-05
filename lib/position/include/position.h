@@ -5,11 +5,6 @@
 #include <tf2/utils.h>
 #include <geometry_msgs/Pose.h>
 #include <std_msgs/Empty.h>
-#include "angle.h"
-#include "sector.h"
-#include "cpswarm_msgs/danger.h"
-#include "cpswarm_msgs/clear_of_obstacles.h"
-#include "cpswarm_msgs/get_occupied_sector.h"
 #include "cpswarm_msgs/out_of_bounds.h"
 
 using namespace std;
@@ -36,7 +31,7 @@ public:
      * @param p The pose to compute bearing of.
      * @return The bearing of the given pose relative to the current yaw of the CPS, counterclockwise.
      */
-    angle bearing (geometry_msgs::Pose p) const;
+    double bearing (geometry_msgs::Pose p) const;
 
     /**
      * @brief Compute the goal coordinates relative to the current position.
@@ -94,7 +89,7 @@ public:
      * @brief Get the current yaw orientation of the CPS.
      * @return The current yaw angle of the CPS counterclockwise starting from x-axis/east.
      */
-    angle get_yaw () const;
+    double get_yaw () const;
 
     /**
      * @brief Check whether a given pose is out of the mission area boundaries.
@@ -123,7 +118,7 @@ private:
      * @param pose The pose that contains the orientation.
      * @return The yaw angle of the given pose counterclockwise starting from x-axis/east.
      */
-    angle get_yaw (geometry_msgs::Pose pose) const;
+    double get_yaw (geometry_msgs::Pose pose) const;
 
     /**
      * @brief Callback function for position updates.

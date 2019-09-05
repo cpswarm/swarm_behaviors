@@ -7,7 +7,7 @@ project(boustrophedon_path)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs angle cpswarm_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs cpswarm_msgs)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -101,7 +101,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs angle cpswarm_msgs)
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS angle cpswarm_msgs
+  CATKIN_DEPENDS cpswarm_msgs
 #  DEPENDS system_lib
 )
 

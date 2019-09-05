@@ -4,7 +4,6 @@
 #include <deque>
 #include <ros/ros.h>
 #include <geometry_msgs/Point.h>
-#include "angle.h"
 #include "cpswarm_msgs/closest_bound.h"
 #include "cpswarm_msgs/get_area.h"
 
@@ -101,22 +100,22 @@ private:
     /**
      * @brief The direction parallel to the closest bound going right.
      */
-    angle dir_par_right;
+    double dir_par_right;
 
     /**
      * @brief The direction parallel to the closest bound going left.
      */
-    angle dir_par_left;
+    double dir_par_left;
 
     /**
      * @brief The direction perpendicular to the closest bound moving away from the start.
      */
-    angle dir_perp_out;
+    double dir_perp_out;
 
     /**
      * @brief The direction perpendicular to the closest bound moving towards the start.
      */
-    angle dir_perp_in;
+    double dir_perp_in;
 
     /**
      * @brief Number of way points on paths parallel to closest bound.
