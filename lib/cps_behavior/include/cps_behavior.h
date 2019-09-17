@@ -9,7 +9,6 @@
 #include <std_msgs/Empty.h>
 #include <cpswarm_msgs/TargetPositionEvent.h>
 #include <cpswarm_msgs/TargetTracking.h>
-#include <cpswarm_msgs/TargetAssignmentEvent.h>
 #include <swarmros/String.h>
 #include "position.h"
 #include "velocity.h"
