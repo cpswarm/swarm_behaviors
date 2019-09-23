@@ -13,8 +13,8 @@ cps_behavior::cps_behavior ()
     target_lost_sub = nh.subscribe("bridge/events/target_lost", queue_size, &cps_behavior::target_lost_callback, this);
     target_rescued_sub = nh.subscribe("bridge/events/target_rescued", queue_size, &cps_behavior::target_rescued_callback, this);
     uuid_sub = nh.subscribe("bridge/uuid", queue_size, &cps_behavior::uuid_callback, this);
-    pose_pub = nh.advertise<geometry_msgs::PoseStamped>("pos_controller/goal_position", queue_size);
-    velocity_pub = nh.advertise<geometry_msgs::Twist>("vel_controller/target_velocity", queue_size);
+    pose_pub = nh.advertise<geometry_msgs::PoseStamped>("pos_controller/goal_position", queue_size, true);
+    velocity_pub = nh.advertise<geometry_msgs::Twist>("vel_controller/target_velocity", queue_size, true);
 
     // init state of algorithm
     state = STATE_ACTIVE;

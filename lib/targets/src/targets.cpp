@@ -35,7 +35,7 @@ targets::targets (string cps) : cps(cps)
     }
 
     // tracking publisher
-    tracking_pub = nh.advertise<cpswarm_msgs::TargetTracking>("tracking", queue_size);
+    tracking_pub = nh.advertise<cpswarm_msgs::TargetTracking>("tracking", queue_size, true);
 }
 
 void targets::publish (unsigned int id)

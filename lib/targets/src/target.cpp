@@ -36,9 +36,9 @@ target::target (unsigned int id, target_state_t state, geometry_msgs::Pose pose,
     nh.getParam(this_node::getName() + "/target_update_event", target_update_event);
 
     // initialize publishers
-    target_found_pub = nh.advertise<cpswarm_msgs::TargetPositionEvent>("target_found", queue_size);
-    target_update_pub = nh.advertise<cpswarm_msgs::TargetPositionEvent>("target_update", queue_size);
-    target_lost_pub = nh.advertise<cpswarm_msgs::TargetPositionEvent>("target_lost", queue_size);
+    target_found_pub = nh.advertise<cpswarm_msgs::TargetPositionEvent>("target_found", queue_size, true);
+    target_update_pub = nh.advertise<cpswarm_msgs::TargetPositionEvent>("target_update", queue_size, true);
+    target_lost_pub = nh.advertise<cpswarm_msgs::TargetPositionEvent>("target_lost", queue_size, true);
 
     // init loop rate
     rate = new Rate(loop_rate);
