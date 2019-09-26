@@ -28,14 +28,19 @@ public:
 
 private:
     /**
-     * @brief TODO
+     * @brief Service client to get the current waypoint to navigate to.
      */
     ServiceClient wp_getter;
 
     /**
-     * @brief TODO
+     * @brief Current waypoint to navigate to.
      */
     geometry_msgs::Point waypoint;
+
+    /**
+     * @brief Service message to get the current waypoint.
+     */
+    cpswarm_msgs::GetWaypoint get_wp;
 
     /**
      * @brief Target velocity of the UAV.
