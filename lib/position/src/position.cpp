@@ -15,7 +15,7 @@ position::position ()
     pose_valid = false;
 
     // init ros communication
-    out_of_bounds_client = nh.serviceClient<cpswarm_msgs::out_of_bounds>("area/out_of_bounds");
+    out_of_bounds_client = nh.serviceClient<cpswarm_msgs::OutOfBounds>("area/out_of_bounds");
     pose_sub = nh.subscribe("pos_provider/pose", queue_size, &position::pose_callback, this);
 
     // init position and yaw
@@ -105,7 +105,7 @@ double position::get_yaw () const
 
 bool position::out_of_bounds (geometry_msgs::Pose pose)
 {
-    cpswarm_msgs::out_of_bounds oob;
+    cpswarm_msgs::OutOfBounds oob;
     oob.request.pose = pose;
     if (out_of_bounds_client.call(oob)){
         return oob.response.out;

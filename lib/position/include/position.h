@@ -5,7 +5,7 @@
 #include <tf2/utils.h>
 #include <geometry_msgs/Pose.h>
 #include <std_msgs/Empty.h>
-#include "cpswarm_msgs/out_of_bounds.h"
+#include "cpswarm_msgs/OutOfBounds.h"
 
 using namespace std;
 using namespace ros;

@@ -11,8 +11,8 @@ ugv_random_walk::ugv_random_walk (int seed) : ugv_coverage()
     }
 
     // init service clients
-    bound_client = nh.serviceClient<cpswarm_msgs::closest_bound>("area/closest_bound");
-    clear_sector_client = nh.serviceClient<cpswarm_msgs::get_sector>("obstacle_detection/get_clear_sector");
+    bound_client = nh.serviceClient<cpswarm_msgs::ClosestBound>("area/closest_bound");
+    clear_sector_client = nh.serviceClient<cpswarm_msgs::GetSector>("obstacle_detection/get_clear_sector");
 
     // initial direction as drone is placed
     direction = pos->get_yaw();
@@ -81,7 +81,7 @@ behavior_state_t ugv_random_walk::step ()
 void ugv_random_walk::new_direction ()
 {
     // get sector clear of obstacles and other uavs
-    cpswarm_msgs::get_sector clear;
+    cpswarm_msgs::GetSector clear;
     if (clear_sector_client.call(clear)){
         ROS_ERROR("Failed to get clear sector");
         return;
@@ -105,7 +105,7 @@ void ugv_random_walk::reflect ()
     // get boundary
     geometry_msgs::Point b1;
     geometry_msgs::Point b2;
-    cpswarm_msgs::closest_bound cb;
+    cpswarm_msgs::ClosestBound cb;
     cb.request.point = pos->get_pose().position;
     if (bound_client.call(cb)){
         b1 = cb.response.coords[0];

@@ -8,7 +8,6 @@
 #include <geometry_msgs/TwistStamped.h>
 #include "position.h"
 #include "cpswarm_msgs/Vector.h"
-#include "cpswarm_msgs/out_of_bounds.h"
 
 using namespace std;
 using namespace ros;

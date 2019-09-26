@@ -2,7 +2,7 @@
 #define UAV_RANDOM_DIRECTION_H
 
 #include <random_numbers/random_numbers.h>
-#include "cpswarm_msgs/get_sector.h"
+#include "cpswarm_msgs/GetSector.h"
 #include "uav_coverage.h"
 
 /**

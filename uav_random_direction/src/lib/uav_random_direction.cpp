@@ -11,7 +11,7 @@ uav_random_direction::uav_random_direction (int seed) : uav_coverage()
     }
 
     // init service clients
-    clear_sector_client = nh.serviceClient<cpswarm_msgs::get_sector>("obstacle_detection/get_clear_sector");
+    clear_sector_client = nh.serviceClient<cpswarm_msgs::GetSector>("obstacle_detection/get_clear_sector");
 
     // inititial direction as drone is placed
     direction = pos->get_yaw();
@@ -88,7 +88,7 @@ geometry_msgs::Pose uav_random_direction::select_goal ()
 void uav_random_direction::new_direction ()
 {
     // get sector clear of obstacles and other uavs
-    cpswarm_msgs::get_sector clear;
+    cpswarm_msgs::GetSector clear;
     if (clear_sector_client.call(clear) == false){
         ROS_ERROR("Failed to get clear sector");
         return;
