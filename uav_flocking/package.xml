@@ -56,7 +56,6 @@
   <depend>cpswarm_msgs</depend>
   <depend>uav_coverage</depend>
   <depend>uav_tracking</depend>
-  <depend>boustrophedon_path</depend>
 
   <test_depend>rostest</test_depend>
 

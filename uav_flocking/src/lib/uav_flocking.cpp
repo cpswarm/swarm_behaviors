@@ -28,7 +28,7 @@ uav_flocking::uav_flocking ()
     swarm_vel_sub = nh.subscribe("swarm_velocity_rel", queue_size, &uav_flocking::swarm_vel_callback, this);
 
     // init service clients
-    area_client = nh.serviceClient<cpswarm_msgs::get_area>("area/get_area");
+    area_client = nh.serviceClient<cpswarm_msgs::GetArea>("area/get_area");
 
     // init velocities and acceleration
     a_repulsion.x = 0;
@@ -68,6 +68,8 @@ geometry_msgs::Vector3 uav_flocking::coverage (geometry_msgs::Vector3 velocity)
     vel_new.x = vel_cur.x + 1 / accel_time * (v_flock.x - vel_cur.x) * dt + (a_repulsion.x + a_alignment.x + a_wall.x) * dt;
     vel_new.y = vel_cur.y + 1 / accel_time * (v_flock.y - vel_cur.y) * dt + (a_repulsion.y + a_alignment.y + a_wall.y) * dt;
 
+    ROS_ERROR("%.2f = cur %.2f + flock %.2f + repulse %.2f + align %.2f + wall %.2f", hypot(vel_new.x, vel_new.y), hypot(vel_cur.x, vel_cur.x), hypot(1 / accel_time * (v_flock.x - vel_cur.x) * dt, 1 / accel_time * (v_flock.y - vel_cur.y)), hypot(a_repulsion.x * dt, a_repulsion.y*dt), hypot(a_alignment.x * dt, a_alignment.y * dt), hypot(a_wall.x * dt, a_wall.y * dt));
+
     return vel_new;
 
 }
@@ -97,6 +99,8 @@ void uav_flocking::alignment ()
     // init alignment acceleration
     a_alignment.x = 0;
     a_alignment.y = 0;
+
+    // TODO: fix this term: over excitation of uav!
 
     // compute damped velocity differences for all neighbors
     for (auto pose : swarm_pos) {
@@ -129,7 +133,7 @@ double uav_flocking::dist_bound()
     geometry_msgs::Pose pose = pos.get_pose();
 
     // get area coordinates
-    cpswarm_msgs::get_area area;
+    cpswarm_msgs::GetArea area;
     if (area_client.call(area) == false){
         ROS_ERROR("Failed to get area boundary");
         return 0.0;

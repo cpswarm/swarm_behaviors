@@ -3,7 +3,6 @@
 
 #include "uav_coverage.h"
 #include "uav_flocking.h"
-#include "boustrophedon_path.h"
 
 /**
  * @brief An implementation of the coverage class that allows to cover a given area with the flocking algorithm.
@@ -36,7 +35,7 @@ private:
     /**
      * @brief The path object to compute the boustrophedon coverage path.
      */
-    boustrophedon_path* path;
+//     boustrophedon_path* path;
 
     /**
      * @brief Target velocity of the flock.

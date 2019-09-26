@@ -3,13 +3,12 @@
 uav_flocking_coverage::uav_flocking_coverage () : uav_coverage()
 {
     flock = new uav_flocking();
-    path = new boustrophedon_path();
     nh.param(this_node::getName() + "/flock_vel", flock_vel, 0.5);
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
 
-    geometry_msgs::Point wp = path->current_wp();
-    ROS_ERROR("Initial waypoint: [%.2f, %.2f]", wp.x, wp.y);
+    geometry_msgs::Point wp;// = path->current_wp(); TODO
+    ROS_DEBUG("Initial waypoint: [%.2f, %.2f]", wp.x, wp.y);
 
     // publishers for visualization
     pub_vis_wp = nh.advertise<geometry_msgs::PointStamped>("vis/wp", queue_size);
@@ -30,7 +29,7 @@ behavior_state_t uav_flocking_coverage::step ()
 
     if (state == STATE_ACTIVE) {
         // get current waypoints of path
-        geometry_msgs::Point wp = path->current_wp();
+        geometry_msgs::Point wp;// = path->current_wp(); TODO
 
         // compute distance reached within next few cycles
         int cycles = 10; // TODO: make param
@@ -41,8 +40,8 @@ behavior_state_t uav_flocking_coverage::step ()
         geometry_msgs::Pose wp_pose;
         wp_pose.position = wp;
         if (pos->dist(wp_pose) < delta) {
-            wp = path->next_wp();
-            ROS_ERROR("Move to waypoint [%.2f, %.2f]", wp.x, wp.y);
+//             wp = path->next_wp();
+            ROS_DEBUG("Move to waypoint [%.2f, %.2f]", wp.x, wp.y);
         }
 
         // visualize waypoint

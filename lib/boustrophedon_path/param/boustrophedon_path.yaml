@@ -1,7 +1,0 @@
-altitude:    1.5 # The altitude above ground at which all UAVs operate. It is used to compute the path of the drone.
-fov:         1.2 # Horizontal (right-left) camera field of view in radian. It is used to compute the path of the drone.
-overlap:     0.0 # Overlap of covered area between different paths in meter.
-margin:      0.5 # Safety margin on the area bounds.
-
-# camera specification: hor fov 1.236, ver fov 0.970
-# https://openmv.io/collections/cams/products/openmv-cam-m7
