@@ -17,7 +17,6 @@
         <rosparam file="$(find uav_simple_tracking)/param/uav_simple_tracking.yaml" command="load" />
         <rosparam file="$(find position)/param/position.yaml" command="load" />
         <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
-        <rosparam file="$(find targets)/param/targets.yaml" command="load" />
     </node>
 
 </launch>

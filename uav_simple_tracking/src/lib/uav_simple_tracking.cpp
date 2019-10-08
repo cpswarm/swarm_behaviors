@@ -1,8 +1,12 @@
 #include "lib/uav_simple_tracking.h"
 
-uav_simple_tracking::uav_simple_tracking(unsigned int target, string ugv) : uav_tracking(target, ugv)
+uav_simple_tracking::uav_simple_tracking(unsigned int target)
 {
-
+    this->target.id = target;
+    NodeHandle nh;
+    int queue_size;
+    nh.param(this_node::getName() + "/queue_size", queue_size, 1);
+    target_sub = nh.subscribe("target_update", queue_size, &uav_simple_tracking::target_callback, this);
 }
 
 behavior_state_t uav_simple_tracking::step ()
@@ -10,51 +14,24 @@ behavior_state_t uav_simple_tracking::step ()
     // update position information
     spinOnce();
 
-    // update information about tracking targets
-    sar_targets->update();
-
-    // get the target being tracked
-    target tracked;
-
-    // uav is tracking a target
-    if (sar_targets->tracking(tracked)) {
-        // target left the area
-        if (pos->out_of_bounds(tracked.get_pose())) {
-            state = STATE_SUCCEEDED;
-        }
-
-        // target is still inside area
-        else {
-            // compute new goal
-            geometry_msgs::Pose goal = select_goal();
-
-            // move to target position
-            move(goal);
-        }
+    // target left the area
+    if (pos.out_of_bounds(target.pose.pose)) {
+        return STATE_SUCCEEDED;
     }
 
-    // no target being tracked by this uav
-    else{
-        // target has been rescued
-        if (sar_targets->rescued())
-            state = STATE_SUCCEEDED;
-
-        // target has been lost
-        else
-            state = STATE_ABORTED;
+    // target is still inside area
+    else {
+        // move to target position
+        pos.move(target.pose.pose);
     }
 
     // return state to action server
-    return state;
+    return STATE_ACTIVE;
 }
 
-geometry_msgs::Pose uav_simple_tracking::select_goal ()
+void uav_simple_tracking::target_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
 {
-    // get target tracked by this cps
-    target tracked;
-
-    // get target position
-    sar_targets->tracking(tracked);
-
-    return tracked.get_pose();
+    // update information for this target
+    if (target.id == msg->id)
+        target = *msg;
 }

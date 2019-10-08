@@ -4,12 +4,24 @@
 #include <random_numbers/random_numbers.h>
 #include "cpswarm_msgs/ClosestBound.h"
 #include "cpswarm_msgs/GetSector.h"
-#include "ugv_coverage.h"
+#include "position.h"
+
+using namespace std;
+using namespace ros;
+
+/**
+ * @brief An enumeration for the state of the behavior algorithm.
+ */
+typedef enum {
+    STATE_ACTIVE = 0,
+    STATE_SUCCEEDED,
+    STATE_ABORTED
+} behavior_state_t;
 
 /**
  * @brief An implementation of the coverage class that allows to cover a given area with the random walk algorithm. The random walk is a mathematical movement model, where an agent moves straight for a specific distance and then changes its direction randomly.
  */
-class ugv_random_walk : public ugv_coverage
+class ugv_random_walk
 {
 public:
     /**
@@ -32,13 +44,15 @@ public:
 private:
     /**
      * @brief Compute new direction using rng.
+     * @return Whether a a new direction could be set successfully.
      */
-    void new_direction ();
+    bool new_direction ();
 
     /**
      * @brief Compute new direction as reflection from wall.
+     * @return Whether a a new direction could be set successfully.
      */
-    void reflect ();
+    bool reflect ();
 
     /**
      * @brief Compute goal position from direction.
@@ -57,19 +71,19 @@ private:
     ServiceClient clear_sector_client;
 
     /**
-     * @brief Whether the UGV still needs to turn before moving.
+     * @brief A helper object for position related tasks.
      */
-    bool turn;
+    position pos;
+
+    /**
+     * @brief The distance that the UGV travels in one step.
+     */
+    double step_size;
 
     /**
      * @brief The direction in which the UGV is traveling. It is measured in radian, clockwise starting from north.
      */
     double direction;
-
-    /**
-     * @brief The distance which the UGV is traveling in each step.
-     */
-    double distance;
 
     /**
      * @brief The random number generator used for selecting a random direction.

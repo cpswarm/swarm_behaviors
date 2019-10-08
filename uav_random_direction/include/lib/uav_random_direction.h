@@ -2,13 +2,25 @@
 #define UAV_RANDOM_DIRECTION_H
 
 #include <random_numbers/random_numbers.h>
-#include "cpswarm_msgs/GetSector.h"
-#include "uav_coverage.h"
+#include <cpswarm_msgs/GetSector.h>
+#include <position.h>
+
+using namespace std;
+using namespace ros;
 
 /**
- * @brief An implementation of the coverage class that allows to cover a given area with the random direction algorithm. The random direction is a mathematical movement model, where an agent moves straight forward until it reaches an obstacle. There, it changes its direction randomly.
+ * @brief An enumeration for the state of the behavior algorithm.
  */
-class uav_random_direction : public uav_coverage
+typedef enum {
+    STATE_ACTIVE = 0,
+    STATE_SUCCEEDED,
+    STATE_ABORTED
+} behavior_state_t;
+
+/**
+ * @brief A class that allows to cover a given area with the random direction algorithm. The random direction is a mathematical movement model, where an agent moves straight forward until it reaches an obstacle. There, it changes its direction randomly.
+ */
+class uav_random_direction
 {
 public:
     /**
@@ -30,12 +42,6 @@ public:
 
 private:
     /**
-     * @brief Obstacle avoidance procedure: change direction.
-     */
-
-    void obstacle_avoidance ();
-
-    /**
      * @brief Compute goal position from direction.
      * @return The selected goal.
      */
@@ -43,13 +49,29 @@ private:
 
     /**
      * @brief Compute new direction using rng.
+     * @return Whether a a new direction could be set successfully.
      */
-    void new_direction ();
+    bool new_direction ();
 
     /**
      * @brief Service client for determining the sector clear of obstacles.
      */
     ServiceClient clear_sector_client;
+
+    /**
+     * @brief A helper object for position related tasks.
+     */
+    position pos;
+
+    /**
+     * @brief The maximum distance that a UAV travels in one step.
+     */
+    double step_size_max;
+
+    /**
+     * @brief The minimum distance that a UAV travels in one step.
+     */
+    double step_size_min;
 
     /**
      * @brief Whether the drone still needs to turn before moving.

@@ -1,8 +1,9 @@
 #include "lib/uav_local_coverage.h"
 
-uav_local_coverage::uav_local_coverage() : uav_coverage()
+uav_local_coverage::uav_local_coverage()
 {
     // read parameters
+    NodeHandle nh;
     nh.param(this_node::getName() + "/altitude", altitude, 5.0);
     nh.param(this_node::getName() + "/fov_hor", fov_hor, 1.236);
     nh.param(this_node::getName() + "/fov_ver", fov_ver, 0.970);
@@ -18,7 +19,7 @@ uav_local_coverage::uav_local_coverage() : uav_coverage()
     // invert direction to reach origin from current pose
     // the current pose is the 0th step on the involute (x = radius a, y = 0)
     direction += M_PI;
-    origin = pos->get_pose();
+    origin = pos.get_pose();
 }
 
 behavior_state_t uav_local_coverage::step ()
@@ -26,37 +27,30 @@ behavior_state_t uav_local_coverage::step ()
     // update position information
     spinOnce();
 
-    // update information about tracking targets
-    sar_targets->update();
+    // next search step
+    ++steps;
 
-    if (state == STATE_ACTIVE) {
-        // next search step
-        ++steps;
+    // next goal
+    geometry_msgs::Pose goal;
 
-        // next goal
-        geometry_msgs::Pose goal;
+    // reached maximum number of steps, stop local coverage
+    if (steps >= max_steps)
+        return STATE_ABORTED;
 
-        // reached maximum number of steps, stop local coverage
-        if (steps >= max_steps)
-            state = STATE_ABORTED;
+    // compute new goal
+    else {
+        goal = select_goal();
 
-        // compute new goal
-        else {
-            goal = select_goal();
-
-            // reached environment boundary, stop local coverage
-            if (pos->out_of_bounds(goal))
-                state = STATE_ABORTED;
-        }
-
-        // move to new goal
-        if (state == STATE_ACTIVE) {
-            move(goal);
-        }
+        // reached environment boundary, stop local coverage
+        if (pos.out_of_bounds(goal))
+            return STATE_ABORTED;
     }
 
+    // move to new goal
+    pos.move(goal);
+
     // return state to action server
-    return state;
+    return STATE_ACTIVE;
 }
 
 void uav_local_coverage::compute_involute (double &distance, double &direction)
@@ -76,11 +70,6 @@ void uav_local_coverage::compute_involute (double &distance, double &direction)
     direction = atan2(y, x);
 }
 
-void uav_local_coverage::obstacle_avoidance ()
-{
-    state = STATE_ABORTED;
-}
-
 geometry_msgs::Pose uav_local_coverage::select_goal ()
 {
     // compute heading and distance for current step
@@ -88,5 +77,5 @@ geometry_msgs::Pose uav_local_coverage::select_goal ()
     compute_involute(distance, direction);
 
     // compute gps coordinats of goal position
-    return pos->compute_goal(origin, distance, direction);
+    return pos.compute_goal(origin, distance, direction);
 }

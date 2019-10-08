@@ -17,7 +17,6 @@
         <rosparam file="$(find uav_optimal_coverage)/param/uav_optimal_coverage.yaml" command="load" />
         <rosparam file="$(find position)/param/position.yaml" command="load" />
         <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
-        <rosparam file="$(find targets)/param/targets.yaml" command="load" />
     </node>
 
 </launch>

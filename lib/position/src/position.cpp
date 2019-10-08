@@ -5,11 +5,10 @@ position::position ()
     // read parameters
     double loop_rate;
     nh.param(this_node::getName() + "/loop_rate", loop_rate, 5.0);
-    Rate rate(loop_rate);
+    rate = new Rate(loop_rate);
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
-    nh.param(this_node::getName() + "/goal_tolerance", goal_tolerance, 0.1);
-    nh.param(this_node::getName() + "/yaw_tolerance", yaw_tolerance, 0.02);
+    nh.param(this_node::getName() + "/goal_timeout", goal_timeout, 30.0);
 
     // no pose received yet
     pose_valid = false;
@@ -17,17 +16,22 @@ position::position ()
     // init ros communication
     out_of_bounds_client = nh.serviceClient<cpswarm_msgs::OutOfBounds>("area/out_of_bounds");
     pose_sub = nh.subscribe("pos_provider/pose", queue_size, &position::pose_callback, this);
+    moveto_client = new actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction>("cmd/moveto", true);
+    moveto_client->waitForServer();
+    pose_pub = nh.advertise<geometry_msgs::PoseStamped>("pos_controller/goal_position", queue_size, true);
 
     // init position and yaw
     while (ok() && pose_valid == false) {
         ROS_DEBUG_ONCE("Waiting for valid pose...");
-        rate.sleep();
+        rate->sleep();
         spinOnce();
     }
 }
 
 position::~position ()
 {
+    delete rate;
+    delete moveto_client;
 }
 
 double position::bearing (geometry_msgs::Pose p) const
@@ -72,58 +76,40 @@ geometry_msgs::Pose position::get_pose () const
     return pose;
 }
 
-geometry_msgs::Pose position::get_pose (geometry_msgs::Transform tf) const
-{
-    // compute distance and direction of target
-    double distance = hypot(tf.translation.x, tf.translation.y);
-    double direction = get_yaw() + atan2(tf.translation.y, -tf.translation.x) - M_PI / 2; // x is inverted in tracking camera tf
-
-    // compute target pose in local obstaclerdinates
-    return compute_goal(pose, distance, direction);
-}
-
-geometry_msgs::Transform position::get_transform (geometry_msgs::Pose p) const
-{
-    // relative obstaclerdinates of pose
-    double dx = p.position.x - pose.position.x;
-    double dy = p.position.y - pose.position.y;
-    double distance = hypot(dx, dy);
-    double direction = (M_PI / 2.0) - get_yaw() + atan2(dy, dx);
-
-    // compute transform
-    geometry_msgs::Transform tf;
-    tf.translation.x = -distance * cos(direction); // x is inverted in tracking camera tf
-    tf.translation.y = distance * sin(direction);
-
-    return tf;
-}
-
 double position::get_yaw () const
 {
     return get_yaw(pose);
+}
+
+void position::move (geometry_msgs::Pose goal)
+{
+    // position to move to
+    move_base_msgs::MoveBaseGoal moveto_goal;
+    moveto_goal.target_pose.pose = goal;
+
+    // send goal pose to moveto action server
+    moveto_client->sendGoal(moveto_goal);
+
+    // wait until goal is reached
+    bool reached = moveto_client->waitForResult(Duration(goal_timeout));
+
+    // failed to reach goal within time
+    if (reached == false) {
+        ROS_ERROR("Failed to move to (%.2f,%.2f)!", goal.position.x, goal.position.x);
+    }
 }
 
 bool position::out_of_bounds (geometry_msgs::Pose pose)
 {
     cpswarm_msgs::OutOfBounds oob;
     oob.request.pose = pose;
-    if (out_of_bounds_client.call(oob)){
+    if (out_of_bounds_client.call(oob)) {
         return oob.response.out;
     }
-    else{
+    else {
         ROS_ERROR("Failed to check if goal is out of bounds");
         return true;
     }
-}
-
-bool position::reached (geometry_msgs::Pose goal)
-{
-    return dist(pose, goal) < goal_tolerance;
-}
-
-bool position::reached_yaw (geometry_msgs::Pose goal)
-{
-    return remainder(get_yaw() - get_yaw(goal), 2*M_PI) + M_PI < yaw_tolerance;
 }
 
 double position::get_yaw (geometry_msgs::Pose pose) const

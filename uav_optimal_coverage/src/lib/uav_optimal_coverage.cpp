@@ -1,7 +1,13 @@
 #include "lib/uav_optimal_coverage.h"
 
-uav_optimal_coverage::uav_optimal_coverage () : uav_coverage()
+uav_optimal_coverage::uav_optimal_coverage ()
 {
+    NodeHandle nh;
+
+    // init state of algorithm
+    state = STATE_ACTIVE;
+
+    // read parameters
     nh.param(this_node::getName() + "/target_velocity", target_velocity, 0.5);
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
@@ -31,12 +37,9 @@ behavior_state_t uav_optimal_coverage::step ()
     // update position information
     spinOnce();
 
-    // update information about tracking targets
-    sar_targets->update();
-
     if (state == STATE_ACTIVE) {
         // reached current waypoint of path
-        if (hypot(waypoint.x - pos->get_pose().position.x, waypoint.y - pos->get_pose().position.y) < tolerance) {
+        if (hypot(waypoint.x - pos.get_pose().position.x, waypoint.y - pos.get_pose().position.y) < tolerance) {
             // get next waypoint of path
             get_wp.request.tolerance = tolerance;
             if (wp_getter.call(get_wp) == false){
@@ -50,7 +53,7 @@ behavior_state_t uav_optimal_coverage::step ()
         // compute velocity to reach waypoint
         geometry_msgs::Vector3 velocity;
         if (get_wp.response.valid)
-            velocity = vel->compute_velocity(waypoint, target_velocity);
+            velocity = vel.compute_velocity(waypoint, target_velocity);
 
         // finished path
         else
@@ -58,7 +61,7 @@ behavior_state_t uav_optimal_coverage::step ()
 
 
         // move with new velocity
-        move(velocity);
+        vel.move(velocity);
     }
 
     // return state to action server

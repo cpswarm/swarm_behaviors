@@ -52,8 +52,9 @@
 
   <depend>roscpp</depend>
   <depend>tf2</depend>
+  <depend>actionlib</depend>
   <depend>geometry_msgs</depend>
-  <depend>std_msgs</depend>
+  <depend>move_base_msgs</depend>
   <depend>cpswarm_msgs</depend>
 
   <test_depend>rostest</test_depend>

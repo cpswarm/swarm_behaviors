@@ -1,12 +1,24 @@
 #ifndef UAV_LOCAL_COVERAGE_H
 #define UAV_LOCAL_COVERAGE_H
 
-#include "uav_coverage.h"
+#include <position.h>
+
+using namespace std;
+using namespace ros;
 
 /**
- * @brief An implementation of the coverage class that allows to cover a given area using a local search algorithm. The local search performs a spiral movement pattern according to the circle involute (http://mathworld.wolfram.com/CircleInvolute.html).
+ * @brief An enumeration for the state of the behavior algorithm.
  */
-class uav_local_coverage : public uav_coverage
+typedef enum {
+    STATE_ACTIVE = 0,
+    STATE_SUCCEEDED,
+    STATE_ABORTED
+} behavior_state_t;
+
+/**
+ * @brief A class that allows to cover a given area using a local search algorithm. The local search performs a spiral movement pattern according to the circle involute (http://mathworld.wolfram.com/CircleInvolute.html).
+ */
+class uav_local_coverage
 {
 public:
   /**
@@ -29,15 +41,15 @@ private:
     void compute_involute (double &distance, double &direction);
 
     /**
-     * @brief Obstacle avoidance procedure.
-     */
-    void obstacle_avoidance ();
-
-    /**
      * @brief Compute goal position.
      * @return The selected goal.
      */
     geometry_msgs::Pose select_goal ();
+
+    /**
+     * @brief A helper object for position related tasks.
+     */
+    position pos;
 
     /**
      * @brief The altitude of the UAV above ground.

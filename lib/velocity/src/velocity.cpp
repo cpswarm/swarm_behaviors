@@ -5,6 +5,7 @@ velocity::velocity ()
     // read parameters
     double loop_rate;
     nh.param(this_node::getName() + "/loop_rate", loop_rate, 5.0);
+    rate = new Rate(loop_rate);
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
     nh.param(this_node::getName() + "/vel_tolerance", vel_tolerance, 0.1);
@@ -14,19 +15,18 @@ velocity::velocity ()
 
     // init publishers and subscribers
     vel_sub = nh.subscribe("vel_provider/velocity", queue_size, &velocity::vel_callback, this);
-
-    // init loop rate
-    Rate rate(loop_rate);
+    vel_pub = nh.advertise<geometry_msgs::Twist>("vel_controller/target_velocity", queue_size, true);
 
     // init velocity
     while (ok() && vel_valid == false) {
-        rate.sleep();
+        rate->sleep();
         spinOnce();
     }
 }
 
 velocity::~velocity ()
 {
+    delete rate;
 }
 
 geometry_msgs::Vector3 velocity::compute_velocity (geometry_msgs::Point goal, double velocity)
@@ -55,6 +55,16 @@ geometry_msgs::Vector3 velocity::compute_velocity (geometry_msgs::Point goal, do
 geometry_msgs::Vector3 velocity::get_velocity () const
 {
     return current_vel.linear;
+}
+
+void velocity::move (geometry_msgs::Vector3 velocity)
+{
+    // create target velocity message
+    geometry_msgs::Twist target_velocity;
+    target_velocity.linear = velocity;
+
+    // send target velocity to cps controller
+    vel_pub.publish(target_velocity);
 }
 
 cpswarm_msgs::Vector velocity::rel_velocity (geometry_msgs::Vector3 v) const

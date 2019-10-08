@@ -43,6 +43,12 @@ public:
     geometry_msgs::Vector3 get_velocity () const;
 
     /**
+    /**@brief Move the CPS with a given velocity.
+     * @param velocity The velocity at which the CPS shall move.
+     */
+    void move (geometry_msgs::Vector3 velocity);
+
+    /**
      * @brief Compute the velocity difference of the CPS to a given velocity.
      * @param v The velocity to compare.
      * @return The velocity relative to the current velocity of the CPS as magnitude and direction.
@@ -65,6 +71,16 @@ private:
      * @brief Subscriber for the velocity of the CPS.
      */
     Subscriber vel_sub;
+
+    /**
+     * @brief Publisher for sending the target velocity of the CPS to the velocity controller in the abstraction library.
+     */
+    Publisher vel_pub;
+
+    /**
+     * @brief The loop rate object for running the behavior control loops at a specific frequency.
+     */
+    Rate* rate;
 
     /**
      * @brief A helper object for position related tasks.

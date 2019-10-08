@@ -1,13 +1,26 @@
 #ifndef UAV_FLOCKING_COVERAGE_H
 #define UAV_FLOCKING_COVERAGE_H
 
-#include "uav_coverage.h"
+#include <position.h>
+#include <velocity.h>
 #include "uav_flocking.h"
+
+using namespace std;
+using namespace ros;
+
+/**
+ * @brief An enumeration for the state of the behavior algorithm.
+ */
+typedef enum {
+    STATE_ACTIVE = 0,
+    STATE_SUCCEEDED,
+    STATE_ABORTED
+} behavior_state_t;
 
 /**
  * @brief An implementation of the coverage class that allows to cover a given area with the flocking algorithm.
  */
-class uav_flocking_coverage : public uav_coverage
+class uav_flocking_coverage
 {
 public:
     /**
@@ -27,6 +40,16 @@ public:
     behavior_state_t step ();
 
 private:
+    /**
+     * @brief A helper object for position related tasks.
+     */
+    position pos;
+
+    /**
+     * @brief A helper object for velocity related tasks.
+     */
+    velocity vel;
+
     /**
      * @brief The flocking behavior library object.
      */

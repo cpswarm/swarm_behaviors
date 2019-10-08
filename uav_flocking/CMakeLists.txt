@@ -7,7 +7,7 @@ add_compile_options(-std=c++11)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp actionlib random_numbers geometry_msgs cpswarm_msgs uav_coverage uav_tracking)
+find_package(catkin REQUIRED COMPONENTS roscpp actionlib random_numbers geometry_msgs cpswarm_msgs position velocity)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -101,7 +101,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp actionlib random_numbers geometry
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS cpswarm_msgs uav_coverage uav_tracking
+#  CATKIN_DEPENDS cpswarm_msgs
 #  DEPENDS system_lib
 )
 

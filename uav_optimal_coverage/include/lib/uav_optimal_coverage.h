@@ -1,13 +1,26 @@
 #ifndef UAV_OPTIMAL_COVERAGE_H
 #define UAV_OPTIMAL_COVERAGE_H
 
-#include "cpswarm_msgs/GetWaypoint.h"
-#include "uav_coverage.h"
+#include <cpswarm_msgs/GetWaypoint.h>
+#include <position.h>
+#include <velocity.h>
+
+using namespace std;
+using namespace ros;
 
 /**
- * @brief An implementation of the coverage class that allows to cover a given area optimally with a swarm of cyber physical systems (CPSs). The area is divided among the CPSs and each CPS covers its part by simple back and forth (boustrophedon) motion.
+ * @brief An enumeration for the state of the behavior algorithm.
  */
-class uav_optimal_coverage : public uav_coverage
+typedef enum {
+    STATE_ACTIVE = 0,
+    STATE_SUCCEEDED,
+    STATE_ABORTED
+} behavior_state_t;
+
+/**
+ * @brief A class that allows to cover a given area optimally with a swarm of cyber physical systems (CPSs). The area is divided among the CPSs and each CPS covers its part by simple back and forth (boustrophedon) motion.
+ */
+class uav_optimal_coverage
 {
 public:
     /**
@@ -41,6 +54,21 @@ private:
      * @brief Service message to get the current waypoint.
      */
     cpswarm_msgs::GetWaypoint get_wp;
+
+    /**
+     * @brief The state of the behavior algorithm.
+     */
+    behavior_state_t state;
+
+    /**
+     * @brief A helper object for position related tasks.
+     */
+    position pos;
+
+    /**
+     * @brief A helper object for velocity related tasks.
+     */
+    velocity vel;
 
     /**
      * @brief Target velocity of the UAV.

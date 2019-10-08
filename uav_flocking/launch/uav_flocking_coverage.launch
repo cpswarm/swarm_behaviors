@@ -15,10 +15,8 @@
         <param name="pos_type" value="$(arg pos_type)" />
         <param name="setpoint_type" value="$(arg setpoint_type)" />
         <rosparam file="$(find uav_flocking)/param/uav_flocking.yaml" command="load" />
-        <rosparam file="$(find boustrophedon_path)/param/boustrophedon_path.yaml" command="load" />
         <rosparam file="$(find position)/param/position.yaml" command="load" />
         <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
-        <rosparam file="$(find targets)/param/targets.yaml" command="load" />
     </node>
 
 </launch>

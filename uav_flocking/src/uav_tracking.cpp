@@ -7,6 +7,16 @@
 using namespace ros;
 
 /**
+ * @brief The state of the behavior algorithm.
+ */
+behavior_state_t state;
+
+/**
+ * @brief The ID of the target being tracked.
+ */
+int target;
+
+/**
  * @brief An action server type that allows to start and stop the tracking task.
  */
 typedef actionlib::SimpleActionServer<cpswarm_msgs::TrackingAction> action_server_t;
@@ -20,6 +30,9 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
 {
     NodeHandle nh;
 
+    // target id
+    target = goal->target;
+
     // set loop rate
     double loop_rate;
     nh.param(this_node::getName() + "/loop_rate", loop_rate, 5.0);
@@ -28,7 +41,7 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
     ROS_INFO("Executing tracking");
 
     // tracking library
-    uav_flocking_tracking* uav_tracking = new uav_flocking_tracking(goal->target, goal->cps);
+    uav_flocking_tracking* uav_tracking = new uav_flocking_tracking(target);
 
     // execute coverage until state changes
     behavior_state_t state = STATE_ACTIVE;
@@ -36,6 +49,7 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
         ROS_INFO("Tracking step");
         state = uav_tracking->step();
         rate.sleep();
+        spinOnce();
     }
 
     // tracking succeeded
@@ -61,6 +75,26 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
 }
 
 /**
+ * @brief Callback function to receive event that target has been lost.
+ * @param msg ID and position of target.
+ */
+void lost_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
+{
+    if (msg->id == target)
+        state = STATE_ABORTED;
+}
+
+/**
+ * @brief Callback function to receive event that target has been done.
+ * @param msg ID and position of target.
+ */
+void done_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
+{
+    if (msg->id == target)
+        state = STATE_SUCCEEDED;
+}
+
+/**
  * @brief Main function to be executed by ROS.
  * @param argc Number of command line arguments.
  * @param argv Array of command line arguments.
@@ -69,7 +103,7 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
 int main (int argc, char** argv)
 {
     // init ros node
-    init(argc, argv, "cpswarm_sar_uav_tracking");
+    init(argc, argv, "uav_tracking");
     NodeHandle nh;
 
     // define which log messages are shown
@@ -79,6 +113,15 @@ int main (int argc, char** argv)
     else{
         ROS_ERROR("Could not set logger level!");
     }
+
+    // initially, no targets being tracked
+    target = -1;
+
+    // subscribers
+    int queue_size;
+    nh.param(this_node::getName() + "/queue_size", queue_size, 1);
+    Subscriber lost_sub = nh.subscribe("target_lost", queue_size, lost_callback);
+    Subscriber done_sub = nh.subscribe("target_done", queue_size, done_callback);
 
     // start action server
     action_server_t as(nh, "uav_tracking", boost::bind(&ActionCallback, _1, &as), false);

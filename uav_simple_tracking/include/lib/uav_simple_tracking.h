@@ -1,20 +1,32 @@
 #ifndef UAV_SIMPLE_TRACKING_H
 #define UAV_SIMPLE_TRACKING_H
 
-#include "uav_tracking.h"
+#include <position.h>
+#include <cpswarm_msgs/TargetPositionEvent.h>
+
+using namespace std;
+using namespace ros;
+
+/**
+ * @brief An enumeration for the state of the behavior algorithm.
+ */
+typedef enum {
+    STATE_ACTIVE = 0,
+    STATE_SUCCEEDED,
+    STATE_ABORTED
+} behavior_state_t;
 
 /**
  * @brief An implementation of the tracking class that allows to track a target by minimizing the offset between the cyber physical system (CPS) and the target.
  */
-class uav_simple_tracking : public uav_tracking
+class uav_simple_tracking
 {
 public:
     /**
      * @brief Constructor that initializes the private member variables.
-     * @param target The target being tracked by this UAV.
-     * @param ugv The UGV that has been assigned to rescue the tracked target.
+     * @param target The ID of the target being tracked by this UAV.
      */
-    uav_simple_tracking (unsigned int target, string ugv);
+    uav_simple_tracking (unsigned int target);
 
     /**
      * @brief Execute one cycle of the tracking algorithm.
@@ -24,10 +36,25 @@ public:
 
 private:
     /**
-     * @brief Compute goal position in order to continue tracking of the target.
-     * @return The selected goal.
+     * @brief Callback function to receive target position updates.
+     * @param msg ID and position of target.
      */
-    geometry_msgs::Pose select_goal ();
+    void target_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg);
+
+    /**
+     * @brief Subscriber to receive target position updates.
+     */
+    Subscriber target_sub;
+
+    /**
+     * @brief A helper object for position related tasks.
+     */
+    position pos;
+
+    /**
+     * @brief The target being tracked by this UAV.
+     */
+    cpswarm_msgs::TargetPositionEvent target;
 };
 
 #endif // UAV_SIMPLE_TRACKING_H

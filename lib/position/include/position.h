@@ -3,9 +3,10 @@
 
 #include <ros/ros.h>
 #include <tf2/utils.h>
+#include <actionlib/client/simple_action_client.h>
 #include <geometry_msgs/Pose.h>
-#include <std_msgs/Empty.h>
-#include "cpswarm_msgs/OutOfBounds.h"
+#include <move_base_msgs/MoveBaseAction.h>
+#include <cpswarm_msgs/OutOfBounds.h>
 
 using namespace std;
 using namespace ros;
@@ -72,24 +73,16 @@ public:
     geometry_msgs::Pose get_pose () const;
 
     /**
-     * @brief Get the pose resulting from transforming the current pose of the CPS.
-     * @param tf The transformation to apply to the pose.
-     * @return The transformed pose of the CPS.
-     */
-    geometry_msgs::Pose get_pose (geometry_msgs::Transform tf) const;
-
-    /**
-     * @brief Get the transformation from the current pose of the CPS to a given pose.
-     * @param p The pose to compute transformation for.
-     * @return The computed transformation.
-     */
-    geometry_msgs::Transform get_transform (geometry_msgs::Pose p) const;
-
-    /**
      * @brief Get the current yaw orientation of the CPS.
      * @return The current yaw angle of the CPS counterclockwise starting from x-axis/east.
      */
     double get_yaw () const;
+
+    /**
+     * @brief Move the CPS to the given pose.
+     * @param pose The position to move to.
+     */
+    void move (geometry_msgs::Pose pose);
 
     /**
      * @brief Check whether a given pose is out of the mission area boundaries.
@@ -97,20 +90,6 @@ public:
      * @return True if the given pose is outside the mission area or it could not be checked, false otherwise.
      */
     bool out_of_bounds (geometry_msgs::Pose pose);
-
-    /**
-     * @brief Check whether the CPS has reached a given pose.
-     * @param goal The pose to check.
-     * @return True if the CPS is close to the given pose, false otherwise.
-     */
-    bool reached (geometry_msgs::Pose goal);
-
-    /**
-     * @brief Check whether the CPS has reached a given yaw.
-     * @param goal The yaw to check.
-     * @return True if the CPS is close to the given yaw, false otherwise.
-     */
-    bool reached_yaw (geometry_msgs::Pose goal);
 
 private:
     /**
@@ -137,9 +116,24 @@ private:
     ServiceClient out_of_bounds_client;
 
     /**
+     * @brief Action client to move the CPS.
+     */
+    actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction>* moveto_client;
+
+    /**
+     * @brief Publisher for sending the goal position of the CPS to the position controller in the abstraction library.
+     */
+    Publisher pose_pub;
+
+    /**
      * @brief A node handle for the main ROS node.
      */
     NodeHandle nh;
+
+    /**
+     * @brief The loop rate object for running the behavior control loops at a specific frequency.
+     */
+    Rate* rate;
 
     /**
      * @brief Current position of the CPS.
@@ -152,14 +146,9 @@ private:
     bool pose_valid;
 
     /**
-     * @brief The distance that the CPS can be away from a goal while still being considered to have reached that goal.
+     * @brief The time in seconds that the CPS is given time to reach a destination before giving up.
      */
-    double goal_tolerance;
-
-    /**
-     * @brief The angle that the CPS can be away from a goal while still being considered to have reached that goal.
-     */
-    double yaw_tolerance;
+    double goal_timeout;
 };
 
 #endif // POSITION_H
