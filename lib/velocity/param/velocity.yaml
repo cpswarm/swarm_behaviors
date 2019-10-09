@@ -1,1 +1,1 @@
-vel_tolerance:          0.1     # The velocity that the CPS can be slower or faster than the target velocity while still being considered to have reached that target velocity.
+vel_tolerance: 0.1 # The velocity that the CPS can be slower or faster than the target velocity while still being considered to have reached that target velocity.

@@ -2,18 +2,10 @@
 <launch>
 
     <arg name="id" default="1" />
-    <arg name="x" default="0" />
-    <arg name="y" default="0" />
-    <arg name="pos_type" default="local" />
-    <arg name="setpoint_type" default="position" />
     <arg name="output" default="log" />
 
     <!-- Random walk coverage algorithm -->
     <node pkg="ugv_random_walk" type="ugv_random_walk" name="ugv_coverage_$(arg id)" output="$(arg output)" required="true">
-        <param name="x" value="$(arg x)" />
-        <param name="y" value="$(arg y)" />
-        <param name="pos_type" value="$(arg pos_type)" />
-        <param name="setpoint_type" value="$(arg setpoint_type)" />
         <rosparam file="$(find ugv_random_walk)/param/ugv_random_walk.yaml" command="load" />
         <rosparam file="$(find position)/param/position.yaml" command="load" />
         <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />

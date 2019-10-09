@@ -2,18 +2,10 @@
 <launch>
 
     <arg name="id" default="1" />
-    <arg name="x" default="0" />
-    <arg name="y" default="0" />
-    <arg name="pos_type" default="local" />
-    <arg name="setpoint_type" default="position" />
     <arg name="output" default="log" />
 
     <!-- Random direction coverage algorithm -->
     <node pkg="uav_random_direction" type="uav_random_direction" name="uav_coverage_$(arg id)" output="$(arg output)" required="true">
-        <param name="x" value="$(arg x)" />
-        <param name="y" value="$(arg y)" />
-        <param name="pos_type" value="$(arg pos_type)" />
-        <param name="setpoint_type" value="$(arg setpoint_type)" />
         <rosparam file="$(find uav_random_direction)/param/uav_random_direction.yaml" command="load" />
         <rosparam file="$(find position)/param/position.yaml" command="load" />
         <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
