@@ -1,6 +1,6 @@
 #include "position.h"
 
-position::position ()
+position::position () : moveto_client("cmd/moveto", true)
 {
     // read parameters
     double loop_rate;
@@ -16,8 +16,7 @@ position::position ()
     // init ros communication
     out_of_bounds_client = nh.serviceClient<cpswarm_msgs::OutOfBounds>("area/out_of_bounds");
     pose_sub = nh.subscribe("pos_provider/pose", queue_size, &position::pose_callback, this);
-    moveto_client = new actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction>("cmd/moveto", true);
-    moveto_client->waitForServer();
+    moveto_client.waitForServer();
     pose_pub = nh.advertise<geometry_msgs::PoseStamped>("pos_controller/goal_position", queue_size, true);
 
     // init position and yaw
@@ -31,7 +30,6 @@ position::position ()
 position::~position ()
 {
     delete rate;
-    delete moveto_client;
 }
 
 double position::bearing (geometry_msgs::Pose p) const
@@ -84,14 +82,14 @@ double position::get_yaw () const
 void position::move (geometry_msgs::Pose goal)
 {
     // position to move to
-    move_base_msgs::MoveBaseGoal moveto_goal;
+    MoveBaseGoal moveto_goal;
     moveto_goal.target_pose.pose = goal;
 
     // send goal pose to moveto action server
-    moveto_client->sendGoal(moveto_goal);
+    moveto_client.sendGoal(moveto_goal);
 
     // wait until goal is reached
-    bool reached = moveto_client->waitForResult(Duration(goal_timeout));
+    bool reached = moveto_client.waitForResult(Duration(goal_timeout));
 
     // failed to reach goal within time
     if (reached == false) {

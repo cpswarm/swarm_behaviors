@@ -10,6 +10,10 @@
 
 using namespace std;
 using namespace ros;
+using namespace actionlib;
+using namespace move_base_msgs;
+
+typedef SimpleActionClient<MoveBaseAction> move_base_client;
 
 /**
  * @brief A class to provide position related functionalities.
@@ -118,7 +122,7 @@ private:
     /**
      * @brief Action client to move the CPS.
      */
-    actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction>* moveto_client;
+    move_base_client moveto_client;
 
     /**
      * @brief Publisher for sending the goal position of the CPS to the position controller in the abstraction library.
