@@ -63,7 +63,7 @@ bool ugv_random_walk::new_direction ()
 {
     // get sector clear of obstacles and other uavs
     cpswarm_msgs::GetSector clear;
-    if (clear_sector_client.call(clear)){
+    if (clear_sector_client.call(clear) == false){
         ROS_ERROR("Failed to get clear sector");
         return false;
     }
