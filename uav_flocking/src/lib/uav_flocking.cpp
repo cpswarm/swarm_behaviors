@@ -29,6 +29,7 @@ uav_flocking::uav_flocking ()
 
     // init service clients
     area_client = nh.serviceClient<cpswarm_msgs::GetArea>("area/get_area");
+    area_client.waitForExistence();
 
     // init velocities and acceleration
     a_repulsion.x = 0;

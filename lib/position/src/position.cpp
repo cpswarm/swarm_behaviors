@@ -15,6 +15,7 @@ position::position () : moveto_client("cmd/moveto", true)
 
     // init ros communication
     out_of_bounds_client = nh.serviceClient<cpswarm_msgs::OutOfBounds>("area/out_of_bounds");
+    out_of_bounds_client.waitForExistence();
     pose_sub = nh.subscribe("pos_provider/pose", queue_size, &position::pose_callback, this);
     moveto_client.waitForServer();
     pose_pub = nh.advertise<geometry_msgs::PoseStamped>("pos_controller/goal_position", queue_size, true);

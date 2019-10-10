@@ -18,6 +18,7 @@ uav_random_direction::uav_random_direction (int seed)
 
     // service client for obstacle detection
     clear_sector_client = nh.serviceClient<cpswarm_msgs::GetSector>("obstacle_detection/get_clear_sector");
+    clear_sector_client.waitForExistence();
 
     // inititial direction as drone is placed
     direction = pos.get_yaw();

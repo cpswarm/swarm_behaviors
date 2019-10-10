@@ -14,7 +14,9 @@ ugv_random_walk::ugv_random_walk (int seed)
 
     // init service clients
     bound_client = nh.serviceClient<cpswarm_msgs::ClosestBound>("area/closest_bound");
+    bound_client.waitForExistence();
     clear_sector_client = nh.serviceClient<cpswarm_msgs::GetSector>("obstacle_detection/get_clear_sector");
+    clear_sector_client.waitForExistence();
 
     // initial direction as drone is placed
     direction = pos.get_yaw();
