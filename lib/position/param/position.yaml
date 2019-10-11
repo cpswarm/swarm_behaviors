@@ -1,1 +1,1 @@
-goal_timeout: 30 # The time in seconds that the CPS is given time to reach a destination before giving up.
+goal_timeout: 15 # The time in seconds that the CPS is given time to reach a destination before giving up.

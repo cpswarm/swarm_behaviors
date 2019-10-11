@@ -85,8 +85,9 @@ public:
     /**
      * @brief Move the CPS to the given pose.
      * @param pose The position to move to.
+     * @return Whether the CPS reached the goal position.
      */
-    void move (geometry_msgs::Pose pose);
+    bool move (geometry_msgs::Pose pose);
 
     /**
      * @brief Check whether a given pose is out of the mission area boundaries.

@@ -17,7 +17,6 @@ position::position () : moveto_client("cmd/moveto", true)
     out_of_bounds_client = nh.serviceClient<cpswarm_msgs::OutOfBounds>("area/out_of_bounds");
     out_of_bounds_client.waitForExistence();
     pose_sub = nh.subscribe("pos_provider/pose", queue_size, &position::pose_callback, this);
-    moveto_client.waitForServer();
     pose_pub = nh.advertise<geometry_msgs::PoseStamped>("pos_controller/goal_position", queue_size, true);
 
     // init position and yaw
@@ -80,22 +79,34 @@ double position::get_yaw () const
     return get_yaw(pose);
 }
 
-void position::move (geometry_msgs::Pose goal)
+bool position::move (geometry_msgs::Pose goal)
 {
     // position to move to
     MoveBaseGoal moveto_goal;
+    moveto_goal.target_pose.header.stamp = Time::now();
     moveto_goal.target_pose.pose = goal;
 
     // send goal pose to moveto action server
-    moveto_client.sendGoal(moveto_goal);
+    SimpleClientGoalState state = moveto_client.sendGoalAndWait(moveto_goal, Duration(goal_timeout));
 
-    // wait until goal is reached
-    bool reached = moveto_client.waitForResult(Duration(goal_timeout));
-
-    // failed to reach goal within time
-    if (reached == false) {
-        ROS_ERROR("Failed to move to (%.2f,%.2f)!", goal.position.x, goal.position.x);
+    // successfully moved to goal
+    if (state == SimpleClientGoalState::SUCCEEDED) {
+        return true;
     }
+
+    // could not reach goal within time
+    else if (state == SimpleClientGoalState::PREEMPTED) {
+        ROS_ERROR("Failed to reach goal (%.2f,%.2f) in time!", goal.position.x, goal.position.y);
+        return true;
+    }
+
+    // failed to reach goal
+    else{
+        ROS_ERROR("Failed to move to (%.2f,%.2f), goal %s!", goal.position.x, goal.position.y, moveto_client.getState().toString().c_str());
+        ROS_ERROR("%s", moveto_client.getState().getText().c_str());
+        return false;
+    }
+
 }
 
 bool position::out_of_bounds (geometry_msgs::Pose pose)
