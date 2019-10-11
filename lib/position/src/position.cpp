@@ -1,6 +1,6 @@
 #include "position.h"
 
-position::position () : moveto_client("cmd/moveto", true)
+position::position ()
 {
     // read parameters
     double loop_rate;
@@ -9,6 +9,8 @@ position::position () : moveto_client("cmd/moveto", true)
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
     nh.param(this_node::getName() + "/goal_timeout", goal_timeout, 30.0);
+    nh.param(this_node::getName() + "/goal_tolerance", goal_tolerance, 0.1);
+    nh.param(this_node::getName() + "/yaw_tolerance", yaw_tolerance, 0.02);
 
     // no pose received yet
     pose_valid = false;
@@ -81,32 +83,37 @@ double position::get_yaw () const
 
 bool position::move (geometry_msgs::Pose goal)
 {
-    // position to move to
-    MoveBaseGoal moveto_goal;
-    moveto_goal.target_pose.header.stamp = Time::now();
-    moveto_goal.target_pose.pose = goal;
-
-    // send goal pose to moveto action server
-    SimpleClientGoalState state = moveto_client.sendGoalAndWait(moveto_goal, Duration(goal_timeout));
-
-    // successfully moved to goal
-    if (state == SimpleClientGoalState::SUCCEEDED) {
-        return true;
-    }
-
-    // could not reach goal within time
-    else if (state == SimpleClientGoalState::PREEMPTED) {
-        ROS_ERROR("Failed to reach goal (%.2f,%.2f) in time!", goal.position.x, goal.position.y);
-        return true;
-    }
-
-    // failed to reach goal
-    else{
-        ROS_ERROR("Failed to move to (%.2f,%.2f), goal %s!", goal.position.x, goal.position.y, moveto_client.getState().toString().c_str());
-        ROS_ERROR("%s", moveto_client.getState().getText().c_str());
+    // goal is out of bounds
+    if (out_of_bounds(goal)) {
+        ROS_ERROR("Cannot move to (%.2f,%.2f) because it is out of bounds!", goal.position.x, goal.position.y);
         return false;
     }
 
+    // send goal pose to cps controller
+    geometry_msgs::PoseStamped goal_pose;
+    goal_pose.header.stamp = Time::now();
+    goal_pose.pose = goal;
+    pose_pub.publish(goal_pose);
+
+    ROS_INFO("Move to (%.2f,%.2f)", goal.position.x, goal.position.y);
+
+    // wait until cps reached goal
+    Time start = Time::now();
+    while (ok() && reached(goal) == false && Time::now() <= start + Duration(goal_timeout)) {
+        // wait
+        rate->sleep();
+
+        // check if reached goal
+        spinOnce();
+    }
+
+    // could not reach goal within time
+    if (Time::now() > start + Duration(goal_timeout)) {
+        ROS_WARN("Failed to reach goal (%.2f,%.2f) in timeout %.2fs!", goal.position.x, goal.position.y, goal_timeout);
+    }
+
+    // successfully moved to goal
+    return true;
 }
 
 bool position::out_of_bounds (geometry_msgs::Pose pose)
@@ -127,6 +134,15 @@ double position::get_yaw (geometry_msgs::Pose pose) const
     tf2::Quaternion orientation;
     tf2::fromMsg(pose.orientation, orientation);
     return tf2::getYaw(orientation);
+}
+
+bool position::reached (geometry_msgs::Pose goal)
+{
+    ROS_DEBUG("Yaw %.2f --> %.2f", get_yaw(pose), get_yaw(goal));
+    ROS_DEBUG("Pose (%.2f,%.2f) --> (%.2f,%.2f)", pose.position.x, pose.position.y, goal.position.x, goal.position.y);
+    ROS_DEBUG("%.2f > %.2f OR %.2f > %.2f", dist(pose, goal), goal_tolerance, abs(remainder(get_yaw(pose) - get_yaw(goal), 2*M_PI)), yaw_tolerance);
+
+    return dist(pose, goal) <= goal_tolerance && abs(remainder(get_yaw(pose) - get_yaw(goal), 2*M_PI)) <= yaw_tolerance;
 }
 
 void position::pose_callback (const geometry_msgs::PoseStamped::ConstPtr& msg)

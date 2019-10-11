@@ -105,6 +105,13 @@ private:
     double get_yaw (geometry_msgs::Pose pose) const;
 
     /**
+     * @brief Check whether the CPS has reached a given pose.
+     * @param goal The pose to check.
+     * @return True if the CPS is close to the given pose, false otherwise.
+     */
+    bool reached (geometry_msgs::Pose goal);
+
+    /**
      * @brief Callback function for position updates.
      * @param msg Position received from the CPS.
      */
@@ -119,11 +126,6 @@ private:
      * @brief Service client for determining whether the goal is out of the area bounds.
      */
     ServiceClient out_of_bounds_client;
-
-    /**
-     * @brief Action client to move the CPS.
-     */
-    move_base_client moveto_client;
 
     /**
      * @brief Publisher for sending the goal position of the CPS to the position controller in the abstraction library.
@@ -154,6 +156,16 @@ private:
      * @brief The time in seconds that the CPS is given time to reach a destination before giving up.
      */
     double goal_timeout;
+
+    /**
+     * @brief The distance that the CPS can be away from a goal while still being considered to have reached that goal.
+     */
+    double goal_tolerance;
+
+    /**
+     * @brief The angle that the CPS can be away from a goal while still being considered to have reached that goal.
+     */
+    double yaw_tolerance;
 };
 
 #endif // POSITION_H
