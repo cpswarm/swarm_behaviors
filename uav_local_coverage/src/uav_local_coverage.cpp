@@ -39,13 +39,13 @@ void ActionCallback(const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serve
     ROS_INFO("Executing local coverage");
 
     // coverage library
-    uav_local_coverage* uav_coverage = new uav_local_coverage();
+    uav_local_coverage uav_coverage;
 
     // execute coverage until state changes
     state = STATE_ACTIVE;
     while (ok() && !as->isPreemptRequested() && state == STATE_ACTIVE) {
         ROS_INFO("Local coverage step");
-        state = uav_coverage->step();
+        state = uav_coverage.step();
         rate.sleep();
         spinOnce();
     }
@@ -74,9 +74,6 @@ void ActionCallback(const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serve
         ROS_INFO("Local coverage preempted");
         as->setPreempted();
     }
-
-    // destroy coverage library
-    delete uav_coverage;
 }
 
 /**

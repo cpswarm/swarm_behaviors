@@ -42,13 +42,13 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
     ROS_INFO("Executing tracking");
 
     // tracking library
-    uav_simple_tracking* uav_tracking = new uav_simple_tracking(target);
+    uav_simple_tracking uav_tracking(target);
 
     // execute tracking until state changes
     behavior_state_t state = STATE_ACTIVE;
     while (ok() && !as->isPreemptRequested() && state == STATE_ACTIVE) {
         ROS_INFO("Tracking step");
-        state = uav_tracking->step();
+        state = uav_tracking.step();
         rate.sleep();
         spinOnce();
     }
@@ -70,9 +70,6 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
         ROS_INFO("Tracking preempted");
         as->setPreempted();
     }
-
-    // destroy tracking library
-    delete uav_tracking;
 }
 
 /**

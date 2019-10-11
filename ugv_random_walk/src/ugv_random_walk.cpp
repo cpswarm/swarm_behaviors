@@ -39,13 +39,13 @@ void ActionCallback(const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serve
     ROS_INFO("Executing coverage");
 
     // coverage library
-    ugv_random_walk* ugv_coverage = new ugv_random_walk();
+    ugv_random_walk ugv_coverage;
 
     // execute coverage until state changes
     state = STATE_ACTIVE;
     while (ok() && !as->isPreemptRequested() && state == STATE_ACTIVE) {
         ROS_INFO("Coverage step");
-        state = ugv_coverage->step();
+        state = ugv_coverage.step();
         rate.sleep();
         spinOnce();
     }
@@ -74,9 +74,6 @@ void ActionCallback(const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serve
         ROS_INFO("Coverage preempted");
         as->setPreempted();
     }
-
-    // destroy coverage library
-    delete ugv_coverage;
 }
 
 /**
