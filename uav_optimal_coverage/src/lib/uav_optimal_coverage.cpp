@@ -67,3 +67,9 @@ behavior_state_t uav_optimal_coverage::step ()
     // return state to action server
     return state;
 }
+
+void uav_optimal_coverage::stop ()
+{
+    geometry_msgs::Vector3 velocity;
+    vel.move(velocity);
+}

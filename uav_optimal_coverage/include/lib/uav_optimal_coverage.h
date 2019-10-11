@@ -37,7 +37,12 @@ public:
      * @brief Move the swarm member to a new position.
      * @return Return the state of the coverage algorithm.
      */
-    behavior_state_t step();
+    behavior_state_t step ();
+
+    /**
+     * @brief Stop moving.
+     */
+    void stop ();
 
 private:
     /**
