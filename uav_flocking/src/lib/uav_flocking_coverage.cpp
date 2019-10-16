@@ -64,3 +64,9 @@ behavior_state_t uav_flocking_coverage::step ()
     // return state to action server
     return STATE_ACTIVE;
 }
+
+void uav_flocking_coverage::stop ()
+{
+    geometry_msgs::Vector3 velocity;
+    vel.move(velocity);
+}

@@ -44,3 +44,9 @@ void uav_flocking_tracking::target_callback (const cpswarm_msgs::TargetPositionE
     if (target.id == msg->id)
         target = *msg;
 }
+
+void uav_flocking_tracking::stop ()
+{
+    geometry_msgs::Vector3 velocity;
+    vel.move(velocity);
+}

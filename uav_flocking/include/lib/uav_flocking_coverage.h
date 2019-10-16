@@ -39,6 +39,11 @@ public:
      */
     behavior_state_t step ();
 
+    /**
+     * @brief Stop moving.
+     */
+    void stop ();
+
 private:
     /**
      * @brief A helper object for position related tasks.
