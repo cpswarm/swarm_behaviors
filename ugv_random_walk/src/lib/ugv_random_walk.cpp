@@ -49,7 +49,8 @@ behavior_state_t ugv_random_walk::step ()
     }
 
     // move to new position
-    pos.move(goal);
+    if (pos.move(goal) == false)
+        return STATE_ABORTED;
 
     // change direction
     if (new_direction() == false)

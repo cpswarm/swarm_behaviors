@@ -22,7 +22,8 @@ behavior_state_t uav_simple_tracking::step ()
     // target is still inside area
     else {
         // move to target position
-        pos.move(target.pose.pose);
+        if (pos.move(target.pose.pose) == false)
+            return STATE_ABORTED;
     }
 
     // return state to action server

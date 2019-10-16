@@ -47,7 +47,8 @@ behavior_state_t uav_local_coverage::step ()
     }
 
     // move to new goal
-    pos.move(goal);
+    if (pos.move(goal) == false)
+        return STATE_ABORTED;
 
     // return state to action server
     return STATE_ACTIVE;
