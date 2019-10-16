@@ -50,12 +50,12 @@ void ActionCallback(const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serve
         spinOnce();
     }
 
+    // stop moving
+    uav_coverage.stop();
+
     // coverage succeeded
     if (state == STATE_SUCCEEDED) {
         ROS_INFO("Coverage succeeded");
-
-        // stop moving
-        uav_coverage.stop();
 
         // get target information
         if (result.target_id >= 0)
