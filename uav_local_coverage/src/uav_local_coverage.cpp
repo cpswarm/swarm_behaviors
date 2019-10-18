@@ -58,7 +58,7 @@ void ActionCallback(const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serve
 
         // get target information
         if (result.target_id >= 0)
-            ROS_INFO("Found target %d at [%f, %f]", result.target_id, result.target_pose.position.x, result.target_pose.position.y);
+            ROS_INFO("Found target %d at [%f, %f]", result.target_id, result.target_pose.pose.position.x, result.target_pose.pose.position.y);
         else
             ROS_INFO("No target found");
 
@@ -86,7 +86,7 @@ void found_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
 {
     state = STATE_SUCCEEDED;
     result.target_id = msg->id;
-    result.target_pose = msg->pose.pose;
+    result.target_pose = msg->pose;
 }
 
 /**
