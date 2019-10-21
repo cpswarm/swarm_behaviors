@@ -50,7 +50,7 @@ behavior_state_t uav_flocking_coverage::step ()
 
     // finished path
     if (wp.x == 0.0 && wp.y == 0.0)
-        return STATE_SUCCEEDED;
+        return STATE_ABORTED;
 
     // compute velocity to reach waypoint
     geometry_msgs::Vector3 cover_velocity = vel.compute_velocity(wp, flock_vel);

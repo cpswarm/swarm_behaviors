@@ -57,13 +57,7 @@ void ActionCallback(const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serve
 
     // coverage succeeded
     if (state == STATE_SUCCEEDED) {
-        ROS_INFO("Coverage succeeded");
-
-        // get target information
-        if (result.target_id >= 0)
-            ROS_INFO("Found target %d at [%f, %f]", result.target_id, result.target_pose.pose.position.x, result.target_pose.pose.position.y);
-        else
-            ROS_INFO("No target found");
+        ROS_INFO("Coverage succeeded, found target %d at [%f, %f]", result.target_id, result.target_pose.pose.position.x, result.target_pose.pose.position.y);
 
         as->setSucceeded(result);
     }
@@ -113,7 +107,6 @@ int main (int argc, char** argv)
     }
 
     // stop covering once a target has been found
-    result.target_id = -1;
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
     bool single_target;

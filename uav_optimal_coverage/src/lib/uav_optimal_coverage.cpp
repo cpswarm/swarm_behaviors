@@ -42,7 +42,7 @@ behavior_state_t uav_optimal_coverage::step ()
         if (hypot(waypoint.x - pos.get_pose().position.x, waypoint.y - pos.get_pose().position.y) < tolerance) {
             // get next waypoint of path
             get_wp.request.tolerance = tolerance;
-            if (wp_getter.call(get_wp) == false){
+            if (wp_getter.call(get_wp) == false) {
                 ROS_ERROR("Failed to get waypoint, cannot perform coverage!");
                 return STATE_ABORTED;
             }
@@ -57,7 +57,7 @@ behavior_state_t uav_optimal_coverage::step ()
 
         // finished path
         else
-            state = STATE_SUCCEEDED;
+            state = STATE_ABORTED;
 
 
         // move with new velocity
