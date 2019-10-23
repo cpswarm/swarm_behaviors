@@ -7,7 +7,7 @@ project(position)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp tf2 actionlib geometry_msgs move_base_msgs cpswarm_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp tf2 geometry_msgs cpswarm_msgs)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)

@@ -3,17 +3,11 @@
 
 #include <ros/ros.h>
 #include <tf2/utils.h>
-#include <actionlib/client/simple_action_client.h>
 #include <geometry_msgs/Pose.h>
-#include <move_base_msgs/MoveBaseAction.h>
 #include <cpswarm_msgs/OutOfBounds.h>
 
 using namespace std;
 using namespace ros;
-using namespace actionlib;
-using namespace move_base_msgs;
-
-typedef SimpleActionClient<MoveBaseAction> move_base_client;
 
 /**
  * @brief A class to provide position related functionalities.
