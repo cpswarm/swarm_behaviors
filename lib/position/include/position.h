@@ -160,6 +160,11 @@ private:
      * @brief The angle that the CPS can be away from a goal while still being considered to have reached that goal.
      */
     double yaw_tolerance;
+
+    /**
+     * @brief Whether the CPS should turn its front into movement direction or not.
+     */
+    bool turning;
 };
 
 #endif // POSITION_H

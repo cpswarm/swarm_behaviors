@@ -1,3 +1,4 @@
-goal_timeout:   15  # The time in seconds that the CPS is given time to reach a destination before giving up.
-goal_tolerance: 0.1 # The distance that the CPS can be away from a goal while still being considered to have reached that goal.
-yaw_tolerance:  0.1 # The angle that the CPS can be away from a goal while still being considered to have reached that goal.
+goal_timeout:   15    # The time in seconds that the CPS is given time to reach a destination before giving up.
+goal_tolerance: 0.1   # The distance that the CPS can be away from a goal while still being considered to have reached that goal.
+yaw_tolerance:  0.1   # The angle that the CPS can be away from a goal while still being considered to have reached that goal.
+turning:        false # Whether the CPS should turn its front into movement direction or not.
