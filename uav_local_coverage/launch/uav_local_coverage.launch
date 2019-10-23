@@ -8,7 +8,6 @@
     <node pkg="uav_local_coverage" type="uav_local_coverage" name="uav_local_coverage_$(arg id)" output="$(arg output)" required="true">
         <rosparam file="$(find uav_local_coverage)/param/uav_local_coverage.yaml" command="load" />
         <rosparam file="$(find position)/param/position.yaml" command="load" />
-        <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
     </node>
 
 </launch>

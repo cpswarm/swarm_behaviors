@@ -8,7 +8,6 @@
     <node pkg="uav_random_direction" type="uav_random_direction" name="uav_coverage_$(arg id)" output="$(arg output)" required="true">
         <rosparam file="$(find uav_random_direction)/param/uav_random_direction.yaml" command="load" />
         <rosparam file="$(find position)/param/position.yaml" command="load" />
-        <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
     </node>
 
 </launch>

@@ -8,7 +8,6 @@
     <node pkg="ugv_random_walk" type="ugv_random_walk" name="ugv_coverage_$(arg id)" output="$(arg output)" required="true">
         <rosparam file="$(find ugv_random_walk)/param/ugv_random_walk.yaml" command="load" />
         <rosparam file="$(find position)/param/position.yaml" command="load" />
-        <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
     </node>
 
 </launch>
