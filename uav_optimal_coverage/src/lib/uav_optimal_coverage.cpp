@@ -18,6 +18,7 @@ uav_optimal_coverage::uav_optimal_coverage ()
     wp_getter.waitForExistence();
 
     // get initial waypoint of path
+    get_wp.request.position = pos.get_pose().position;
     get_wp.request.tolerance = tolerance;
     if (wp_getter.call(get_wp) == false || get_wp.response.valid == false){
         ROS_ERROR("Failed to get waypoint, cannot perform coverage!");
@@ -41,6 +42,7 @@ behavior_state_t uav_optimal_coverage::step ()
         // reached current waypoint of path
         if (hypot(waypoint.x - pos.get_pose().position.x, waypoint.y - pos.get_pose().position.y) < tolerance) {
             // get next waypoint of path
+            get_wp.request.position = pos.get_pose().position;
             get_wp.request.tolerance = tolerance;
             if (wp_getter.call(get_wp) == false) {
                 ROS_ERROR("Failed to get waypoint, cannot perform coverage!");
