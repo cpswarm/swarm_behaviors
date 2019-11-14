@@ -5,7 +5,7 @@
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Vector3.h>
 #include <cpswarm_msgs/ArrayOfVectors.h>
-#include "cpswarm_msgs/GetArea.h"
+#include "cpswarm_msgs/GetPoints.h"
 #include "position.h"
 #include "velocity.h"
 

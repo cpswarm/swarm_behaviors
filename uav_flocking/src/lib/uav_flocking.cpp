@@ -28,7 +28,7 @@ uav_flocking::uav_flocking ()
     swarm_vel_sub = nh.subscribe("swarm_velocity_rel", queue_size, &uav_flocking::swarm_vel_callback, this);
 
     // init service clients
-    area_client = nh.serviceClient<cpswarm_msgs::GetArea>("area/get_area");
+    area_client = nh.serviceClient<cpswarm_msgs::GetPoints>("area/get_area");
     area_client.waitForExistence();
 
     // init velocities and acceleration
@@ -134,7 +134,7 @@ double uav_flocking::dist_bound()
     geometry_msgs::Pose pose = pos.get_pose();
 
     // get area coordinates
-    cpswarm_msgs::GetArea area;
+    cpswarm_msgs::GetPoints area;
     if (area_client.call(area) == false){
         ROS_ERROR("Failed to get area boundary");
         return 0.0;
@@ -153,12 +153,12 @@ double uav_flocking::dist_bound()
     double y2 = pose.position.y;
 
     // find boundary that yields closest intersection point (i.e. the correct boundary)
-    for (int i=0; i<area.response.area.size(); ++i) {
+    for (int i=0; i<area.response.points.size(); ++i) {
         // coordinates of boundary
-        double x3 = area.response.area[i].x;
-        double y3 = area.response.area[i].y;
-        double x4 = area.response.area[(i+1) % area.response.area.size()].x;
-        double y4 = area.response.area[(i+1) % area.response.area.size()].y;
+        double x3 = area.response.points[i].x;
+        double y3 = area.response.points[i].y;
+        double x4 = area.response.points[(i+1) % area.response.points.size()].x;
+        double y4 = area.response.points[(i+1) % area.response.points.size()].y;
 
         // compute point based on https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection#Given_two_points_on_each_line
         p.x = ((x1*y2 - y1*x2) * (x3 - x4) - (x1 - x2) * (x3*y4 - y3*x4)) / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
