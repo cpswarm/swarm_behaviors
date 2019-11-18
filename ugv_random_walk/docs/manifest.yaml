@@ -9,8 +9,8 @@ depends:
 - cpswarm_msgs
 - random_numbers
 - position
-description: A package performs random walk coverage with a swarm of unmanned ground
-  vehicles (UGVs).
+description: A package performs random walk coverage with an unmanned ground vehicle
+  (UGV).
 license: Apache License 2.0
 maintainers: Micha Sende <sende@lakeside-labs.com>
 msgs: []

@@ -9,8 +9,8 @@ depends:
 - cpswarm_msgs
 - random_numbers
 - position
-description: A package that performs random direction coverage with a swarm of unmanned
-  aerial vehicles (UAVs).
+description: A package that performs random direction coverage with an unmanned aerial
+  vehicle (UAV).
 license: Apache License 2.0
 maintainers: Micha Sende <sende@lakeside-labs.com>
 msgs: []

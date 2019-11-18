@@ -66,6 +66,8 @@ The `uav_random_direction` performs coverage using the random direction algorith
   The maximum distance in meter that a UAV travels in one step.
 * `~step_size_min` (real, default: 1.0)
   The minimum distance in meter that a UAV travels in one step.
+* `/rng_seed` (integer, default: 0)
+  The seed used for random number generation. In the default case, a random seed is generated.
 
 ## Code API
 [uav_random_direction package code API documentation](https://cpswarm.github.io/swarm_behaviors/uav_random_direction/docs/html/files.html)

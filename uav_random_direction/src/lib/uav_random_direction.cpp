@@ -1,6 +1,6 @@
 #include "lib/uav_random_direction.h"
 
-uav_random_direction::uav_random_direction (int seed)
+uav_random_direction::uav_random_direction ()
 {
     NodeHandle nh;
 
@@ -9,6 +9,8 @@ uav_random_direction::uav_random_direction (int seed)
     nh.param(this_node::getName() + "/step_size_max", step_size_max, 3.0);
 
     // init random number generator
+    int seed;
+    nh.param<int>("/rng_seed", seed, 0);
     if (seed != 0) {
         rng = new random_numbers::RandomNumberGenerator(seed);
     }

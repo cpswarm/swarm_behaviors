@@ -67,6 +67,8 @@ The `ugv_random_walk` performs coverage using the random walk algorithm. The ran
   Whether the algorithm will succeed / terminate once a target has been found.
 * `~step_size` (real, default: 3.0)
   The distance in meter that a UGV travels in one step.
+* `/rng_seed` (integer, default: 0)
+  The seed used for random number generation. In the default case, a random seed is generated.
 
 ## Code API
 [ugv_random_walk package code API documentation](https://cpswarm.github.io/swarm_behaviors/ugv_random_walk/docs/html/files.html)

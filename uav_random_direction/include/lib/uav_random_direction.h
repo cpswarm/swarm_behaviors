@@ -25,9 +25,8 @@ class uav_random_direction
 public:
     /**
      * @brief Constructor that initializes the private member variables.
-     * @param seed Seed for random number generation. If not set, a random seed will be used.
      */
-    uav_random_direction (int seed=0);
+    uav_random_direction ();
 
     /**
      * @brief Destructor that deletes the private member objects.
