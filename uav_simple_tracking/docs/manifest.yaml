@@ -1,0 +1,18 @@
+actions: []
+authors: Micha Sende <sende@lakeside-labs.com>
+brief: ''
+bugtracker: ''
+depends:
+- position
+- actionlib
+- cpswarm_msgs
+- roscpp
+- catkin
+description: A package that tracks a target with an unmanned aerial vehicle (UAV).
+license: Apache License 2.0
+maintainers: Micha Sende <sende@lakeside-labs.com>
+msgs: []
+package_type: package
+repo_url: ''
+srvs: []
+url: https://wiki.ros.org/uav_simple_tracking

@@ -8,7 +8,6 @@ velocity::velocity ()
     rate = new Rate(loop_rate);
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
-    nh.param(this_node::getName() + "/vel_tolerance", vel_tolerance, 0.1);
 
     // no velocity received yet
     vel_valid = false;

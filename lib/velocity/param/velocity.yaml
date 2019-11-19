@@ -1,1 +1,2 @@
-vel_tolerance: 0.1 # The velocity that the CPS can be slower or faster than the target velocity while still being considered to have reached that target velocity.
+loop_rate:     5.0 # The frequency in Hz at which to run the swarm behavior loops.
+queue_size:    1   # The size of the message queue used for publishing and subscribing to topics.

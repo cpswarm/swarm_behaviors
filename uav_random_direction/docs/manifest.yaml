@@ -1,0 +1,20 @@
+actions: []
+authors: Micha Sende <sende@lakeside-labs.com>
+brief: ''
+bugtracker: ''
+depends:
+- catkin
+- roscpp
+- actionlib
+- cpswarm_msgs
+- random_numbers
+- position
+description: A package that performs random direction coverage with an unmanned aerial
+  vehicle (UAV).
+license: Apache License 2.0
+maintainers: Micha Sende <sende@lakeside-labs.com>
+msgs: []
+package_type: package
+repo_url: ''
+srvs: []
+url: https://wiki.ros.org/uav_random_direction

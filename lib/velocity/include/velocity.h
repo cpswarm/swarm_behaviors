@@ -96,11 +96,6 @@ private:
      * @brief Whether a valid velocity has been received.
      */
     bool vel_valid;
-
-    /**
-     * @brief The velocity that the CPS can be slower or faster than the target velocity while still being considered to have reached that target velocity.
-     */
-    double vel_tolerance;
 };
 
 #endif // VELOCITY_H

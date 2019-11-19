@@ -1,0 +1,20 @@
+actions: []
+authors: Micha Sende <sende@lakeside-labs.com>
+brief: ''
+bugtracker: ''
+depends:
+- catkin
+- roscpp
+- actionlib
+- cpswarm_msgs
+- random_numbers
+- position
+description: A package performs random walk coverage with an unmanned ground vehicle
+  (UGV).
+license: Apache License 2.0
+maintainers: Micha Sende <sende@lakeside-labs.com>
+msgs: []
+package_type: package
+repo_url: ''
+srvs: []
+url: https://wiki.ros.org/ugv_random_walk

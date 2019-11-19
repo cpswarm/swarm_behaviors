@@ -26,9 +26,8 @@ class ugv_random_walk
 public:
     /**
      * @brief Constructor that initializes the private member variables.
-     * @param seed Seed for random number generation. If not set, a random seed will be used.
      */
-    ugv_random_walk (int seed=0);
+    ugv_random_walk ();
 
     /**
      * @brief Destructor that deletes the private member objects.

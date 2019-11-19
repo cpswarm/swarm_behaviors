@@ -17,7 +17,7 @@ typedef enum {
 } behavior_state_t;
 
 /**
- * @brief An implementation of the tracking class that allows to track a target by minimizing the offset between the cyber physical system (CPS) and the target.
+ * @brief An implementation that allows to track a target by minimizing the offset between the cyber physical system (CPS) and the target.
  */
 class uav_simple_tracking
 {

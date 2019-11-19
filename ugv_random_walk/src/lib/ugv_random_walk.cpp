@@ -1,11 +1,14 @@
 #include "lib/ugv_random_walk.h"
 
-ugv_random_walk::ugv_random_walk (int seed)
+ugv_random_walk::ugv_random_walk ()
 {
     NodeHandle nh;
 
     // init random number generator
+    int seed;
+    nh.param<int>("/rng_seed", seed, 0);
     if (seed != 0) {
+        ROS_INFO("Using seed %d for random number generation.", seed);
         rng = new random_numbers::RandomNumberGenerator(seed);
     }
     else {
