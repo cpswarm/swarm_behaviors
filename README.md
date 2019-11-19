@@ -1,6 +1,6 @@
 # Swarm Behaviors Library
 
-The swarm behaviors library contains implementations of swarm algorithms. It is part of the swarm library.
+The swarm behaviors library contains implementations of swarm algorithms. It is part of the [swarm library](https://github.com/topics/swarm-library).
 
 ![Behavior Library Structure](library_structure.png)
 
