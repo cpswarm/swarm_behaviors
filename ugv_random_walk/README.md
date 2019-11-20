@@ -17,6 +17,7 @@ The following packages of the [sensing and actuation library](https://github.com
 * obstacle_detection
 
 Further required packages are:
+* [roscpp](https://wiki.ros.org/roscpp/)
 * [actionlib](https://wiki.ros.org/actionlib/)
 * [random_numbers](https://wiki.ros.org/random_numbers/)
 
@@ -28,9 +29,9 @@ roslaunch ugv_random_walk ugv_random_walk.launch
 to launch the `ugv_random_walk` node.
 
 The launch file can be configured with following parameters:
-* `id` (integer, default: 1)
+* `id` (integer, default: `1`)
   The identifier (ID) of the CPS used for name spacing in simulation.
-* `output` (string, default: screen)
+* `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
 
 In the `param` subdirectory there is the parameter file `ugv_random_walk.yaml` that allows to configure the behavior of the `ugv_random_walk` node.
@@ -59,15 +60,15 @@ The `ugv_random_walk` performs coverage using the random walk algorithm. The ran
   Get the coordinates of the closest boundary in order to reflect from it.
 
 #### Parameters
-* `~loop_rate` (real, default: 5.0)
+* `~loop_rate` (real, default: `5.0`)
   The frequency in Hz at which to run the control loops.
-* `~queue_size` (integer, default: 1)
+* `~queue_size` (integer, default: `1`)
   The size of the message queue used for publishing and subscribing to topics.
-* `~single_target` (boolean, default: true)
+* `~single_target` (boolean, default: `true`)
   Whether the algorithm will succeed / terminate once a target has been found.
-* `~step_size` (real, default: 3.0)
+* `~step_size` (real, default: `3.0`)
   The distance in meter that a UGV travels in one step.
-* `/rng_seed` (integer, default: 0)
+* `/rng_seed` (integer, default: `0`)
   The seed used for random number generation. In the default case, a random seed is generated.
 
 ## Code API

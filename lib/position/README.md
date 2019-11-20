@@ -13,6 +13,7 @@ The following packages of the [sensing and actuation library](https://github.com
 * *_pos_controller
 
 Further required packages are:
+* [roscpp](https://wiki.ros.org/roscpp/)
 * [tf2](https://wiki.ros.org/tf2/)
 
 ## Libraries
@@ -33,17 +34,17 @@ The `position` library provides position related functionalities. These function
   Check whether a coordinate is within the defined environment area.
 
 #### Parameters
-* `~loop_rate` (real, default: 5.0)
+* `~loop_rate` (real, default: `5.0`)
   The frequency in Hz at which to run the control loops.
-* `~queue_size` (integer, default: 1)
+* `~queue_size` (integer, default: `1`)
   The size of the message queue used for publishing and subscribing to topics.
-* `~goal_timeout` (real, default: 30.0)
+* `~goal_timeout` (real, default: `30.0`)
   The time in seconds that the CPS is given time to reach a destination before giving up.
-* `~goal_tolerance` (real, default: 0.1)
+* `~goal_tolerance` (real, default: `0.1`)
   The distance in meter that the CPS can be away from a goal while still being considered to have reached that goal.
-* `~yaw_tolerance` (real, default: 0.02)
+* `~yaw_tolerance` (real, default: `0.02`)
   The angle in radian that the CPS can be away from a goal while still being considered to have reached that goal.
-* `~turning` (boolean, default: true)
+* `~turning` (boolean, default: `true`)
   Whether the CPS should turn its front into movement direction or not.
 
 ## Code API

@@ -7,7 +7,7 @@ The swarm behaviors library contains implementations of swarm algorithms. It is 
 ## Getting Started
 The behavior library is based on the latest ROS long-term support release [ROS Kinetic Kame](https://wiki.ros.org/kinetic/). Newer versions may also work.
 
-To run swarm behaviors of this library, the [swarm functions](https://github.com/cpswarm/swarm_functions) library and the abstraction library are required. The abstraction library consists of three sub-libraries:
+To run swarm behaviors of this library, the [swarm functions library](https://github.com/cpswarm/swarm_functions) and the abstraction library are required. The abstraction library consists of three sub-libraries:
 * [hardware functions](https://github.com/cpswarm/hardware_functions)
 * [sensing and actuation](https://github.com/cpswarm/sensing_actuation)
 * hardware drivers

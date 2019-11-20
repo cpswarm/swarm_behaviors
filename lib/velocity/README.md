@@ -14,6 +14,9 @@ The following packages of the [sensing and actuation library](https://github.com
 * *_vel_provider
 * *_vel_controller
 
+Further required packages are:
+* [roscpp](https://wiki.ros.org/roscpp/)
+
 ## Libraries
 
 ### velocity
@@ -28,9 +31,9 @@ The `velocity` library provides velocity related functionalities. These include 
   The target velocity at which the CPS shall move.
 
 #### Parameters
-* `~loop_rate` (real, default: 5.0)
+* `~loop_rate` (real, default: `5.0`)
   The frequency in Hz at which to run the control loops.
-* `~queue_size` (integer, default: 1)
+* `~queue_size` (integer, default: `1`)
   The size of the message queue used for publishing and subscribing to topics.
 
 ## Code API

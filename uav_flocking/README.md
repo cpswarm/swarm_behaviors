@@ -19,6 +19,7 @@ The following packages of the [sensing and actuation library](https://github.com
 * area_provider
 
 Further required packages are:
+* [roscpp](https://wiki.ros.org/roscpp/)
 * [actionlib](https://wiki.ros.org/actionlib/)
 
 ## Execution
@@ -33,9 +34,9 @@ roslaunch uav_flocking uav_flocking_tracking.launch
 to launch the `uav_flocking_tracking` node.
 
 The launch files can be configured with following parameters:
-* `id` (integer, default: 1)
+* `id` (integer, default: `1`)
   The identifier (ID) of the CPS used for name spacing in simulation.
-* `output` (string, default: screen)
+* `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
 
 In the `param` subdirectory there is the parameter file `uav_flocking.yaml` that allows to configure the behavior of the both nodes.
@@ -70,37 +71,37 @@ The `uav_flocking_coverage` performs coverage with a swarm of UAVs. The UAVs sta
   Get the center of the area.
 
 #### Parameters
-* `~loop_rate` (real, default: 5.0)
+* `~loop_rate` (real, default: `5.0`)
   The frequency in Hz at which to run the control loops.
-* `~queue_size` (integer, default: 1)
+* `~queue_size` (integer, default: `1`)
   The size of the message queue used for publishing and subscribing to topics.
-* `~single_target` (boolean, default: true)
+* `~single_target` (boolean, default: `true`)
   Whether the algorithm will succeed / terminate once a target has been found.
-* `~equi_dist` (real, default: 10.0)
+* `~equi_dist` (real, default: `10.0`)
   Equilibrium distance between CPSs in meter.
-* `~flock_vel` (real, default: 0.5)
+* `~flock_vel` (real, default: `0.5`)
   Target velocity of the flock in meter per second.
-* `~form_vel` (real, default: 0.5)
+* `~form_vel` (real, default: `0.5`)
   Maximum velocity during formation flight in meter per second.
-* `~repulse_spring` (real, default: 1.0)
+* `~repulse_spring` (real, default: `1.0`)
   Repulsion spring constant of half-spring per square second.
-* `~repulse_max` (real, default: 1.0)
+* `~repulse_max` (real, default: `1.0`)
   Maximum repulsion between CPSs in meter in order to avoid over excitation.
-* `~align_frict` (real, default: 20.0)
+* `~align_frict` (real, default: `20.0`)
   Velocity alignment viscous friction coefficient in square meter per second. Higher values result in slower but more stable flocks.
-* `~align_slope` (real, default: 1.0)
+* `~align_slope` (real, default: `1.0`)
   Constant slope around equilibrium distance in meter.
-* `~align_min` (real, default: 1.0)
+* `~align_min` (real, default: `1.0`)
   Minimum alignment between CPS in meter in order to avoid over excitation.
-* `~wall_frict` (real, default: 20.0)
+* `~wall_frict` (real, default: `20.0`)
   Bounding area viscous friction coefficient in square meter per second.
-* `~wall_decay` (real, default: 1.0)
+* `~wall_decay` (real, default: `1.0`)
   Softness of wall as decay width in meter.
-* `~form_shape` (real, default: 1.0)
+* `~form_shape` (real, default: `1.0`)
   Strength of the shape forming velocity component in formation flight.
-* `~form_track` (real, default: 1.0)
+* `~form_track` (real, default: `1.0`)
   Strength of the tracking velocity component in formation flight.
-* `~accel_time` (real, default: 1.0)
+* `~accel_time` (real, default: `1.0`)
   Characteristic time needed by the CPS to reach the target velocity in seconds.
 
 ### uav_flocking_tracking
@@ -129,35 +130,35 @@ The `uav_flocking_tracking` performs tracking with a swarm of UAVs. The UAVs sta
   Get the center of the area.
 
 #### Parameters
-* `~loop_rate` (real, default: 5.0)
+* `~loop_rate` (real, default: `5.0`)
   The frequency in Hz at which to run the control loops.
-* `~queue_size` (integer, default: 1)
+* `~queue_size` (integer, default: `1`)
   The size of the message queue used for publishing and subscribing to topics.
-* `~equi_dist` (real, default: 10.0)
+* `~equi_dist` (real, default: `10.0`)
   Equilibrium distance between CPSs in meter.
-* `~flock_vel` (real, default: 0.5)
+* `~flock_vel` (real, default: `0.5`)
   Target velocity of the flock in meter per second.
-* `~form_vel` (real, default: 0.5)
+* `~form_vel` (real, default: `0.5`)
   Maximum velocity during formation flight in meter per second.
-* `~repulse_spring` (real, default: 1.0)
+* `~repulse_spring` (real, default: `1.0`)
   Repulsion spring constant of half-spring per square second.
-* `~repulse_max` (real, default: 1.0)
+* `~repulse_max` (real, default: `1.0`)
   Maximum repulsion between CPSs in meter in order to avoid over excitation.
-* `~align_frict` (real, default: 20.0)
+* `~align_frict` (real, default: `20.0`)
   Velocity alignment viscous friction coefficient in square meter per second. Higher values result in slower but more stable flocks.
-* `~align_slope` (real, default: 1.0)
+* `~align_slope` (real, default: `1.0`)
   Constant slope around equilibrium distance in meter.
-* `~align_min` (real, default: 1.0)
+* `~align_min` (real, default: `1.0`)
   Minimum alignment between CPS in meter in order to avoid over excitation.
-* `~wall_frict` (real, default: 20.0)
+* `~wall_frict` (real, default: `20.0`)
   Bounding area viscous friction coefficient in square meter per second.
-* `~wall_decay` (real, default: 1.0)
+* `~wall_decay` (real, default: `1.0`)
   Softness of wall as decay width in meter.
-* `~form_shape` (real, default: 1.0)
+* `~form_shape` (real, default: `1.0`)
   Strength of the shape forming velocity component in formation flight.
-* `~form_track` (real, default: 1.0)
+* `~form_track` (real, default: `1.0`)
   Strength of the tracking velocity component in formation flight.
-* `~accel_time` (real, default: 1.0)
+* `~accel_time` (real, default: `1.0`)
   Characteristic time needed by the CPS to reach the target velocity in seconds.
 
 ## Code API

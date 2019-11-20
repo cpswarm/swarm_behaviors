@@ -16,6 +16,7 @@ The following packages of the [sensing and actuation library](https://github.com
 * obstacle_detection
 
 Further required packages are:
+* [roscpp](https://wiki.ros.org/roscpp/)
 * [actionlib](https://wiki.ros.org/actionlib/)
 * [random_numbers](https://wiki.ros.org/random_numbers/)
 
@@ -27,9 +28,9 @@ roslaunch uav_random_direction uav_random_direction.launch
 to launch the `uav_random_direction` node.
 
 The launch file can be configured with following parameters:
-* `id` (integer, default: 1)
+* `id` (integer, default: `1`)
   The identifier (ID) of the CPS used for name spacing in simulation.
-* `output` (string, default: screen)
+* `output` (string, default: `screen`)
   Whether to show the program output (`screen`) or to write it to a log file (`log`).
 
 In the `param` subdirectory there is the parameter file `uav_random_direction.yaml` that allows to configure the behavior of the `uav_random_direction` node.
@@ -56,17 +57,17 @@ The `uav_random_direction` performs coverage using the random direction algorith
   Get the circular sector that is clear of obstacles.
 
 #### Parameters
-* `~loop_rate` (real, default: 5.0)
+* `~loop_rate` (real, default: `5.0`)
   The frequency in Hz at which to run the control loops.
-* `~queue_size` (integer, default: 1)
+* `~queue_size` (integer, default: `1`)
   The size of the message queue used for publishing and subscribing to topics.
-* `~single_target` (boolean, default: true)
+* `~single_target` (boolean, default: `true`)
   Whether the algorithm will succeed / terminate once a target has been found.
-* `~step_size_max` (real, default: 3.0)
+* `~step_size_max` (real, default: `3.0`)
   The maximum distance in meter that a UAV travels in one step.
-* `~step_size_min` (real, default: 1.0)
+* `~step_size_min` (real, default: `1.0`)
   The minimum distance in meter that a UAV travels in one step.
-* `/rng_seed` (integer, default: 0)
+* `/rng_seed` (integer, default: `0`)
   The seed used for random number generation. In the default case, a random seed is generated.
 
 ## Code API
