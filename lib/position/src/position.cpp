@@ -93,6 +93,7 @@ bool position::move (geometry_msgs::Pose goal)
     // create goal pose
     geometry_msgs::PoseStamped goal_pose;
     goal_pose.header.stamp = Time::now();
+    goal_pose.header.frame_id = "map";  //TODO: be parametrized
 
     // use orientation of the goal
     if (turning)
