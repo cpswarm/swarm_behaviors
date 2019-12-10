@@ -3,4 +3,4 @@ queue_size:      1    # The size of the message queue used for publishing and su
 goal_timeout:   15    # The time in seconds that the CPS is given time to reach a destination before giving up.
 goal_tolerance: 0.1   # The distance in meter that the CPS can be away from a goal while still being considered to have reached that goal.
 yaw_tolerance:  0.1   # The angle in radian that the CPS can be away from a goal while still being considered to have reached that goal.
-turning:        false # Whether the CPS should turn its front into movement direction or not.
+turning:        true # Whether the CPS should turn its front into movement direction or not.
