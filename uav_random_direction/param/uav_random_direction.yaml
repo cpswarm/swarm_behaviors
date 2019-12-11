@@ -1,4 +1,4 @@
 queue_size:    1    # The size of the message queue used for publishing and subscribing to topics.
 single_target: true # Whether the algorithm will succeed / terminate once a target has been found.
-step_size_max: 3.0  # The maximum distance in meter that a UAV travels in one step.
+step_size_max: 1.5  # The maximum distance in meter that a UAV travels in one step.
 step_size_min: 1.0  # The minimum distance in meter that a UAV travels in one step.
