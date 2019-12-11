@@ -70,7 +70,7 @@ behavior_state_t uav_random_direction::step ()
 
     // obstacle in direction of new goal
     if (pos.occupied(goal)) {
-        ROS_ERROR("Obstacle ahead!");
+        ROS_DEBUG("Obstacle ahead!");
         // change direction
         if (new_direction() == false)
             return STATE_ABORTED;

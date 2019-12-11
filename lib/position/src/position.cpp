@@ -131,7 +131,7 @@ bool position::occupied (geometry_msgs::Pose pose)
         if (ocs.response.min == ocs.response.max)
             return false;
 
-        ROS_ERROR("Goal %.2f in occupied sector [%.2f,%.2f]?", bearing(pose), ocs.response.min, ocs.response.max);
+        ROS_DEBUG("Goal %.2f in occupied sector [%.2f,%.2f]?", bearing(pose), ocs.response.min, ocs.response.max);
 
         // check if pose is in this sector
         if (ocs.response.max > 2*M_PI && bearing(pose) < M_PI)
