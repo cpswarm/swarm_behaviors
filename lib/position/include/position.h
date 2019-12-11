@@ -5,6 +5,7 @@
 #include <tf2/utils.h>
 #include <geometry_msgs/Pose.h>
 #include <cpswarm_msgs/OutOfBounds.h>
+#include <cpswarm_msgs/GetSector.h>
 
 using namespace std;
 using namespace ros;
@@ -84,9 +85,16 @@ public:
     bool move (geometry_msgs::Pose pose);
 
     /**
+     * @brief Check whether there is an obstacle in the direction of the given pose.
+     * @param pose The pose to check.
+     * @return True, if there is an obstacle in the direction of the pose, false otherwise.
+     */
+    bool occupied (geometry_msgs::Pose pose);
+
+    /**
      * @brief Check whether a given pose is out of the mission area boundaries.
      * @param pose The pose to check.
-     * @return True if the given pose is outside the mission area or it could not be checked, false otherwise.
+     * @return True, if the given pose is outside the mission area or it could not be checked, false otherwise.
      */
     bool out_of_bounds (geometry_msgs::Pose pose);
 
@@ -122,6 +130,11 @@ private:
     ServiceClient out_of_bounds_client;
 
     /**
+     * @brief Service client for determining the sector occupied by obstacles.
+     */
+    ServiceClient occupied_sector_client;
+
+    /**
      * @brief Publisher for sending the goal position of the CPS to the position controller in the abstraction library.
      */
     Publisher pose_pub;
@@ -155,16 +168,6 @@ private:
      * @brief The distance that the CPS can be away from a goal while still being considered to have reached that goal.
      */
     double goal_tolerance;
-
-    /**
-     * @brief The angle that the CPS can be away from a goal while still being considered to have reached that goal.
-     */
-    double yaw_tolerance;
-
-    /**
-     * @brief Whether the CPS should turn its front into movement direction or not.
-     */
-    bool turning;
 };
 
 #endif // POSITION_H
