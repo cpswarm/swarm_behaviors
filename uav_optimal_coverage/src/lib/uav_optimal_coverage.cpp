@@ -58,12 +58,16 @@ behavior_state_t uav_optimal_coverage::step ()
         goal.position.y = waypoint.y;
 
         // finished path
-        if (get_wp.response.valid == false)
+        if (get_wp.response.valid == false) {
+            ROS_INFO("Path completely traversed, stop coverage!");
             state = STATE_ABORTED;
+        }
 
         // new goal is out of bounds
-        else if (pos.out_of_bounds(goal))
+        else if (pos.out_of_bounds(goal)) {
+            ROS_ERROR("Waypoint out of allowed area, stop coverage!");
             state = STATE_ABORTED;
+        }
 
         // obstacle in direction of new goal
         else if (pos.occupied(goal)) {
