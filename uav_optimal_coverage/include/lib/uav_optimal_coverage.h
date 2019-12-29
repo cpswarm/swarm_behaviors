@@ -1,6 +1,7 @@
 #ifndef UAV_OPTIMAL_COVERAGE_H
 #define UAV_OPTIMAL_COVERAGE_H
 
+#include <geometry_msgs/Pose.h>
 #include <cpswarm_msgs/GetWaypoint.h>
 #include <position.h>
 #include <velocity.h>

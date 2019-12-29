@@ -52,18 +52,32 @@ behavior_state_t uav_optimal_coverage::step ()
             ROS_INFO("Move to waypoint [%.2f, %.2f]", waypoint.x, waypoint.y);
         }
 
-        // compute velocity to reach waypoint
-        geometry_msgs::Vector3 velocity;
-        if (get_wp.response.valid)
-            velocity = vel.compute_velocity(waypoint, target_velocity);
+        // convert waypoint to pose
+        geometry_msgs::Pose goal = pos.get_pose();
+        goal.position.x = waypoint.x;
+        goal.position.y = waypoint.y;
 
         // finished path
-        else
+        if (get_wp.response.valid == false) {
+            ROS_INFO("Path completely traversed, stop coverage!");
             state = STATE_ABORTED;
+        }
 
+        // new goal is out of bounds
+        else if (pos.out_of_bounds(goal)) {
+            ROS_ERROR("Waypoint out of allowed area, stop coverage!");
+            state = STATE_ABORTED;
+        }
 
-        // move with new velocity
-        vel.move(velocity);
+        // obstacle in direction of new goal
+        else if (pos.occupied(goal)) {
+            ROS_ERROR("Obstacle ahead, stop coverage!");
+            state = STATE_ABORTED;
+        }
+
+        // move to new position
+        else if (pos.move(goal) == false)
+            state = STATE_ABORTED;
     }
 
     // return state to action server

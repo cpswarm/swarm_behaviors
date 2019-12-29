@@ -57,6 +57,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abec1c4f9aa5ab8b757307df0329f05b6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#abec1c4f9aa5ab8b757307df0329f05b6">move</a> (geometry_msgs::Pose <a class="el" href="classposition.html#a3a536a3a28c9c9b0302b06869aa1487a">pose</a>)</td></tr>
 <tr class="memdesc:abec1c4f9aa5ab8b757307df0329f05b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move the CPS to the given pose.  <a href="#abec1c4f9aa5ab8b757307df0329f05b6">More...</a><br /></td></tr>
 <tr class="separator:abec1c4f9aa5ab8b757307df0329f05b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa60bca2bdaf09ebecf9802ba893613fe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#aa60bca2bdaf09ebecf9802ba893613fe">occupied</a> (geometry_msgs::Pose <a class="el" href="classposition.html#a3a536a3a28c9c9b0302b06869aa1487a">pose</a>)</td></tr>
+<tr class="memdesc:aa60bca2bdaf09ebecf9802ba893613fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether there is an obstacle in the direction of the given pose.  <a href="#aa60bca2bdaf09ebecf9802ba893613fe">More...</a><br /></td></tr>
+<tr class="separator:aa60bca2bdaf09ebecf9802ba893613fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a3d7a697a5f5ed45885f8ad527b576b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#a4a3d7a697a5f5ed45885f8ad527b576b">out_of_bounds</a> (geometry_msgs::Pose <a class="el" href="classposition.html#a3a536a3a28c9c9b0302b06869aa1487a">pose</a>)</td></tr>
 <tr class="memdesc:a4a3d7a697a5f5ed45885f8ad527b576b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether a given pose is out of the mission area boundaries.  <a href="#a4a3d7a697a5f5ed45885f8ad527b576b">More...</a><br /></td></tr>
 <tr class="separator:a4a3d7a697a5f5ed45885f8ad527b576b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -90,6 +93,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a107c6e8b98811e4a2f42c126a8382b7e"><td class="memItemLeft" align="right" valign="top">NodeHandle&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#a107c6e8b98811e4a2f42c126a8382b7e">nh</a></td></tr>
 <tr class="memdesc:a107c6e8b98811e4a2f42c126a8382b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A node handle for the main ROS node.  <a href="#a107c6e8b98811e4a2f42c126a8382b7e">More...</a><br /></td></tr>
 <tr class="separator:a107c6e8b98811e4a2f42c126a8382b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48c9745ad9eb09af69afdc6b2ff96db7"><td class="memItemLeft" align="right" valign="top">ServiceClient&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#a48c9745ad9eb09af69afdc6b2ff96db7">occupied_sector_client</a></td></tr>
+<tr class="memdesc:a48c9745ad9eb09af69afdc6b2ff96db7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Service client for determining the sector occupied by obstacles.  <a href="#a48c9745ad9eb09af69afdc6b2ff96db7">More...</a><br /></td></tr>
+<tr class="separator:a48c9745ad9eb09af69afdc6b2ff96db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62ebff48ed374eabd7b5e7fac403ae38"><td class="memItemLeft" align="right" valign="top">ServiceClient&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#a62ebff48ed374eabd7b5e7fac403ae38">out_of_bounds_client</a></td></tr>
 <tr class="memdesc:a62ebff48ed374eabd7b5e7fac403ae38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Service client for determining whether the goal is out of the area bounds.  <a href="#a62ebff48ed374eabd7b5e7fac403ae38">More...</a><br /></td></tr>
 <tr class="separator:a62ebff48ed374eabd7b5e7fac403ae38"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -108,17 +114,11 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:acdc8e8a698ae7942a15d58eadfc66036"><td class="memItemLeft" align="right" valign="top">Rate *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#acdc8e8a698ae7942a15d58eadfc66036">rate</a></td></tr>
 <tr class="memdesc:acdc8e8a698ae7942a15d58eadfc66036"><td class="mdescLeft">&#160;</td><td class="mdescRight">The loop rate object for running the behavior control loops at a specific frequency.  <a href="#acdc8e8a698ae7942a15d58eadfc66036">More...</a><br /></td></tr>
 <tr class="separator:acdc8e8a698ae7942a15d58eadfc66036"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95e1f4e5c2c99972c5195b97b328dfcb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#a95e1f4e5c2c99972c5195b97b328dfcb">turning</a></td></tr>
-<tr class="memdesc:a95e1f4e5c2c99972c5195b97b328dfcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the CPS should turn its front into movement direction or not.  <a href="#a95e1f4e5c2c99972c5195b97b328dfcb">More...</a><br /></td></tr>
-<tr class="separator:a95e1f4e5c2c99972c5195b97b328dfcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0a82d58e48e23b0ab9f64cf6ee6c69b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#aa0a82d58e48e23b0ab9f64cf6ee6c69b">yaw_tolerance</a></td></tr>
-<tr class="memdesc:aa0a82d58e48e23b0ab9f64cf6ee6c69b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The angle that the CPS can be away from a goal while still being considered to have reached that goal.  <a href="#aa0a82d58e48e23b0ab9f64cf6ee6c69b">More...</a><br /></td></tr>
-<tr class="separator:aa0a82d58e48e23b0ab9f64cf6ee6c69b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class to provide position related functionalities. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00015">15</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00016">16</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0492eb9ae0eee02f191f02e229af24d1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0492eb9ae0eee02f191f02e229af24d1">&#9670;&nbsp;</a></span>position()</h2>
@@ -228,7 +228,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The goal pose. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00043">43</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00046">46</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -275,7 +275,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The goal pose. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00048">48</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00051">51</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -304,7 +304,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The distance in meters. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00065">65</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00068">68</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -344,7 +344,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The distance in meters. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00070">70</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00073">73</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -366,7 +366,7 @@ Private Attributes</h2></td></tr>
 <p>Get the current pose of the CPS. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current pose of the CPS in local coordinates. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00075">75</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00078">78</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -388,7 +388,7 @@ Private Attributes</h2></td></tr>
 <p>Get the current yaw orientation of the CPS. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current yaw angle of the CPS counterclockwise starting from x-axis/east. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00080">80</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00083">83</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -425,7 +425,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The yaw angle of the given pose counterclockwise starting from x-axis/east. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00144">144</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00161">161</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -454,7 +454,36 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the CPS reached the goal position. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00085">85</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00088">88</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa60bca2bdaf09ebecf9802ba893613fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa60bca2bdaf09ebecf9802ba893613fe">&#9670;&nbsp;</a></span>occupied()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool position::occupied </td>
+          <td>(</td>
+          <td class="paramtype">geometry_msgs::Pose&#160;</td>
+          <td class="paramname"><em>pose</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check whether there is an obstacle in the direction of the given pose. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pose</td><td>The pose to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True, if there is an obstacle in the direction of the pose, false otherwise. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00125">125</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -481,9 +510,9 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the given pose is outside the mission area or it could not be checked, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True, if the given pose is outside the mission area or it could not be checked, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00131">131</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00148">148</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -519,7 +548,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00166">166</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00178">178</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -556,7 +585,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the CPS is close to the given pose, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00151">151</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00168">168</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -583,7 +612,7 @@ Private Attributes</h2></td></tr>
 
 <p>The time in seconds that the CPS is given time to reach a destination before giving up. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00152">152</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00165">165</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -609,7 +638,7 @@ Private Attributes</h2></td></tr>
 
 <p>The distance that the CPS can be away from a goal while still being considered to have reached that goal. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00157">157</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00170">170</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -635,7 +664,33 @@ Private Attributes</h2></td></tr>
 
 <p>A node handle for the main ROS node. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00132">132</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00145">145</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+
+</div>
+</div>
+<a id="a48c9745ad9eb09af69afdc6b2ff96db7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48c9745ad9eb09af69afdc6b2ff96db7">&#9670;&nbsp;</a></span>occupied_sector_client</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ServiceClient position::occupied_sector_client</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Service client for determining the sector occupied by obstacles. </p>
+
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00135">135</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -661,7 +716,7 @@ Private Attributes</h2></td></tr>
 
 <p>Service client for determining whether the goal is out of the area bounds. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00122">122</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00130">130</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -687,7 +742,7 @@ Private Attributes</h2></td></tr>
 
 <p>Current position of the CPS. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00142">142</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00155">155</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -713,7 +768,7 @@ Private Attributes</h2></td></tr>
 
 <p>Publisher for sending the goal position of the CPS to the position controller in the abstraction library. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00127">127</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00140">140</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -739,7 +794,7 @@ Private Attributes</h2></td></tr>
 
 <p>Subscriber for the position of the CPS. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00117">117</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00125">125</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -765,7 +820,7 @@ Private Attributes</h2></td></tr>
 
 <p>Whether a valid position has been received. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00147">147</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00160">160</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -791,59 +846,7 @@ Private Attributes</h2></td></tr>
 
 <p>The loop rate object for running the behavior control loops at a specific frequency. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00137">137</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
-
-</div>
-</div>
-<a id="a95e1f4e5c2c99972c5195b97b328dfcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95e1f4e5c2c99972c5195b97b328dfcb">&#9670;&nbsp;</a></span>turning</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool position::turning</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Whether the CPS should turn its front into movement direction or not. </p>
-
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00167">167</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
-
-</div>
-</div>
-<a id="aa0a82d58e48e23b0ab9f64cf6ee6c69b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0a82d58e48e23b0ab9f64cf6ee6c69b">&#9670;&nbsp;</a></span>yaw_tolerance</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double position::yaw_tolerance</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The angle that the CPS can be away from a goal while still being considered to have reached that goal. </p>
-
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00162">162</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00150">150</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -857,7 +860,7 @@ Private Attributes</h2></td></tr>
 <hr size="1"><div style="align: right;">
 <a href="http://wiki.ros.org/position">position</a><br />
 Author(s): </br />
-<small>autogenerated on Thu Nov 14 2019 11:05:46</small>
+<small>autogenerated on Sun Dec 29 2019 10:25:17</small>
 </div>
 </body>
 </html>
