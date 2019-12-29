@@ -8,12 +8,12 @@ depends:
 - cpswarm_msgs
 - roscpp
 - catkin
-description: A package that performs local coverage with unmanned aerial vehicles
-  (UAVs).
+description: A package that performs local coverage with an unmanned aerial vehicle
+  (UAV).
 license: Apache License 2.0
 maintainers: Micha Sende <sende@lakeside-labs.com>
 msgs: []
 package_type: package
 repo_url: ''
 srvs: []
-url: http://wiki.ros.org/uav_local_coverage
+url: https://wiki.ros.org/uav_local_coverage

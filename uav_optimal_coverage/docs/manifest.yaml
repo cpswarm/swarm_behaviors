@@ -7,8 +7,9 @@ depends:
 - roscpp
 - actionlib
 - cpswarm_msgs
-- velocity
+- geometry_msgs
 - position
+- velocity
 description: A package that performs optimal coverage with a swarm of unmanned aerial
   vehicles (UAVs). The UAVs optimally divide the area to be covered among each other.
 license: Apache License 2.0
@@ -17,4 +18,4 @@ msgs: []
 package_type: package
 repo_url: ''
 srvs: []
-url: http://wiki.ros.org/uav_optimal_coverage
+url: https://wiki.ros.org/uav_optimal_coverage

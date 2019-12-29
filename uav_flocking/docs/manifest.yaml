@@ -7,10 +7,9 @@ depends:
 - roscpp
 - actionlib
 - cpswarm_msgs
-- velocity
 - geometry_msgs
 - position
-- random_numbers
+- velocity
 description: A package that performs coverage and tracking with a flock of unmanned
   aerial vehicles (UAVs).
 license: Apache License 2.0
