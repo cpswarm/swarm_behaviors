@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>uav_local_coverage</name>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
   <description>A package that performs local coverage with an unmanned aerial vehicle (UAV).</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
@@ -25,7 +25,7 @@
   <depend>roscpp</depend>
   <depend>actionlib</depend>
   <depend>cpswarm_msgs</depend>
-  <depend>position</depend>
+  <depend>swarm_behaviors_position</depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

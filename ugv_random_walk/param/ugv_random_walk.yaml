@@ -1,4 +1,0 @@
-loop_rate:     5.0  # The frequency in Hz at which to run the swarm behavior loops.
-queue_size:    1    # The size of the message queue used for publishing and subscribing to topics.
-single_target: true # Whether the algorithm will succeed / terminate once a target has been found.
-step_size:     3.0  # The distance in meter that a UGV travels in one step.
