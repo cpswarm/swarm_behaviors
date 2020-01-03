@@ -48,4 +48,4 @@ The `position` library provides position related functionalities. These function
   Whether the CPS should turn its front into movement direction or not.
 
 ## Code API
-[swarm_behaviors_position package code API documentation](https://cpswarm.github.io/swarm_behaviors/swarm_behaviors_position/docs/html/files.html)
+[swarm_behaviors_position package code API documentation](https://cpswarm.github.io/swarm_behaviors/lib/swarm_behaviors_position/docs/html/files.html)

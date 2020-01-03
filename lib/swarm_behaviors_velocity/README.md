@@ -37,4 +37,4 @@ The `velocity` library provides velocity related functionalities. These include 
   The size of the message queue used for publishing and subscribing to topics.
 
 ## Code API
-[swarm_behaviors_velocity package code API documentation](https://cpswarm.github.io/swarm_behaviors/swarm_behaviors_velocity/docs/html/files.html)
+[swarm_behaviors_velocity package code API documentation](https://cpswarm.github.io/swarm_behaviors/lib/swarm_behaviors_velocity/docs/html/files.html)
