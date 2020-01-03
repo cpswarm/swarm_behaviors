@@ -2,6 +2,9 @@
 Changelog for package uav_local_coverage
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.0 (2020-01-03)
+------------------
+
 1.2.0 (2019-12-29)
 ------------------
 * Changed: Refactor library structure

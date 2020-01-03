@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(velocity)
+project(swarm_behaviors_velocity)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -7,7 +7,7 @@ project(velocity)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs cpswarm_msgs position)
+find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs cpswarm_msgs swarm_behaviors_position)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -100,8 +100,8 @@ find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs cpswarm_msgs positi
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS cpswarm_msgs position
+  LIBRARIES velocity
+  CATKIN_DEPENDS cpswarm_msgs swarm_behaviors_position
 #  DEPENDS system_lib
 )
 
@@ -118,8 +118,8 @@ include_directories(
 
 ## Declare a C++ library
 add_library(
-  ${PROJECT_NAME}
-  src/${PROJECT_NAME}.cpp
+  velocity
+  src/velocity.cpp
 )
 
 ## Add cmake target dependencies of the library

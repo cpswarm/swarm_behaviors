@@ -2,6 +2,10 @@
 Changelog for package position
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.0 (2020-01-03)
+------------------
+* Changed: Rename position library to swarm_behaviors_position
+
 1.2.0 (2019-12-29)
 ------------------
 * Added: Obstacle detection

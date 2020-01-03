@@ -1,4 +1,4 @@
-# velocity
+# swarm_behaviors_velocity
 
 This package provides velocity related functionalities. It is a library package of the swarm behaviors library.
 
@@ -8,7 +8,7 @@ This package depends on the following message definitions:
 * [cpswarm_msgs](https://cpswarm.github.io/cpswarm_msgs/html/index-msg.html)
 
 The following library packages of the [swarm behaviors library](https://github.com/cpswarm/swarm_behaviors) are required:
-* position
+* swarm_behaviors_position
 
 The following packages of the [sensing and actuation library](https://github.com/cpswarm/sensing_actuation) are required:
 * *_vel_provider
@@ -37,4 +37,4 @@ The `velocity` library provides velocity related functionalities. These include 
   The size of the message queue used for publishing and subscribing to topics.
 
 ## Code API
-[velocity package code API documentation](https://cpswarm.github.io/swarm_behaviors/velocity/docs/html/files.html)
+[swarm_behaviors_velocity package code API documentation](https://cpswarm.github.io/swarm_behaviors/swarm_behaviors_velocity/docs/html/files.html)

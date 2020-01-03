@@ -4,10 +4,10 @@ brief: ''
 bugtracker: ''
 depends:
 - cpswarm_msgs
+- catkin
 - geometry_msgs
 - roscpp
-- catkin
-- position
+- swarm_behaviors_position
 description: A package that provides velocity related functionalities.
 license: Apache License 2.0
 maintainers: Micha Sende <sende@lakeside-labs.com>, Micha Sende <sende@lakeside-labs.com>
@@ -15,4 +15,4 @@ msgs: []
 package_type: package
 repo_url: ''
 srvs: []
-url: https://wiki.ros.org/velocity
+url: https://wiki.ros.org/swarm_behaviors_velocity

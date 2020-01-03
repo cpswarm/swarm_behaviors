@@ -7,7 +7,7 @@ This package depends on the following message definitions:
 * [cpswarm_msgs](https://cpswarm.github.io/cpswarm_msgs/html/index-msg.html)
 
 The following library packages of the [swarm behaviors library](https://github.com/cpswarm/swarm_behaviors) are required:
-* position
+* swarm_behaviors_position
 
 The following packages of the [swarm functions library](https://github.com/cpswarm/swarm_functions/) are required:
 * target_monitor

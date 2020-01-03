@@ -2,6 +2,11 @@
 Changelog for package swarm_behaviors
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.3.0 (2020-01-03)
+------------------
+* Changed: Rename position library to swarm_behaviors_position
+* Changed: Rename velocity library to swarm_behaviors_velocity
+
 1.2.0 (2019-12-29)
 ------------------
 * First public release
