@@ -1,4 +1,5 @@
 # swarm_behaviors_position
+[![Build Status](http://build.ros.org/buildStatus/icon?job=Ksrc_uX__swarm_behaviors_position__ubuntu_xenial__source)](http://build.ros.org/view/Ksrc_uX/job/Ksrc_uX__swarm_behaviors_position__ubuntu_xenial__source/)
 
 This package provides position related functionalities. It is a library package of the swarm behaviors library.
 

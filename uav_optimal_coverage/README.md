@@ -1,4 +1,5 @@
 # uav_optimal_coverage
+[![Build Status](http://build.ros.org/buildStatus/icon?job=Ksrc_uX__uav_optimal_coverage__ubuntu_xenial__source)](http://build.ros.org/view/Ksrc_uX/job/Ksrc_uX__uav_optimal_coverage__ubuntu_xenial__source/)
 
 This package performs coverage with a swarm of unmanned aerial vehicles (UAVs). The UAVs optimally divide the area to be covered among each other. It is part of the swarm behaviors library.
 

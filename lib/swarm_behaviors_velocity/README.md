@@ -1,4 +1,5 @@
 # swarm_behaviors_velocity
+[![Build Status](http://build.ros.org/buildStatus/icon?job=Ksrc_uX__swarm_behaviors_velocity__ubuntu_xenial__source)](http://build.ros.org/view/Ksrc_uX/job/Ksrc_uX__swarm_behaviors_velocity__ubuntu_xenial__source/)
 
 This package provides velocity related functionalities. It is a library package of the swarm behaviors library.
 

@@ -1,4 +1,5 @@
 # uav_simple_tracking
+[![Build Status](http://build.ros.org/buildStatus/icon?job=Ksrc_uX__uav_simple_tracking__ubuntu_xenial__source)](http://build.ros.org/view/Ksrc_uX/job/Ksrc_uX__uav_simple_tracking__ubuntu_xenial__source/)
 
 This package tracks a target with an unmanned aerial vehicle (UAV). It is part of the swarm behaviors library.
 

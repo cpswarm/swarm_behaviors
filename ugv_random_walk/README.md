@@ -1,4 +1,5 @@
 # ugv_random_walk
+[![Build Status](http://build.ros.org/buildStatus/icon?job=Ksrc_uX__ugv_random_walk__ubuntu_xenial__source)](http://build.ros.org/view/Ksrc_uX/job/Ksrc_uX__ugv_random_walk__ubuntu_xenial__source/)
 
 This package performs random walk coverage with an unmanned ground vehicle (UGV). It is part of the swarm behaviors library.
 
