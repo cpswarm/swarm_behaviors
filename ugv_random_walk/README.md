@@ -39,7 +39,7 @@ In the `param` subdirectory there is the parameter file `ugv_random_walk.yaml` t
 ## Nodes
 
 ### ugv_random_walk
-The `ugv_random_walk` performs coverage using the random walk algorithm. The random direction is a mathematical movement model, where an agent moves straight for a specific distance. Then, it changes its direction randomly into a direction that is clear of obstacles and moves straight again. If it arrives at the environment boundary, it reflects to continue its walk. When the parameter `single_target` is set to `true`, the UGV succeeds once a target has been found and returns the target ID and position.
+The `ugv_random_walk` performs coverage using the random walk algorithm. The random walk is a mathematical movement model, where an agent moves straight for a specific distance. Then, it changes its direction randomly into a direction that is clear of obstacles and moves straight again. If it arrives at the environment boundary, it reflects to continue its walk. When the parameter `single_target` is set to `true`, the UGV succeeds once a target has been found and returns the target ID and position.
 
 #### Action Goal
 * `ugv_coverage/goal` ([cpswarm_msgs/CoverageGoal](https://cpswarm.github.io/cpswarm_msgs/html/action/Coverage.html))
