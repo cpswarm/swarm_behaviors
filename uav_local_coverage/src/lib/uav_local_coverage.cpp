@@ -34,7 +34,7 @@ behavior_state_t uav_local_coverage::step ()
 
     // reached maximum number of steps, stop local coverage
     if (steps >= max_steps) {
-        ROS_ERROR("Reached maximum steps!");
+        ROS_INFO("Reached maximum coverage steps!");
         return STATE_ABORTED;
     }
 
@@ -50,10 +50,8 @@ behavior_state_t uav_local_coverage::step ()
     }
 
     // move to new goal
-    if (pos.move(goal) == false) {
-        ROS_ERROR("Cannot move to goal!");
+    if (pos.move(goal) == false)
         return STATE_ABORTED;
-    }
 
     // return state to action server
     return STATE_ACTIVE;
