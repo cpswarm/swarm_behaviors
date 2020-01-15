@@ -38,9 +38,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7f8f041a76007819b87fb781f11eec07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__optimal__coverage.html#a7f8f041a76007819b87fb781f11eec07">stop</a> ()</td></tr>
 <tr class="memdesc:a7f8f041a76007819b87fb781f11eec07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop moving.  <a href="#a7f8f041a76007819b87fb781f11eec07">More...</a><br /></td></tr>
 <tr class="separator:a7f8f041a76007819b87fb781f11eec07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc5d8ca4140444bd186b1bef0cc02e07"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__optimal__coverage.html#abc5d8ca4140444bd186b1bef0cc02e07">uav_optimal_coverage</a> ()</td></tr>
-<tr class="memdesc:abc5d8ca4140444bd186b1bef0cc02e07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that initializes the private member variables.  <a href="#abc5d8ca4140444bd186b1bef0cc02e07">More...</a><br /></td></tr>
-<tr class="separator:abc5d8ca4140444bd186b1bef0cc02e07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07daf00510e776719c5f49712e8f8178"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__optimal__coverage.html#a07daf00510e776719c5f49712e8f8178">uav_optimal_coverage</a> (double altitude)</td></tr>
+<tr class="memdesc:a07daf00510e776719c5f49712e8f8178"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that initializes the private member variables.  <a href="#a07daf00510e776719c5f49712e8f8178">More...</a><br /></td></tr>
+<tr class="separator:a07daf00510e776719c5f49712e8f8178"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53647730d175bc324c5871e13958a108"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__optimal__coverage.html#a53647730d175bc324c5871e13958a108">~uav_optimal_coverage</a> ()</td></tr>
 <tr class="memdesc:a53647730d175bc324c5871e13958a108"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor that deletes the private member objects.  <a href="#a53647730d175bc324c5871e13958a108">More...</a><br /></td></tr>
 <tr class="separator:a53647730d175bc324c5871e13958a108"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -76,8 +76,8 @@ Private Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00024">24</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="abc5d8ca4140444bd186b1bef0cc02e07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc5d8ca4140444bd186b1bef0cc02e07">&#9670;&nbsp;</a></span>uav_optimal_coverage()</h2>
+<a id="a07daf00510e776719c5f49712e8f8178"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07daf00510e776719c5f49712e8f8178">&#9670;&nbsp;</a></span>uav_optimal_coverage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -85,13 +85,20 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">uav_optimal_coverage::uav_optimal_coverage </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>altitude</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Constructor that initializes the private member variables. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">altitude</td><td>The altitude at which the CPS operates. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="lib_2uav__optimal__coverage_8cpp_source.html#l00003">3</a> of file <a class="el" href="lib_2uav__optimal__coverage_8cpp_source.html">lib/uav_optimal_coverage.cpp</a>.</p>
 
@@ -185,7 +192,7 @@ Private Attributes</h2></td></tr>
 
 <p>Service message to get the current waypoint. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00062">62</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00063">63</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -211,7 +218,7 @@ Private Attributes</h2></td></tr>
 
 <p>A helper object for position related tasks. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00072">72</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00073">73</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -237,7 +244,7 @@ Private Attributes</h2></td></tr>
 
 <p>The state of the behavior algorithm. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00067">67</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00068">68</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -263,7 +270,7 @@ Private Attributes</h2></td></tr>
 
 <p>Target velocity of the UAV. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00082">82</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00083">83</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -288,7 +295,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>The distance to the current waypoint below which the next waypoint of the path is selected. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00087">87</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00088">88</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -314,7 +321,7 @@ Private Attributes</h2></td></tr>
 
 <p>A helper object for velocity related tasks. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00077">77</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00078">78</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -340,7 +347,7 @@ Private Attributes</h2></td></tr>
 
 <p>Current waypoint to navigate to. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00057">57</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00058">58</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -366,7 +373,7 @@ Private Attributes</h2></td></tr>
 
 <p>Service client to get the current waypoint to navigate to. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00052">52</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__optimal__coverage_8h_source.html#l00053">53</a> of file <a class="el" href="uav__optimal__coverage_8h_source.html">uav_optimal_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -380,7 +387,7 @@ Private Attributes</h2></td></tr>
 <hr size="1"><div style="align: right;">
 <a href="http://wiki.ros.org/uav_optimal_coverage">uav_optimal_coverage</a><br />
 Author(s): Micha Sende <sende@lakeside-labs.com></br />
-<small>autogenerated on Sun Dec 29 2019 10:25:49</small>
+<small>autogenerated on Wed Jan 15 2020 15:21:29</small>
 </div>
 </body>
 </html>

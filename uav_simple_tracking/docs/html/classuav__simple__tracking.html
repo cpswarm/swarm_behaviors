@@ -36,9 +36,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4f7df310e0f95d3079a142e525b5c187"><td class="memItemLeft" align="right" valign="top"><a class="el" href="uav__simple__tracking_8h.html#a27dd7d0a41b9e119c1bd4d59bfb6889e">behavior_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__simple__tracking.html#a4f7df310e0f95d3079a142e525b5c187">step</a> ()</td></tr>
 <tr class="memdesc:a4f7df310e0f95d3079a142e525b5c187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute one cycle of the tracking algorithm.  <a href="#a4f7df310e0f95d3079a142e525b5c187">More...</a><br /></td></tr>
 <tr class="separator:a4f7df310e0f95d3079a142e525b5c187"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08424bf9db019c19ff6414ce2934bdc3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__simple__tracking.html#a08424bf9db019c19ff6414ce2934bdc3">uav_simple_tracking</a> (unsigned int <a class="el" href="classuav__simple__tracking.html#a72f43b66afc0b29b27f631c151161520">target</a>)</td></tr>
-<tr class="memdesc:a08424bf9db019c19ff6414ce2934bdc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that initializes the private member variables.  <a href="#a08424bf9db019c19ff6414ce2934bdc3">More...</a><br /></td></tr>
-<tr class="separator:a08424bf9db019c19ff6414ce2934bdc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62b7ea313fad59d06aabb3c8aafecd0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__simple__tracking.html#a62b7ea313fad59d06aabb3c8aafecd0c">uav_simple_tracking</a> (unsigned int <a class="el" href="classuav__simple__tracking.html#a72f43b66afc0b29b27f631c151161520">target</a>, double altitude)</td></tr>
+<tr class="memdesc:a62b7ea313fad59d06aabb3c8aafecd0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that initializes the private member variables.  <a href="#a62b7ea313fad59d06aabb3c8aafecd0c">More...</a><br /></td></tr>
+<tr class="separator:a62b7ea313fad59d06aabb3c8aafecd0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -63,8 +63,8 @@ Private Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8h_source.html#l00022">22</a> of file <a class="el" href="uav__simple__tracking_8h_source.html">uav_simple_tracking.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a08424bf9db019c19ff6414ce2934bdc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08424bf9db019c19ff6414ce2934bdc3">&#9670;&nbsp;</a></span>uav_simple_tracking()</h2>
+<a id="a62b7ea313fad59d06aabb3c8aafecd0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62b7ea313fad59d06aabb3c8aafecd0c">&#9670;&nbsp;</a></span>uav_simple_tracking()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -73,8 +73,18 @@ Private Attributes</h2></td></tr>
           <td class="memname">uav_simple_tracking::uav_simple_tracking </td>
           <td>(</td>
           <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>target</em></td><td>)</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>altitude</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -83,6 +93,7 @@ Private Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">target</td><td>The ID of the target being tracked by this UAV. </td></tr>
+    <tr><td class="paramname">altitude</td><td>The altitude at which the CPS operates. </td></tr>
   </table>
   </dd>
 </dl>
@@ -173,7 +184,7 @@ Private Attributes</h2></td></tr>
 
 <p>A helper object for position related tasks. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8h_source.html#l00052">52</a> of file <a class="el" href="uav__simple__tracking_8h_source.html">uav_simple_tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8h_source.html#l00053">53</a> of file <a class="el" href="uav__simple__tracking_8h_source.html">uav_simple_tracking.h</a>.</p>
 
 </div>
 </div>
@@ -199,7 +210,7 @@ Private Attributes</h2></td></tr>
 
 <p>The target being tracked by this UAV. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8h_source.html#l00057">57</a> of file <a class="el" href="uav__simple__tracking_8h_source.html">uav_simple_tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8h_source.html#l00058">58</a> of file <a class="el" href="uav__simple__tracking_8h_source.html">uav_simple_tracking.h</a>.</p>
 
 </div>
 </div>
@@ -225,7 +236,7 @@ Private Attributes</h2></td></tr>
 
 <p>Subscriber to receive target position updates. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8h_source.html#l00047">47</a> of file <a class="el" href="uav__simple__tracking_8h_source.html">uav_simple_tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8h_source.html#l00048">48</a> of file <a class="el" href="uav__simple__tracking_8h_source.html">uav_simple_tracking.h</a>.</p>
 
 </div>
 </div>
@@ -239,7 +250,7 @@ Private Attributes</h2></td></tr>
 <hr size="1"><div style="align: right;">
 <a href="http://wiki.ros.org/uav_simple_tracking">uav_simple_tracking</a><br />
 Author(s): Micha Sende <sende@lakeside-labs.com></br />
-<small>autogenerated on Sun Dec 29 2019 10:26:16</small>
+<small>autogenerated on Wed Jan 15 2020 15:22:44</small>
 </div>
 </body>
 </html>

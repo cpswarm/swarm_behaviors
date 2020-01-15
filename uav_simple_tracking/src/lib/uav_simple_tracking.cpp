@@ -1,6 +1,6 @@
 #include "lib/uav_simple_tracking.h"
 
-uav_simple_tracking::uav_simple_tracking(unsigned int target)
+uav_simple_tracking::uav_simple_tracking(unsigned int target, double altitude) : pos(altitude)
 {
     this->target.id = target;
     NodeHandle nh;

@@ -36,9 +36,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9951f5da3ed42af39f7459e3260f2e10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="uav__local__coverage_8h.html#a27dd7d0a41b9e119c1bd4d59bfb6889e">behavior_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__local__coverage.html#a9951f5da3ed42af39f7459e3260f2e10">step</a> ()</td></tr>
 <tr class="memdesc:a9951f5da3ed42af39f7459e3260f2e10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move the swarm member to a new position.  <a href="#a9951f5da3ed42af39f7459e3260f2e10">More...</a><br /></td></tr>
 <tr class="separator:a9951f5da3ed42af39f7459e3260f2e10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7dbc969aa2f39bc4355170b8e29e6a81"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__local__coverage.html#a7dbc969aa2f39bc4355170b8e29e6a81">uav_local_coverage</a> ()</td></tr>
-<tr class="memdesc:a7dbc969aa2f39bc4355170b8e29e6a81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that initializes the private member variables.  <a href="#a7dbc969aa2f39bc4355170b8e29e6a81">More...</a><br /></td></tr>
-<tr class="separator:a7dbc969aa2f39bc4355170b8e29e6a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7c60d5ce6f0cdcab859e2410e76dfc4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__local__coverage.html#af7c60d5ce6f0cdcab859e2410e76dfc4">uav_local_coverage</a> (double <a class="el" href="classuav__local__coverage.html#a2e329e5b6f68d0ae3cd31834f965ec9d">altitude</a>)</td></tr>
+<tr class="memdesc:af7c60d5ce6f0cdcab859e2410e76dfc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that initializes the private member variables.  <a href="#af7c60d5ce6f0cdcab859e2410e76dfc4">More...</a><br /></td></tr>
+<tr class="separator:af7c60d5ce6f0cdcab859e2410e76dfc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -78,8 +78,8 @@ Private Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00021">21</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7dbc969aa2f39bc4355170b8e29e6a81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7dbc969aa2f39bc4355170b8e29e6a81">&#9670;&nbsp;</a></span>uav_local_coverage()</h2>
+<a id="af7c60d5ce6f0cdcab859e2410e76dfc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7c60d5ce6f0cdcab859e2410e76dfc4">&#9670;&nbsp;</a></span>uav_local_coverage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -87,13 +87,20 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">uav_local_coverage::uav_local_coverage </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>altitude</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Constructor that initializes the private member variables. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">altitude</td><td>The altitude at which the CPS operates. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="definition">Definition at line <a class="el" href="lib_2uav__local__coverage_8cpp_source.html#l00003">3</a> of file <a class="el" href="lib_2uav__local__coverage_8cpp_source.html">lib/uav_local_coverage.cpp</a>.</p>
 
@@ -143,7 +150,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="lib_2uav__local__coverage_8cpp_source.html#l00057">57</a> of file <a class="el" href="lib_2uav__local__coverage_8cpp_source.html">lib/uav_local_coverage.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lib_2uav__local__coverage_8cpp_source.html#l00062">62</a> of file <a class="el" href="lib_2uav__local__coverage_8cpp_source.html">lib/uav_local_coverage.cpp</a>.</p>
 
 </div>
 </div>
@@ -173,7 +180,7 @@ Private Attributes</h2></td></tr>
 <p>Compute goal position. </p>
 <dl class="section return"><dt>Returns</dt><dd>The selected goal. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lib_2uav__local__coverage_8cpp_source.html#l00074">74</a> of file <a class="el" href="lib_2uav__local__coverage_8cpp_source.html">lib/uav_local_coverage.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lib_2uav__local__coverage_8cpp_source.html#l00079">79</a> of file <a class="el" href="lib_2uav__local__coverage_8cpp_source.html">lib/uav_local_coverage.cpp</a>.</p>
 
 </div>
 </div>
@@ -195,7 +202,7 @@ Private Attributes</h2></td></tr>
 <p>Move the swarm member to a new position. </p>
 <dl class="section return"><dt>Returns</dt><dd>Return the state of the coverage algorithm. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lib_2uav__local__coverage_8cpp_source.html#l00025">25</a> of file <a class="el" href="lib_2uav__local__coverage_8cpp_source.html">lib/uav_local_coverage.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lib_2uav__local__coverage_8cpp_source.html#l00024">24</a> of file <a class="el" href="lib_2uav__local__coverage_8cpp_source.html">lib/uav_local_coverage.cpp</a>.</p>
 
 </div>
 </div>
@@ -222,7 +229,7 @@ Private Attributes</h2></td></tr>
 
 <p>The altitude of the UAV above ground. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00057">57</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00058">58</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -248,7 +255,7 @@ Private Attributes</h2></td></tr>
 
 <p>Horizontal camera field of view in radian. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00062">62</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00063">63</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -274,7 +281,7 @@ Private Attributes</h2></td></tr>
 
 <p>Vertical camera field of view in radian. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00067">67</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00068">68</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -300,7 +307,7 @@ Private Attributes</h2></td></tr>
 
 <p>Maximum number of steps to do in the local search. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00082">82</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00083">83</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -326,7 +333,7 @@ Private Attributes</h2></td></tr>
 
 <p>Center of the spiral movement search pattern. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00072">72</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00073">73</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -352,7 +359,7 @@ Private Attributes</h2></td></tr>
 
 <p>A helper object for position related tasks. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00052">52</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00053">53</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -378,7 +385,7 @@ Private Attributes</h2></td></tr>
 
 <p>Number of steps performed in the local search. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00077">77</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__local__coverage_8h_source.html#l00078">78</a> of file <a class="el" href="uav__local__coverage_8h_source.html">uav_local_coverage.h</a>.</p>
 
 </div>
 </div>
@@ -392,7 +399,7 @@ Private Attributes</h2></td></tr>
 <hr size="1"><div style="align: right;">
 <a href="http://wiki.ros.org/uav_local_coverage">uav_local_coverage</a><br />
 Author(s): Micha Sende <sende@lakeside-labs.com></br />
-<small>autogenerated on Sun Dec 29 2019 10:25:43</small>
+<small>autogenerated on Wed Jan 15 2020 15:21:11</small>
 </div>
 </body>
 </html>

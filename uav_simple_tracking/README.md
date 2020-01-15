@@ -39,7 +39,7 @@ The `uav_simple_tracking` tracks a target with a UAV. The UAV moves to the posit
 
 #### Action Goal
 * `uav_tracking/goal` ([cpswarm_msgs/TrackingGoal](https://cpswarm.github.io/cpswarm_msgs/html/action/Tracking.html))
-  A goal that starts the tracking behavior. It contains the ID of the target to track.
+  A goal that starts the tracking behavior. It contains the ID of the target to track and the altitude at which to operate.
 
 #### Subscribed Topics
 * `target_update` ([cpswarm_msgs/TargetPositionEvent](https://cpswarm.github.io/cpswarm_msgs/html/msg/TargetPositionEvent.html))

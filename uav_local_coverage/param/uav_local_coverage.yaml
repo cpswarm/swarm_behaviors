@@ -1,7 +1,6 @@
 loop_rate:     5.0  # The frequency in Hz at which to run control loops.
 queue_size:    1    # The size of the message queue used for publishing and subscribing to topics.
 single_target: true # Whether the algorithm will succeed / terminate once a target has been found.
-altitude:      1.5  # The altitude above ground at which the UAV operates. It is used to compute the path of the drone.
 fov_hor:       0.64 # Horizontal camera field of view in radian. It is used to compute the path of the drone.
 fov_ver:       0.64 # Vertical camera field of view in radian. It is used to compute the path of the drone.
 local_steps:   30   # Number of steps to do in the local coverage behavior.

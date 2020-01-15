@@ -26,8 +26,9 @@ class uav_optimal_coverage
 public:
     /**
      * @brief Constructor that initializes the private member variables.
+     * @param altitude: The altitude at which the CPS operates.
      */
-    uav_optimal_coverage ();
+    uav_optimal_coverage (double altitude);
 
     /**
      * @brief Destructor that deletes the private member objects.

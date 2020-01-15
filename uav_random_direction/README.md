@@ -43,7 +43,7 @@ The `uav_random_direction` performs coverage using the random direction algorith
 
 #### Action Goal
 * `uav_coverage/goal` ([cpswarm_msgs/CoverageGoal](https://cpswarm.github.io/cpswarm_msgs/html/action/Coverage.html))
-  An empty goal that starts the random direction coverage behavior.
+  A goal that starts the random direction coverage behavior. It contains the altitude at which to operate.
 
 #### Action Result
 * `uav_coverage/result` ([cpswarm_msgs/CoverageResult](https://cpswarm.github.io/cpswarm_msgs/html/action/Coverage.html))

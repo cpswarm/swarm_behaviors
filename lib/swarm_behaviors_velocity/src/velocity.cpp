@@ -1,6 +1,6 @@
 #include "velocity.h"
 
-velocity::velocity ()
+velocity::velocity (double altitude) : pos(altitude)
 {
     // read parameters
     double loop_rate;

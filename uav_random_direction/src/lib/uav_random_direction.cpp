@@ -1,6 +1,6 @@
 #include "lib/uav_random_direction.h"
 
-uav_random_direction::uav_random_direction ()
+uav_random_direction::uav_random_direction (double altitude) : pos(altitude)
 {
     NodeHandle nh;
 

@@ -18,8 +18,9 @@ class position
 public:
     /**
      * @brief Constructor that initializes the private member variables.
+     * @param altitude: The altitude at which the CPS operates.
      */
-    position ();
+    position (double altitude);
 
     /**
      * @brief Destructor that deletes the private member objects.
@@ -168,6 +169,11 @@ private:
      * @brief The distance that the CPS can be away from a goal while still being considered to have reached that goal.
      */
     double goal_tolerance;
+
+    /**
+     * @brief The altitude at which the CPS operates.
+     */
+    double altitude;
 };
 
 #endif // POSITION_H

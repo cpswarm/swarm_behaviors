@@ -42,7 +42,7 @@ The `uav_optimal_coverage` performs coverage with a swarm of UAVs. The coverage 
 
 #### Action Goal
 * `uav_coverage/goal` ([cpswarm_msgs/CoverageGoal](https://cpswarm.github.io/cpswarm_msgs/html/action/Coverage.html))
-  An empty goal that starts the optimal coverage behavior.
+  A goal that starts the optimal coverage behavior. It contains the altitude at which to operate.
 
 #### Action Result
 * `uav_coverage/result` ([cpswarm_msgs/CoverageResult](https://cpswarm.github.io/cpswarm_msgs/html/action/Coverage.html))

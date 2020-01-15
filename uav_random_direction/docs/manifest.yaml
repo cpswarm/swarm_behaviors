@@ -7,8 +7,8 @@ depends:
 - roscpp
 - actionlib
 - cpswarm_msgs
+- swarm_behaviors_position
 - random_numbers
-- position
 description: A package that performs random direction coverage with an unmanned aerial
   vehicle (UAV).
 license: Apache License 2.0

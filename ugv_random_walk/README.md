@@ -44,7 +44,7 @@ The `ugv_random_walk` performs coverage using the random walk algorithm. The ran
 
 #### Action Goal
 * `ugv_coverage/goal` ([cpswarm_msgs/CoverageGoal](https://cpswarm.github.io/cpswarm_msgs/html/action/Coverage.html))
-  An empty goal that starts the random direction coverage behavior.
+  A goal that starts the random direction coverage behavior.
 
 #### Action Result
 * `ugv_coverage/result` ([cpswarm_msgs/CoverageResult](https://cpswarm.github.io/cpswarm_msgs/html/action/Coverage.html))

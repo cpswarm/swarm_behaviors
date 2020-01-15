@@ -1,6 +1,6 @@
 #include "lib/ugv_random_walk.h"
 
-ugv_random_walk::ugv_random_walk ()
+ugv_random_walk::ugv_random_walk () : pos(0.0)
 {
     NodeHandle nh;
 

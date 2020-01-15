@@ -1,10 +1,9 @@
 #include "lib/uav_local_coverage.h"
 
-uav_local_coverage::uav_local_coverage()
+uav_local_coverage::uav_local_coverage(double altitude) : altitude(altitude), pos(altitude)
 {
     // read parameters
     NodeHandle nh;
-    nh.param(this_node::getName() + "/altitude", altitude, 5.0);
     nh.param(this_node::getName() + "/fov_hor", fov_hor, 1.236);
     nh.param(this_node::getName() + "/fov_ver", fov_ver, 0.970);
     nh.param(this_node::getName() + "/local_steps", max_steps, 20);
@@ -34,21 +33,27 @@ behavior_state_t uav_local_coverage::step ()
     geometry_msgs::Pose goal;
 
     // reached maximum number of steps, stop local coverage
-    if (steps >= max_steps)
+    if (steps >= max_steps) {
+        ROS_ERROR("Reached maximum steps!");
         return STATE_ABORTED;
+    }
 
     // compute new goal
     else {
         goal = select_goal();
 
         // reached environment boundary, stop local coverage
-        if (pos.out_of_bounds(goal))
+        if (pos.out_of_bounds(goal)) {
+            ROS_ERROR("Goal (%.2f,%.2f) out of bounds!", goal.position.x, goal.position.y);
             return STATE_ABORTED;
+        }
     }
 
     // move to new goal
-    if (pos.move(goal) == false)
+    if (pos.move(goal) == false) {
+        ROS_ERROR("Cannot move to goal!");
         return STATE_ABORTED;
+    }
 
     // return state to action server
     return STATE_ACTIVE;

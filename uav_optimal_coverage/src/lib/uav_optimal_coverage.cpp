@@ -1,6 +1,6 @@
 #include "lib/uav_optimal_coverage.h"
 
-uav_optimal_coverage::uav_optimal_coverage ()
+uav_optimal_coverage::uav_optimal_coverage (double altitude) : pos(altitude), vel(altitude)
 {
     NodeHandle nh;
 

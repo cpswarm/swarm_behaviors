@@ -39,7 +39,7 @@ The `uav_local_coverage` performs coverage locally around the current position o
 
 #### Action Goal
 * `uav_local_coverage/goal` ([cpswarm_msgs/CoverageGoal](https://cpswarm.github.io/cpswarm_msgs/html/action/Coverage.html))
-  An empty goal that starts the local coverage behavior.
+  A goal that starts the local coverage behavior. It contains the altitude at which to operate.
 
 #### Action Result
 * `uav_local_coverage/result` ([cpswarm_msgs/CoverageResult](https://cpswarm.github.io/cpswarm_msgs/html/action/Coverage.html))
@@ -56,8 +56,6 @@ The `uav_local_coverage` performs coverage locally around the current position o
   The size of the message queue used for publishing and subscribing to topics.
 * `~single_target` (boolean, default: `true`)
   Whether the algorithm will succeed / terminate once a target has been found.
-* `~altitude` (real, default: `5.0`)
-  The altitude above ground at which the UAV operates. It is used to compute the path of the UAV.
 * `~fov_hor` (real, default: `1.236`)
   Horizontal camera field of view in radian. It is used to compute the path of the UAV.
 * `~fov_ver` (real, default: `0.970`)

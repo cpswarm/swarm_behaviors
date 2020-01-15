@@ -20,8 +20,9 @@ class velocity
 public:
     /**
      * @brief Constructor that initializes the private member variables.
+     * @param altitude: The altitude at which the CPS operates.
      */
-    velocity ();
+    velocity (double altitude);
 
     /**
      * @brief Destructor that deletes the private member objects.

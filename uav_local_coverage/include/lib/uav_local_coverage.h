@@ -21,10 +21,11 @@ typedef enum {
 class uav_local_coverage
 {
 public:
-  /**
-   * @brief Constructor that initializes the private member variables.
-   */
-    uav_local_coverage();
+    /**
+     * @brief Constructor that initializes the private member variables.
+     * @param altitude: The altitude at which the CPS operates.
+     */
+    uav_local_coverage(double altitude);
 
     /**
      * @brief Move the swarm member to a new position.

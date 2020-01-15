@@ -39,7 +39,7 @@ void ActionCallback(const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serve
     ROS_INFO("Executing local coverage");
 
     // coverage library
-    uav_local_coverage uav_coverage;
+    uav_local_coverage uav_coverage(goal->altitude);
 
     // execute coverage until state changes
     state = STATE_ACTIVE;

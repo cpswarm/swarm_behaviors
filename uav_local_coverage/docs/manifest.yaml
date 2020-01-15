@@ -3,11 +3,11 @@ authors: Micha Sende <sende@lakeside-labs.com>
 brief: ''
 bugtracker: ''
 depends:
-- position
+- catkin
 - actionlib
 - cpswarm_msgs
 - roscpp
-- catkin
+- swarm_behaviors_position
 description: A package that performs local coverage with an unmanned aerial vehicle
   (UAV).
 license: Apache License 2.0

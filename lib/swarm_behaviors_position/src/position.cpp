@@ -1,6 +1,6 @@
 #include "position.h"
 
-position::position ()
+position::position (double altitude) : altitude(altitude)
 {
     // read parameters
     double loop_rate;
@@ -55,7 +55,7 @@ geometry_msgs::Pose position::compute_goal (geometry_msgs::Pose start, double di
     // calculate position
     goal.position.x = start.position.x + distance * cos(direction);
     goal.position.y = start.position.y + distance * sin(direction);
-    goal.position.z = start.position.z;
+    goal.position.z = altitude;
 
     // calculate orientation
     tf2::Quaternion orientation;
@@ -97,6 +97,7 @@ bool position::move (geometry_msgs::Pose goal)
     geometry_msgs::PoseStamped goal_pose;
     goal_pose.header.stamp = Time::now();
     goal_pose.pose = goal;
+    goal_pose.pose.position.z = altitude;
 
     // send goal pose to cps controller
     pose_pub.publish(goal_pose);

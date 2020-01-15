@@ -42,7 +42,7 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
     ROS_INFO("Executing tracking");
 
     // tracking library
-    uav_simple_tracking uav_tracking(target);
+    uav_simple_tracking uav_tracking(target, goal->altitude);
 
     // execute tracking until state changes
     behavior_state_t state = STATE_ACTIVE;

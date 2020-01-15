@@ -25,8 +25,9 @@ class uav_random_direction
 public:
     /**
      * @brief Constructor that initializes the private member variables.
+     * @param altitude: The altitude at which the CPS operates.
      */
-    uav_random_direction ();
+    uav_random_direction (double altitude);
 
     /**
      * @brief Destructor that deletes the private member objects.
