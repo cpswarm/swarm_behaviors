@@ -9,6 +9,7 @@ position::position (double altitude) : altitude(altitude)
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
     nh.param(this_node::getName() + "/goal_tolerance", goal_tolerance, 0.1);
+    nh.param(this_node::getName() + "/visualize", visualize, false);
 
     // no pose received yet
     pose_valid = false;
@@ -20,6 +21,8 @@ position::position (double altitude) : altitude(altitude)
     occupied_sector_client.waitForExistence();
     pose_sub = nh.subscribe("pos_provider/pose", queue_size, &position::pose_callback, this);
     pose_pub = nh.advertise<geometry_msgs::PoseStamped>("pos_controller/goal_position", queue_size, true);
+    if (visualize)
+        visualize_pub = nh.advertise<geometry_msgs::PointStamped>("swarm_behaviors_position/goal", queue_size, true);
 
     // init position and yaw
     while (ok() && pose_valid == false) {
@@ -97,22 +100,36 @@ bool position::move (geometry_msgs::Pose goal)
     // goal is out of bounds
     if (out_of_bounds(goal)) {
         ROS_ERROR("Cannot move to (%.2f,%.2f) because it is out of bounds!", goal.position.x, goal.position.y);
+        stop();
         return false;
     }
 
     // obstacle in direction of goal
     else if (occupied(goal)) {
         ROS_ERROR("Obstacle ahead, stop moving!");
+        stop();
         return false;
     }
 
-    // create goal pose
-    this->goal.header.stamp = Time::now();
-    this->goal.pose = goal;
-    this->goal.pose.position.z = altitude;
+    // goal changed
+    if (this->goal.pose.position.x != goal.position.x || this->goal.pose.position.y != goal.position.y) {
+        // visualize goal
+        if (visualize) {
+            geometry_msgs::PointStamped wp;
+            wp.header.stamp = Time::now();
+            wp.header.frame_id = "local_origin_ned";
+            wp.point = goal.position;
+            visualize_pub.publish(wp);
+        }
 
-    // send goal pose to cps controller
-    pose_pub.publish(this->goal);
+        // create goal pose
+        this->goal.header.stamp = Time::now();
+        this->goal.pose = goal;
+        this->goal.pose.position.z = altitude;
+
+        // send goal pose to cps controller
+        pose_pub.publish(this->goal);
+    }
 
     // successfully published goal set point
     return true;
