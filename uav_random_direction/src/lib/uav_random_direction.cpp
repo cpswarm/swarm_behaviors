@@ -78,8 +78,7 @@ behavior_state_t uav_random_direction::step ()
     }
 
     // move to new position
-    if (pos.move(goal) == false)
-        return STATE_ABORTED;
+    pos.move(goal);
 
     return STATE_ACTIVE;
 }
