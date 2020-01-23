@@ -3,6 +3,7 @@
 
 #include <random_numbers/random_numbers.h>
 #include <cpswarm_msgs/GetSector.h>
+#include <cpswarm_msgs/GetPoints.h>
 #include <position.h>
 
 using namespace std;
@@ -48,15 +49,20 @@ public:
 private:
     /**
      * @brief Compute goal position from direction.
-     * @return The selected goal.
+     * @return Whether the goal could be computed successfully.
      */
-    geometry_msgs::Pose select_goal ();
+    bool select_goal ();
 
     /**
      * @brief Compute new direction using rng.
      * @return Whether a a new direction could be set successfully.
      */
     bool new_direction ();
+
+    /**
+     * @brief Service client to get the area polygon.
+     */
+    ServiceClient area_client;
 
     /**
      * @brief Service client for determining the sector clear of obstacles.
@@ -69,34 +75,24 @@ private:
     position pos;
 
     /**
-     * @brief The maximum distance that a UAV travels in one step.
-     */
-    double step_size_max;
-
-    /**
-     * @brief The minimum distance that a UAV travels in one step.
-     */
-    double step_size_min;
-
-    /**
-     * @brief Whether the drone still needs to turn before moving.
-     */
-    bool turn;
-
-    /**
      * @brief The direction in which the drone is travling. It is measured in radian, clockwise starting from north.
      */
     double direction;
 
     /**
-     * @brief The distance which the drone is traveling.
+     * @brief The current goal.
      */
-    double distance;
+    geometry_msgs::Pose goal;
 
     /**
      * @brief The random number generator used for selecting a random direction.
      */
     random_numbers::RandomNumberGenerator* rng;
+
+    /**
+     * @brief The distance in meter to keep to the environment boundary.
+     */
+    double margin;
 };
 
 #endif // UAV_RANDOM_DIRECTION_H
