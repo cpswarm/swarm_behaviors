@@ -1,5 +1,3 @@
 loop_rate:       5.0  # The frequency in Hz at which to run the swarm behavior loops.
 queue_size:      1    # The size of the message queue used for publishing and subscribing to topics.
 single_target:   true # Whether the algorithm will succeed / terminate once a target has been found.
-target_velocity: 1.0  # Target velocity of the UAV in meter per second.
-tolerance:       0.25 # The distance in meter to the current waypoint below which the next waypoint of the path is selected.

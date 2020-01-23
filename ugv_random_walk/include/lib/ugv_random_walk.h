@@ -40,6 +40,11 @@ public:
      */
     behavior_state_t step();
 
+    /**
+     * @brief Stop moving.
+     */
+    void stop ();
+
 private:
     /**
      * @brief Compute new direction using rng.

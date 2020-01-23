@@ -30,6 +30,11 @@ behavior_state_t uav_simple_tracking::step ()
     return STATE_ACTIVE;
 }
 
+void uav_simple_tracking::stop ()
+{
+    pos.stop();
+}
+
 void uav_simple_tracking::target_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
 {
     // update information for this target

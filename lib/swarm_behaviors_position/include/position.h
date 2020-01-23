@@ -73,6 +73,12 @@ public:
     geometry_msgs::Pose get_pose () const;
 
     /**
+     * @brief Get the position tolerance.
+     * @return The distance in meter that the CPS can be away from a goal while still being considered to have reached that goal.
+     */
+    double get_tolerance () const;
+
+    /**
      * @brief Get the current yaw orientation of the CPS.
      * @return The current yaw angle of the CPS counterclockwise starting from x-axis/east.
      */
@@ -99,6 +105,17 @@ public:
      */
     bool out_of_bounds (geometry_msgs::Pose pose);
 
+    /**
+     * @brief Check whether the CPS has reached the current goal.
+     * @return True if the CPS is close to the current goal, false otherwise.
+     */
+    bool reached ();
+
+    /**
+     * @brief Stop moving by publishing the current position as goal.
+     */
+    void stop ();
+
 private:
     /**
      * @brief Get the yaw orientation from a pose.
@@ -106,13 +123,6 @@ private:
      * @return The yaw angle of the given pose counterclockwise starting from x-axis/east.
      */
     double get_yaw (geometry_msgs::Pose pose) const;
-
-    /**
-     * @brief Check whether the CPS has reached a given pose.
-     * @param goal The pose to check.
-     * @return True if the CPS is close to the given pose, false otherwise.
-     */
-    bool reached (geometry_msgs::Pose goal);
 
     /**
      * @brief Callback function for position updates.
@@ -156,14 +166,14 @@ private:
     geometry_msgs::Pose pose;
 
     /**
+     * @brief Current goal of the CPS.
+     */
+    geometry_msgs::PoseStamped goal;
+
+    /**
      * @brief Whether a valid position has been received.
      */
     bool pose_valid;
-
-    /**
-     * @brief The time in seconds that the CPS is given time to reach a destination before giving up.
-     */
-    double goal_timeout;
 
     /**
      * @brief The distance that the CPS can be away from a goal while still being considered to have reached that goal.

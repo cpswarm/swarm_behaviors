@@ -4,7 +4,6 @@
 #include <geometry_msgs/Pose.h>
 #include <cpswarm_msgs/GetWaypoint.h>
 #include <position.h>
-#include <velocity.h>
 
 using namespace std;
 using namespace ros;
@@ -71,21 +70,6 @@ private:
      * @brief A helper object for position related tasks.
      */
     position pos;
-
-    /**
-     * @brief A helper object for velocity related tasks.
-     */
-    velocity vel;
-
-    /**
-     * @brief Target velocity of the UAV.
-     */
-    double target_velocity;
-
-    /**
-     * The distance to the current waypoint below which the next waypoint of the path is selected.
-     */
-    double tolerance;
 
 };
 

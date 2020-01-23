@@ -9,7 +9,6 @@ depends:
 - cpswarm_msgs
 - swarm_behaviors_position
 - geometry_msgs
-- swarm_behaviors_velocity
 description: A package that performs optimal coverage with a swarm of unmanned aerial
   vehicles (UAVs). The UAVs optimally divide the area to be covered among each other.
 license: Apache License 2.0
