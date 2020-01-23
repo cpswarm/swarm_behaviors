@@ -8,7 +8,6 @@ position::position (double altitude) : altitude(altitude)
     rate = new Rate(loop_rate);
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
-    nh.param(this_node::getName() + "/goal_timeout", goal_timeout, 30.0);
     nh.param(this_node::getName() + "/goal_tolerance", goal_tolerance, 0.1);
 
     // no pose received yet
@@ -28,6 +27,9 @@ position::position (double altitude) : altitude(altitude)
         rate->sleep();
         spinOnce();
     }
+
+    // init goal
+    goal.pose = pose;
 }
 
 position::~position ()
@@ -80,6 +82,11 @@ geometry_msgs::Pose position::get_pose () const
     return pose;
 }
 
+double position::get_tolerance () const
+{
+    return goal_tolerance;
+}
+
 double position::get_yaw () const
 {
     return get_yaw(pose);
@@ -93,33 +100,21 @@ bool position::move (geometry_msgs::Pose goal)
         return false;
     }
 
+    // obstacle in direction of goal
+    else if (occupied(goal)) {
+        ROS_ERROR("Obstacle ahead, stop moving!");
+        return false;
+    }
+
     // create goal pose
-    geometry_msgs::PoseStamped goal_pose;
-    goal_pose.header.stamp = Time::now();
-    goal_pose.pose = goal;
-    goal_pose.pose.position.z = altitude;
+    this->goal.header.stamp = Time::now();
+    this->goal.pose = goal;
+    this->goal.pose.position.z = altitude;
 
     // send goal pose to cps controller
-    pose_pub.publish(goal_pose);
+    pose_pub.publish(this->goal);
 
-    ROS_INFO("Move to (%.2f,%.2f)", goal.position.x, goal.position.y);
-
-    // wait until cps reached goal
-    Time start = Time::now();
-    while (ok() && reached(goal) == false && Time::now() <= start + Duration(goal_timeout)) {
-        // wait
-        rate->sleep();
-
-        // check if reached goal
-        spinOnce();
-    }
-
-    // could not reach goal within time
-    if (Time::now() > start + Duration(goal_timeout)) {
-        ROS_WARN("Failed to reach goal (%.2f,%.2f) in timeout %.2fs!", goal.position.x, goal.position.y, goal_timeout);
-    }
-
-    // successfully moved to goal
+    // successfully published goal set point
     return true;
 }
 
@@ -159,21 +154,33 @@ bool position::out_of_bounds (geometry_msgs::Pose pose)
     }
 }
 
+bool position::reached ()
+{
+    ROS_DEBUG("Yaw %.2f --> %.2f", get_yaw(pose), get_yaw(goal.pose));
+    ROS_DEBUG("Pose (%.2f,%.2f) --> (%.2f,%.2f)", pose.position.x, pose.position.y, goal.pose.position.x, goal.pose.position.y);
+    ROS_DEBUG("%.2f > %.2f", dist(pose, goal.pose), goal_tolerance);
+
+    // whether cps reached goal position, ignoring yaw
+    return dist(pose, goal.pose) <= goal_tolerance;
+}
+
+void position::stop ()
+{
+    // create goal pose
+    goal.header.stamp = Time::now();
+    goal.pose = pose;
+    goal.pose.position.z = altitude;
+
+    // send goal pose to cps controller
+    pose_pub.publish(goal);
+
+}
+
 double position::get_yaw (geometry_msgs::Pose pose) const
 {
     tf2::Quaternion orientation;
     tf2::fromMsg(pose.orientation, orientation);
     return tf2::getYaw(orientation);
-}
-
-bool position::reached (geometry_msgs::Pose goal)
-{
-    ROS_DEBUG("Yaw %.2f --> %.2f", get_yaw(pose), get_yaw(goal));
-    ROS_DEBUG("Pose (%.2f,%.2f) --> (%.2f,%.2f)", pose.position.x, pose.position.y, goal.position.x, goal.position.y);
-    ROS_DEBUG("%.2f > %.2f", dist(pose, goal), goal_tolerance);
-
-    // whether cps reached goal position, ignoring yaw
-    return dist(pose, goal) <= goal_tolerance;
 }
 
 void position::pose_callback (const geometry_msgs::PoseStamped::ConstPtr& msg)

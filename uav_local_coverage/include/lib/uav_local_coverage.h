@@ -33,6 +33,11 @@ public:
      */
     behavior_state_t step();
 
+    /**
+     * @brief Stop moving.
+     */
+    void stop ();
+
 private:
     /**
      * @brief Compute local coordinates on circle involute for current step.

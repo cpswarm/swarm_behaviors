@@ -63,6 +63,11 @@ behavior_state_t ugv_random_walk::step ()
     return STATE_ACTIVE;
 }
 
+void ugv_random_walk::stop ()
+{
+    pos.stop();
+}
+
 bool ugv_random_walk::new_direction ()
 {
     // get sector clear of obstacles and other uavs

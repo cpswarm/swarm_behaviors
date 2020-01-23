@@ -36,6 +36,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5a43ceef559e19cb0484c93986083ed8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="uav__random__direction_8h.html#a27dd7d0a41b9e119c1bd4d59bfb6889e">behavior_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__random__direction.html#a5a43ceef559e19cb0484c93986083ed8">step</a> ()</td></tr>
 <tr class="memdesc:a5a43ceef559e19cb0484c93986083ed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move the swarm member to a new position.  <a href="#a5a43ceef559e19cb0484c93986083ed8">More...</a><br /></td></tr>
 <tr class="separator:a5a43ceef559e19cb0484c93986083ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a52c3c90870d13bfd4570f9b65ba79c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__random__direction.html#a8a52c3c90870d13bfd4570f9b65ba79c">stop</a> ()</td></tr>
+<tr class="memdesc:a8a52c3c90870d13bfd4570f9b65ba79c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop moving.  <a href="#a8a52c3c90870d13bfd4570f9b65ba79c">More...</a><br /></td></tr>
+<tr class="separator:a8a52c3c90870d13bfd4570f9b65ba79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab29df576fb4d80006fc2a71a0007830d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classuav__random__direction.html#ab29df576fb4d80006fc2a71a0007830d">uav_random_direction</a> (double altitude)</td></tr>
 <tr class="memdesc:ab29df576fb4d80006fc2a71a0007830d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that initializes the private member variables.  <a href="#ab29df576fb4d80006fc2a71a0007830d">More...</a><br /></td></tr>
 <tr class="separator:ab29df576fb4d80006fc2a71a0007830d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,7 +163,7 @@ Private Attributes</h2></td></tr>
 <p>Compute new direction using rng. </p>
 <dl class="section return"><dt>Returns</dt><dd>Whether a a new direction could be set successfully. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lib_2uav__random__direction_8cpp_source.html#l00093">93</a> of file <a class="el" href="lib_2uav__random__direction_8cpp_source.html">lib/uav_random_direction.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lib_2uav__random__direction_8cpp_source.html#l00098">98</a> of file <a class="el" href="lib_2uav__random__direction_8cpp_source.html">lib/uav_random_direction.cpp</a>.</p>
 
 </div>
 </div>
@@ -190,7 +193,7 @@ Private Attributes</h2></td></tr>
 <p>Compute goal position from direction. </p>
 <dl class="section return"><dt>Returns</dt><dd>The selected goal. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lib_2uav__random__direction_8cpp_source.html#l00087">87</a> of file <a class="el" href="lib_2uav__random__direction_8cpp_source.html">lib/uav_random_direction.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lib_2uav__random__direction_8cpp_source.html#l00092">92</a> of file <a class="el" href="lib_2uav__random__direction_8cpp_source.html">lib/uav_random_direction.cpp</a>.</p>
 
 </div>
 </div>
@@ -213,6 +216,27 @@ Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Return the state of the coverage algorithm. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="lib_2uav__random__direction_8cpp_source.html#l00036">36</a> of file <a class="el" href="lib_2uav__random__direction_8cpp_source.html">lib/uav_random_direction.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8a52c3c90870d13bfd4570f9b65ba79c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a52c3c90870d13bfd4570f9b65ba79c">&#9670;&nbsp;</a></span>stop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void uav_random_direction::stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stop moving. </p>
+
+<p class="definition">Definition at line <a class="el" href="lib_2uav__random__direction_8cpp_source.html#l00087">87</a> of file <a class="el" href="lib_2uav__random__direction_8cpp_source.html">lib/uav_random_direction.cpp</a>.</p>
 
 </div>
 </div>
@@ -239,7 +263,7 @@ Private Attributes</h2></td></tr>
 
 <p>Service client for determining the sector clear of obstacles. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00059">59</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00064">64</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
 
 </div>
 </div>
@@ -265,7 +289,7 @@ Private Attributes</h2></td></tr>
 
 <p>The direction in which the drone is travling. It is measured in radian, clockwise starting from north. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00084">84</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00089">89</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
 
 </div>
 </div>
@@ -291,7 +315,7 @@ Private Attributes</h2></td></tr>
 
 <p>The distance which the drone is traveling. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00089">89</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00094">94</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
 
 </div>
 </div>
@@ -317,7 +341,7 @@ Private Attributes</h2></td></tr>
 
 <p>A helper object for position related tasks. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00064">64</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00069">69</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
 
 </div>
 </div>
@@ -343,7 +367,7 @@ Private Attributes</h2></td></tr>
 
 <p>The random number generator used for selecting a random direction. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00094">94</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00099">99</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
 
 </div>
 </div>
@@ -369,7 +393,7 @@ Private Attributes</h2></td></tr>
 
 <p>The maximum distance that a UAV travels in one step. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00069">69</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00074">74</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
 
 </div>
 </div>
@@ -395,7 +419,7 @@ Private Attributes</h2></td></tr>
 
 <p>The minimum distance that a UAV travels in one step. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00074">74</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00079">79</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
 
 </div>
 </div>
@@ -421,7 +445,7 @@ Private Attributes</h2></td></tr>
 
 <p>Whether the drone still needs to turn before moving. </p>
 
-<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00079">79</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__random__direction_8h_source.html#l00084">84</a> of file <a class="el" href="uav__random__direction_8h_source.html">uav_random_direction.h</a>.</p>
 
 </div>
 </div>
@@ -435,7 +459,7 @@ Private Attributes</h2></td></tr>
 <hr size="1"><div style="align: right;">
 <a href="http://wiki.ros.org/uav_random_direction">uav_random_direction</a><br />
 Author(s): Micha Sende <sende@lakeside-labs.com></br />
-<small>autogenerated on Wed Jan 15 2020 15:21:43</small>
+<small>autogenerated on Thu Jan 23 2020 14:00:15</small>
 </div>
 </body>
 </html>

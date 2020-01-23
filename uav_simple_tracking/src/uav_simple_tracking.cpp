@@ -55,6 +55,9 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
         spinOnce();
     }
 
+    // stop moving
+    uav_tracking.stop();
+
     // tracking succeeded
     if (state == STATE_SUCCEEDED) {
         ROS_INFO("Tracking succeeded");

@@ -35,6 +35,11 @@ public:
      */
     behavior_state_t step ();
 
+    /**
+     * @brief Stop moving.
+     */
+    void stop ();
+
 private:
     /**
      * @brief Callback function to receive target position updates.

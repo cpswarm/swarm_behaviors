@@ -27,27 +27,18 @@ behavior_state_t uav_local_coverage::step ()
     spinOnce();
 
     // next search step
-    ++steps;
+    if (pos.reached()) {
+        ++steps;
 
-    // next goal
-    geometry_msgs::Pose goal;
-
-    // reached maximum number of steps, stop local coverage
-    if (steps >= max_steps) {
-        ROS_INFO("Reached maximum coverage steps!");
-        return STATE_ABORTED;
-    }
-
-    // compute new goal
-    else {
-        goal = select_goal();
-
-        // reached environment boundary, stop local coverage
-        if (pos.out_of_bounds(goal)) {
-            ROS_ERROR("Goal (%.2f,%.2f) out of bounds!", goal.position.x, goal.position.y);
+        // reached maximum number of steps, stop local coverage
+        if (steps >= max_steps) {
+            ROS_INFO("Reached maximum coverage steps!");
             return STATE_ABORTED;
         }
     }
+
+    // compute goal
+    geometry_msgs::Pose goal = select_goal();
 
     // move to new goal
     if (pos.move(goal) == false)
@@ -82,4 +73,9 @@ geometry_msgs::Pose uav_local_coverage::select_goal ()
 
     // compute gps coordinats of goal position
     return pos.compute_goal(origin, distance, direction);
+}
+
+void uav_local_coverage::stop ()
+{
+    pos.stop();
 }

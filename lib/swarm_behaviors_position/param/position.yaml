@@ -1,4 +1,3 @@
 loop_rate:       5.0  # The frequency in Hz at which to run the swarm behavior loops.
 queue_size:      1    # The size of the message queue used for publishing and subscribing to topics.
-goal_timeout:   15    # The time in seconds that the CPS is given time to reach a destination before giving up.
-goal_tolerance: 0.4   # The distance in meter that the CPS can be away from a goal while still being considered to have reached that goal.
+goal_tolerance:  0.4  # The distance in meter that the CPS can be away from a goal while still being considered to have reached that goal.

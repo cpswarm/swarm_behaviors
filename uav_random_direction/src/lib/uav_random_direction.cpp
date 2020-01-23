@@ -84,6 +84,11 @@ behavior_state_t uav_random_direction::step ()
     return STATE_ACTIVE;
 }
 
+void uav_random_direction::stop ()
+{
+    pos.stop();
+}
+
 geometry_msgs::Pose uav_random_direction::select_goal ()
 {
     // compute goal position

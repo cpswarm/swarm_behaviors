@@ -9,7 +9,6 @@ This package depends on the following message definitions:
 
 The following library packages of the [swarm behaviors library](https://github.com/cpswarm/swarm_behaviors) are required:
 * swarm_behaviors_position
-* swarm_behaviors_velocity
 
 The following packages of the [swarm functions library](https://github.com/cpswarm/swarm_functions/) are required:
 * area_division
@@ -63,10 +62,6 @@ The `uav_optimal_coverage` performs coverage with a swarm of UAVs. The coverage 
   The size of the message queue used for publishing and subscribing to topics.
 * `~single_target` (boolean, default: `true`)
   Whether the algorithm will succeed / terminate once a target has been found.
-* `~target_velocity` (real, default: `0.5`)
-  Target velocity of the UAV in meter per second.
-* `~tolerance` (real, default: `0.5`)
-  The distance in meter to the current waypoint below which the next waypoint of the path is selected.
 
 ## Code API
 [uav_optimal_coverage package code API documentation](https://cpswarm.github.io/swarm_behaviors/uav_optimal_coverage/docs/html/files.html)
