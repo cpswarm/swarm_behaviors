@@ -151,6 +151,11 @@ private:
     Publisher pose_pub;
 
     /**
+     * @brief Publisher to visualize the current goal.
+     */
+    Publisher visualize_pub;
+
+    /**
      * @brief A node handle for the main ROS node.
      */
     NodeHandle nh;
@@ -179,6 +184,11 @@ private:
      * @brief The distance that the CPS can be away from a goal while still being considered to have reached that goal.
      */
     double goal_tolerance;
+
+    /**
+     * @brief Whether to publish the goal waypoint on a topic for visualization.
+     */
+    bool visualize;
 
     /**
      * @brief The altitude at which the CPS operates.
