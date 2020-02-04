@@ -41,6 +41,8 @@ The `position` library provides position related functionalities. These function
   The size of the message queue used for publishing and subscribing to topics.
 * `~goal_tolerance` (real, default: `0.1`)
   The distance in meter that the CPS can be away from a goal while still being considered to have reached that goal.
+* `~visualize` (boolean, default: `false`)
+  Whether to publish the goal waypoint on a topic for visualization.
 
 ## Code API
 [swarm_behaviors_position package code API documentation](https://cpswarm.github.io/swarm_behaviors/lib/swarm_behaviors_position/docs/html/files.html)

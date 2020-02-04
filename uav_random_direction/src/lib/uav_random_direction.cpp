@@ -5,8 +5,7 @@ uav_random_direction::uav_random_direction (double altitude) : pos(altitude)
     NodeHandle nh;
 
     // read parameters
-    nh.param(this_node::getName() + "/step_size_min", step_size_min, 1.0);
-    nh.param(this_node::getName() + "/step_size_max", step_size_max, 3.0);
+    nh.param(this_node::getName() + "/margin", margin, 0.5);
 
     // init random number generator
     int seed;
@@ -18,12 +17,18 @@ uav_random_direction::uav_random_direction (double altitude) : pos(altitude)
         rng = new random_numbers::RandomNumberGenerator();
     }
 
-    // service client for obstacle detection
+    // init service clients
+    area_client = nh.serviceClient<cpswarm_msgs::GetPoints>("area/get_area");
+    area_client.waitForExistence();
     clear_sector_client = nh.serviceClient<cpswarm_msgs::GetSector>("obstacle_detection/get_clear_sector");
     clear_sector_client.waitForExistence();
 
     // inititial direction as drone is placed
     direction = pos.get_yaw();
+
+    // initialize goal
+    goal = pos.get_pose();
+    select_goal();
 
     ROS_INFO("Initial direction %.2f", direction);
 }
@@ -38,34 +43,12 @@ behavior_state_t uav_random_direction::step ()
     // update position information
     spinOnce();
 
-    // compute new goal with maximum distance
-    distance = step_size_max;
-    geometry_msgs::Pose goal = select_goal();
-
-    // new goal is out of bounds
-    if (pos.out_of_bounds(goal)) {
-        // delta distance
-        double step = (step_size_max - step_size_min) / 10;
-
-        // look for largest possible distance
-        for (int i = 0; i <= 10; ++i) {
-            // reduce distance
-            distance = step_size_max - i * step;
-
-            // select goal at new distance
-            goal = select_goal();
-
-            // found valid goal
-            if (!pos.out_of_bounds(goal))
-                break;
-        }
-
-        // change direction
-        if (pos.out_of_bounds(goal)) {
-            if (new_direction() == false)
-                return STATE_ABORTED;
-            goal = select_goal();
-        }
+    // at boundary
+    if (pos.reached()) {
+        if (new_direction() == false)
+            return STATE_ABORTED;
+        if (select_goal() == false)
+            return STATE_ABORTED;
     }
 
     // obstacle in direction of new goal
@@ -74,7 +57,8 @@ behavior_state_t uav_random_direction::step ()
         // change direction
         if (new_direction() == false)
             return STATE_ABORTED;
-        goal = select_goal();
+        if (select_goal() == false)
+            return STATE_ABORTED;
     }
 
     // move to new position
@@ -88,10 +72,49 @@ void uav_random_direction::stop ()
     pos.stop();
 }
 
-geometry_msgs::Pose uav_random_direction::select_goal ()
+bool uav_random_direction::select_goal ()
 {
-    // compute goal position
-    return pos.compute_goal(distance, direction);
+    // calculate goal
+    cpswarm_msgs::GetPoints area;
+    if (area_client.call(area)){
+        // get area polygon
+        vector<geometry_msgs::Point> coords = area.response.points;
+
+        // find intersecting point of direction and area boundary
+        for (int i = 0; i < coords.size(); ++i) {
+            geometry_msgs::Point v1;
+            v1.x = goal.position.x - coords[i].x;
+            v1.y = goal.position.y - coords[i].y;
+
+            geometry_msgs::Point v2;
+            v2.x = coords[(i+1)%coords.size()].x - coords[i].x;
+            v2.y = coords[(i+1)%coords.size()].y - coords[i].y;
+
+            geometry_msgs::Point v3;
+            v3.x = -sin(direction);
+            v3.y = cos(direction);
+
+            double dot1 = v1.x*v3.x + v1.y*v3.y;
+            double dot2 = v2.x*v3.x + v2.y*v3.y;
+            double cross = v2.x*v1.y - v1.x*v2.y;
+
+            double t1 = cross / dot2;
+            double t2 = dot1 / dot2;
+
+            if (t1 >= 0.0 && t2 >= 0.0 && t2 <= 1.0) {
+                goal.position.x += (t1 - margin) * cos(direction);
+                goal.position.y += (t1 - margin) * sin(direction);
+                return true;
+            }
+        }
+
+        ROS_ERROR("Failed to compute goal");
+    }
+    else{
+        ROS_ERROR("Failed to get area");
+    }
+
+    return false;
 }
 
 bool uav_random_direction::new_direction ()
@@ -109,7 +132,7 @@ bool uav_random_direction::new_direction ()
     geometry_msgs::Pose goal;
     do {
         direction = rng->uniformReal(clear.response.min, clear.response.max);
-        goal = select_goal();
+        select_goal();
         ROS_DEBUG_THROTTLE(1, "Checking goal [%.2f, %.2f, %.2f] in direction %.2f...", goal.position.x, goal.position.y, goal.position.z, direction);
     } while (pos.out_of_bounds(goal));
 

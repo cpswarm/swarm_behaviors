@@ -123,6 +123,12 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:acdc8e8a698ae7942a15d58eadfc66036"><td class="memItemLeft" align="right" valign="top">Rate *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#acdc8e8a698ae7942a15d58eadfc66036">rate</a></td></tr>
 <tr class="memdesc:acdc8e8a698ae7942a15d58eadfc66036"><td class="mdescLeft">&#160;</td><td class="mdescRight">The loop rate object for running the behavior control loops at a specific frequency.  <a href="#acdc8e8a698ae7942a15d58eadfc66036">More...</a><br /></td></tr>
 <tr class="separator:acdc8e8a698ae7942a15d58eadfc66036"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea042469ef3c9969212aac6fc78d7abb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#aea042469ef3c9969212aac6fc78d7abb">visualize</a></td></tr>
+<tr class="memdesc:aea042469ef3c9969212aac6fc78d7abb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to publish the goal waypoint on a topic for visualization.  <a href="#aea042469ef3c9969212aac6fc78d7abb">More...</a><br /></td></tr>
+<tr class="separator:aea042469ef3c9969212aac6fc78d7abb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72d044caf0025f07f2dfecaee7bb9e9f"><td class="memItemLeft" align="right" valign="top">Publisher&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classposition.html#a72d044caf0025f07f2dfecaee7bb9e9f">visualize_pub</a></td></tr>
+<tr class="memdesc:a72d044caf0025f07f2dfecaee7bb9e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publisher to visualize the current goal.  <a href="#a72d044caf0025f07f2dfecaee7bb9e9f">More...</a><br /></td></tr>
+<tr class="separator:a72d044caf0025f07f2dfecaee7bb9e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class to provide position related functionalities. </p>
@@ -174,7 +180,7 @@ Private Attributes</h2></td></tr>
 
 <p>Destructor that deletes the private member objects. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00035">35</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00038">38</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -204,7 +210,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The bearing of the given pose relative to the current yaw of the CPS, counterclockwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00040">40</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00043">43</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -244,7 +250,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The goal pose. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00048">48</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00051">51</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -291,7 +297,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The goal pose. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00053">53</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00056">56</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -320,7 +326,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The distance in meters. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00070">70</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00073">73</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -360,7 +366,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The distance in meters. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00075">75</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00078">78</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -382,7 +388,7 @@ Private Attributes</h2></td></tr>
 <p>Get the current pose of the CPS. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current pose of the CPS in local coordinates. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00080">80</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00083">83</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -404,7 +410,7 @@ Private Attributes</h2></td></tr>
 <p>Get the position tolerance. </p>
 <dl class="section return"><dt>Returns</dt><dd>The distance in meter that the CPS can be away from a goal while still being considered to have reached that goal. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00085">85</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00088">88</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -426,7 +432,7 @@ Private Attributes</h2></td></tr>
 <p>Get the current yaw orientation of the CPS. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current yaw angle of the CPS counterclockwise starting from x-axis/east. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00090">90</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00093">93</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -463,7 +469,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The yaw angle of the given pose counterclockwise starting from x-axis/east. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00179">179</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00196">196</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -492,7 +498,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the CPS reached the goal position. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00095">95</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00098">98</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -521,7 +527,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True, if there is an obstacle in the direction of the pose, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00121">121</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00138">138</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -550,7 +556,7 @@ Private Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True, if the given pose is outside the mission area or it could not be checked, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00144">144</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00161">161</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -586,7 +592,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00186">186</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00203">203</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -608,7 +614,7 @@ Private Attributes</h2></td></tr>
 <p>Check whether the CPS has reached the current goal. </p>
 <dl class="section return"><dt>Returns</dt><dd>True if the CPS is close to the current goal, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00157">157</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00174">174</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -629,7 +635,7 @@ Private Attributes</h2></td></tr>
 
 <p>Stop moving by publishing the current position as goal. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00167">167</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8cpp_source.html#l00184">184</a> of file <a class="el" href="position_8cpp_source.html">position.cpp</a>.</p>
 
 </div>
 </div>
@@ -656,7 +662,7 @@ Private Attributes</h2></td></tr>
 
 <p>The altitude at which the CPS operates. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00186">186</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00196">196</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -682,7 +688,7 @@ Private Attributes</h2></td></tr>
 
 <p>Current goal of the CPS. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00171">171</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00176">176</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -708,7 +714,7 @@ Private Attributes</h2></td></tr>
 
 <p>The distance that the CPS can be away from a goal while still being considered to have reached that goal. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00181">181</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00186">186</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -734,7 +740,7 @@ Private Attributes</h2></td></tr>
 
 <p>A node handle for the main ROS node. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00156">156</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00161">161</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -812,7 +818,7 @@ Private Attributes</h2></td></tr>
 
 <p>Current position of the CPS. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00166">166</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00171">171</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -890,7 +896,7 @@ Private Attributes</h2></td></tr>
 
 <p>Whether a valid position has been received. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00176">176</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00181">181</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -916,7 +922,59 @@ Private Attributes</h2></td></tr>
 
 <p>The loop rate object for running the behavior control loops at a specific frequency. </p>
 
-<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00161">161</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00166">166</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+
+</div>
+</div>
+<a id="aea042469ef3c9969212aac6fc78d7abb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea042469ef3c9969212aac6fc78d7abb">&#9670;&nbsp;</a></span>visualize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool position::visualize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether to publish the goal waypoint on a topic for visualization. </p>
+
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00191">191</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
+
+</div>
+</div>
+<a id="a72d044caf0025f07f2dfecaee7bb9e9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72d044caf0025f07f2dfecaee7bb9e9f">&#9670;&nbsp;</a></span>visualize_pub</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Publisher position::visualize_pub</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Publisher to visualize the current goal. </p>
+
+<p class="definition">Definition at line <a class="el" href="position_8h_source.html#l00156">156</a> of file <a class="el" href="position_8h_source.html">position.h</a>.</p>
 
 </div>
 </div>
@@ -930,7 +988,7 @@ Private Attributes</h2></td></tr>
 <hr size="1"><div style="align: right;">
 <a href="http://wiki.ros.org/swarm_behaviors_position">swarm_behaviors_position</a><br />
 Author(s): </br />
-<small>autogenerated on Thu Jan 23 2020 13:58:57</small>
+<small>autogenerated on Thu Jan 23 2020 19:39:03</small>
 </div>
 </body>
 </html>

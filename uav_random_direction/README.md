@@ -14,6 +14,7 @@ The following packages of the [swarm functions library](https://github.com/cpswa
 * target_monitor (only if `single_target=true`)
 
 The following packages of the [sensing and actuation library](https://github.com/cpswarm/sensing_actuation) are required:
+* area_provider
 * obstacle_detection
 
 Further required packages are:
@@ -54,6 +55,8 @@ The `uav_random_direction` performs coverage using the random direction algorith
   Position and ID of a target detected by the target monitor. Only subscribed when `single_target` is set to `true`.
 
 #### Services Called
+* `area/get_area` ([cpswarm_msgs/GetPoints](https://cpswarm.github.io/cpswarm_msgs/html/srv/GetPoints.html))
+  Get the area polygon.
 * `obstacle_detection/get_clear_sector` ([cpswarm_msgs/GetSector](https://cpswarm.github.io/cpswarm_msgs/html/srv/GetSector.html))
   Get the circular sector that is clear of obstacles.
 
@@ -64,10 +67,8 @@ The `uav_random_direction` performs coverage using the random direction algorith
   The size of the message queue used for publishing and subscribing to topics.
 * `~single_target` (boolean, default: `true`)
   Whether the algorithm will succeed / terminate once a target has been found.
-* `~step_size_max` (real, default: `3.0`)
-  The maximum distance in meter that a UAV travels in one step.
-* `~step_size_min` (real, default: `1.0`)
-  The minimum distance in meter that a UAV travels in one step.
+* `~margin` (real, default: `0.5`)
+  The distance in meter to keep to the environment boundary.
 * `/rng_seed` (integer, default: `0`)
   The seed used for random number generation. In the default case, a random seed is generated.
 
