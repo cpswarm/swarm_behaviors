@@ -18,7 +18,7 @@ class position
 public:
     /**
      * @brief Constructor that initializes the private member variables.
-     * @param altitude: The altitude at which the CPS operates.
+     * @param altitude The altitude at which the CPS operates.
      */
     position (double altitude);
 
@@ -184,6 +184,11 @@ private:
      * @brief The distance that the CPS can be away from a goal while still being considered to have reached that goal.
      */
     double goal_tolerance;
+
+    /**
+     * @brief The time in seconds that reaching a waypoint is allowed to take.
+     */
+    Duration move_timeout;
 
     /**
      * @brief Whether to publish the goal waypoint on a topic for visualization.
