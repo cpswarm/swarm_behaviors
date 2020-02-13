@@ -9,6 +9,9 @@ position::position (double altitude) : altitude(altitude)
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
     nh.param(this_node::getName() + "/goal_tolerance", goal_tolerance, 0.1);
+    double d_move_timeout;
+    nh.param(this_node::getName() + "/move_timeout", d_move_timeout, 10.0);
+    move_timeout = Duration(d_move_timeout);
     nh.param(this_node::getName() + "/visualize", visualize, false);
 
     // no pose received yet
@@ -176,6 +179,12 @@ bool position::reached ()
     ROS_DEBUG("Yaw %.2f --> %.2f", get_yaw(pose), get_yaw(goal.pose));
     ROS_DEBUG("Pose (%.2f,%.2f) --> (%.2f,%.2f)", pose.position.x, pose.position.y, goal.pose.position.x, goal.pose.position.y);
     ROS_DEBUG("%.2f > %.2f", dist(pose, goal.pose), goal_tolerance);
+
+    // time out
+    if (goal.header.stamp + move_timeout < Time::now()) {
+        ROS_ERROR("Could not reach goal within timeout %.2fs", move_timeout.toSec());
+        return true;
+    }
 
     // whether cps reached goal position, ignoring yaw
     return dist(pose, goal.pose) <= goal_tolerance;

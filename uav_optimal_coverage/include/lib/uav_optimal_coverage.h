@@ -25,7 +25,7 @@ class uav_optimal_coverage
 public:
     /**
      * @brief Constructor that initializes the private member variables.
-     * @param altitude: The altitude at which the CPS operates.
+     * @param altitude The altitude at which the CPS operates.
      */
     uav_optimal_coverage (double altitude);
 
@@ -60,11 +60,6 @@ private:
      * @brief Service message to get the current waypoint.
      */
     cpswarm_msgs::GetWaypoint get_wp;
-
-    /**
-     * @brief The state of the behavior algorithm.
-     */
-    behavior_state_t state;
 
     /**
      * @brief A helper object for position related tasks.
