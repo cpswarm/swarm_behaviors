@@ -14,16 +14,22 @@ behavior_state_t uav_simple_tracking::step ()
     // update position information
     spinOnce();
 
-    // target left the area
-    if (pos.out_of_bounds(target.pose.pose)) {
-        return STATE_SUCCEEDED;
-    }
+    // check if target pose has been received
+    if (target.header.stamp > Time(0)) {
+        // target left the area
+        if (pos.out_of_bounds(target.pose.pose)) {
+            return STATE_SUCCEEDED;
+        }
 
-    // target is still inside area
+        // target is still inside area
+        else {
+            // move to target position
+            if (pos.move(target.pose.pose) == false)
+                return STATE_ABORTED;
+        }
+    }
     else {
-        // move to target position
-        if (pos.move(target.pose.pose) == false)
-            return STATE_ABORTED;
+        ROS_WARN_ONCE("No pose received for target %d, holding position!", target.id);
     }
 
     // return state to action server
