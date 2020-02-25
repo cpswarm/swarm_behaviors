@@ -115,7 +115,7 @@ bool position::move (geometry_msgs::Pose goal)
     }
 
     // goal changed
-    if (this->goal.pose.position.x != goal.position.x || this->goal.pose.position.y != goal.position.y) {
+    if (this->goal.header.stamp.isZero() || this->goal.pose.position.x != goal.position.x || this->goal.pose.position.y != goal.position.y) {
         // visualize goal
         if (visualize) {
             geometry_msgs::PointStamped wp;
@@ -180,9 +180,18 @@ bool position::reached ()
     ROS_DEBUG("Pose (%.2f,%.2f) --> (%.2f,%.2f)", pose.position.x, pose.position.y, goal.pose.position.x, goal.pose.position.y);
     ROS_DEBUG("%.2f > %.2f", dist(pose, goal.pose), goal_tolerance);
 
+    // invalid goal
+    if (goal.header.stamp.isZero())
+        return true;
+
     // time out
     if (goal.header.stamp + move_timeout < Time::now()) {
         ROS_ERROR("Could not reach goal within timeout %.2fs", move_timeout.toSec());
+
+        // invalidate goal
+        goal.header.stamp = Time(0);
+
+        // let behavior think goal is reached
         return true;
     }
 
