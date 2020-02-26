@@ -1,18 +1,13 @@
 #include "lib/uav_simple_tracking.h"
 
-uav_simple_tracking::uav_simple_tracking(unsigned int target, double altitude) : pos(altitude)
+uav_simple_tracking::uav_simple_tracking(cpswarm_msgs::TargetPositionEvent target, double altitude) : target(target), pos(altitude)
 {
-    this->target.id = target;
-    NodeHandle nh;
-    int queue_size;
-    nh.param(this_node::getName() + "/queue_size", queue_size, 1);
-    target_sub = nh.subscribe("target_update", queue_size, &uav_simple_tracking::target_callback, this);
 }
 
-behavior_state_t uav_simple_tracking::step ()
+behavior_state_t uav_simple_tracking::step (cpswarm_msgs::TargetPositionEvent target)
 {
-    // update position information
-    spinOnce();
+    // update target information
+    this->target = target;
 
     // check if target pose has been received
     if (target.header.stamp > Time(0)) {
@@ -39,11 +34,4 @@ behavior_state_t uav_simple_tracking::step ()
 void uav_simple_tracking::stop ()
 {
     pos.stop();
-}
-
-void uav_simple_tracking::target_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
-{
-    // update information for this target
-    if (target.id == msg->id)
-        target = *msg;
 }

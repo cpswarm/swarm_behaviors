@@ -24,16 +24,17 @@ class uav_simple_tracking
 public:
     /**
      * @brief Constructor that initializes the private member variables.
-     * @param target The ID of the target being tracked by this UAV.
+     * @param target The target being tracked by this UAV.
      * @param altitude: The altitude at which the CPS operates.
      */
-    uav_simple_tracking (unsigned int target, double altitude);
+    uav_simple_tracking (cpswarm_msgs::TargetPositionEvent target, double altitude);
 
     /**
      * @brief Execute one cycle of the tracking algorithm.
+     * @param target Updated target information.
      * @return Return the state of the tracking algorithm.
      */
-    behavior_state_t step ();
+    behavior_state_t step (cpswarm_msgs::TargetPositionEvent target);
 
     /**
      * @brief Stop moving.
@@ -41,17 +42,6 @@ public:
     void stop ();
 
 private:
-    /**
-     * @brief Callback function to receive target position updates.
-     * @param msg ID and position of target.
-     */
-    void target_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg);
-
-    /**
-     * @brief Subscriber to receive target position updates.
-     */
-    Subscriber target_sub;
-
     /**
      * @brief A helper object for position related tasks.
      */

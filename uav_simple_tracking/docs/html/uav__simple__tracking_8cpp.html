@@ -65,15 +65,18 @@ Functions</h2></td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uav__simple__tracking_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="memdesc:a3c04138a5bfe5d72780bb7e82a18e627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main function to be executed by ROS.  <a href="#a3c04138a5bfe5d72780bb7e82a18e627">More...</a><br /></td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5094472070b103fda3b5f67d0447fba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uav__simple__tracking_8cpp.html#ad5094472070b103fda3b5f67d0447fba">update_callback</a> (const cpswarm_msgs::TargetPositionEvent::ConstPtr &amp;msg)</td></tr>
+<tr class="memdesc:ad5094472070b103fda3b5f67d0447fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function to receive target update events.  <a href="#ad5094472070b103fda3b5f67d0447fba">More...</a><br /></td></tr>
+<tr class="separator:ad5094472070b103fda3b5f67d0447fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a171c9b2afccc896abc267cc65d4e51d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="uav__simple__tracking_8h.html#a27dd7d0a41b9e119c1bd4d59bfb6889e">behavior_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uav__simple__tracking_8cpp.html#a171c9b2afccc896abc267cc65d4e51d9">state</a></td></tr>
 <tr class="memdesc:a171c9b2afccc896abc267cc65d4e51d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The state of the behavior algorithm.  <a href="#a171c9b2afccc896abc267cc65d4e51d9">More...</a><br /></td></tr>
 <tr class="separator:a171c9b2afccc896abc267cc65d4e51d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8aa5cb4faa95420993aad5d4f2e839f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uav__simple__tracking_8cpp.html#ae8aa5cb4faa95420993aad5d4f2e839f">target</a></td></tr>
-<tr class="memdesc:ae8aa5cb4faa95420993aad5d4f2e839f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ID of the target being tracked.  <a href="#ae8aa5cb4faa95420993aad5d4f2e839f">More...</a><br /></td></tr>
-<tr class="separator:ae8aa5cb4faa95420993aad5d4f2e839f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb0da109b53b6b8c159c9287c8c7d37"><td class="memItemLeft" align="right" valign="top">cpswarm_msgs::TargetPositionEvent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uav__simple__tracking_8cpp.html#adbb0da109b53b6b8c159c9287c8c7d37">target</a></td></tr>
+<tr class="memdesc:adbb0da109b53b6b8c159c9287c8c7d37"><td class="mdescLeft">&#160;</td><td class="mdescRight">The target being tracked.  <a href="#adbb0da109b53b6b8c159c9287c8c7d37">More...</a><br /></td></tr>
+<tr class="separator:adbb0da109b53b6b8c159c9287c8c7d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a3b81be36db7e5529a438e3ecaf456b37"></a>
@@ -158,7 +161,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8cpp_source.html#l00094">94</a> of file <a class="el" href="uav__simple__tracking_8cpp_source.html">uav_simple_tracking.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8cpp_source.html#l00105">105</a> of file <a class="el" href="uav__simple__tracking_8cpp_source.html">uav_simple_tracking.cpp</a>.</p>
 
 </div>
 </div>
@@ -186,7 +189,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8cpp_source.html#l00084">84</a> of file <a class="el" href="uav__simple__tracking_8cpp_source.html">uav_simple_tracking.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8cpp_source.html#l00095">95</a> of file <a class="el" href="uav__simple__tracking_8cpp_source.html">uav_simple_tracking.cpp</a>.</p>
 
 </div>
 </div>
@@ -226,7 +229,35 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Success. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8cpp_source.html#l00106">106</a> of file <a class="el" href="uav__simple__tracking_8cpp_source.html">uav_simple_tracking.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8cpp_source.html#l00117">117</a> of file <a class="el" href="uav__simple__tracking_8cpp_source.html">uav_simple_tracking.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ad5094472070b103fda3b5f67d0447fba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5094472070b103fda3b5f67d0447fba">&#9670;&nbsp;</a></span>update_callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void update_callback </td>
+          <td>(</td>
+          <td class="paramtype">const cpswarm_msgs::TargetPositionEvent::ConstPtr &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Callback function to receive target update events. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>ID and position of target. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8cpp_source.html#l00084">84</a> of file <a class="el" href="uav__simple__tracking_8cpp_source.html">uav_simple_tracking.cpp</a>.</p>
 
 </div>
 </div>
@@ -249,19 +280,19 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ae8aa5cb4faa95420993aad5d4f2e839f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae8aa5cb4faa95420993aad5d4f2e839f">&#9670;&nbsp;</a></span>target</h2>
+<a id="adbb0da109b53b6b8c159c9287c8c7d37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbb0da109b53b6b8c159c9287c8c7d37">&#9670;&nbsp;</a></span>target</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int target</td>
+          <td class="memname">cpswarm_msgs::TargetPositionEvent target</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>The ID of the target being tracked. </p>
+<p>The target being tracked. </p>
 
 <p class="definition">Definition at line <a class="el" href="uav__simple__tracking_8cpp_source.html#l00018">18</a> of file <a class="el" href="uav__simple__tracking_8cpp_source.html">uav_simple_tracking.cpp</a>.</p>
 
@@ -273,7 +304,7 @@ Variables</h2></td></tr>
 <hr size="1"><div style="align: right;">
 <a href="http://wiki.ros.org/uav_simple_tracking">uav_simple_tracking</a><br />
 Author(s): Micha Sende <sende@lakeside-labs.com></br />
-<small>autogenerated on Thu Jan 23 2020 19:39:42</small>
+<small>autogenerated on Wed Feb 26 2020 13:13:20</small>
 </div>
 </body>
 </html>

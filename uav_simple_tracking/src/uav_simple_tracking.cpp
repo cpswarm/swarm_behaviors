@@ -13,9 +13,9 @@ using namespace ros;
 behavior_state_t state;
 
 /**
- * @brief The ID of the target being tracked.
+ * @brief The target being tracked.
  */
-int target;
+cpswarm_msgs::TargetPositionEvent target;
 
 /**
  * @brief An action server type that allows to start and stop the tracking task.
@@ -32,7 +32,7 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
     NodeHandle nh;
 
     // target id
-    target = goal->target;
+    target.id = goal->target;
 
     // set loop rate
     double loop_rate;
@@ -48,7 +48,7 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
     state = STATE_ACTIVE;
     while (ok() && !as->isPreemptRequested() && state == STATE_ACTIVE) {
         ROS_DEBUG("Tracking step");
-        behavior_state_t result = uav_tracking.step();
+        behavior_state_t result = uav_tracking.step(target);
         if (state == STATE_ACTIVE)
             state = result;
         rate.sleep();
@@ -78,12 +78,23 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
 }
 
 /**
+ * @brief Callback function to receive target update events.
+ * @param msg ID and position of target.
+ */
+void update_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
+{
+    // update information for this target
+    if (msg->id == target.id)
+        target = *msg;
+}
+
+/**
  * @brief Callback function to receive event that target has been lost.
  * @param msg ID and position of target.
  */
 void lost_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
 {
-    if (msg->id == target)
+    if (msg->id == target.id)
         state = STATE_ABORTED;
 }
 
@@ -93,7 +104,7 @@ void lost_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
  */
 void done_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
 {
-    if (msg->id == target)
+    if (msg->id == target.id)
         state = STATE_SUCCEEDED;
 }
 
@@ -118,11 +129,12 @@ int main (int argc, char** argv)
     }
 
     // initially, no targets being tracked
-    target = -1;
+    target.id = -1;
 
     // subscribers
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
+    Subscriber update_sub = nh.subscribe("target_update", queue_size, update_callback);
     Subscriber lost_sub = nh.subscribe("target_lost", queue_size, lost_callback);
     Subscriber done_sub = nh.subscribe("target_done", queue_size, done_callback);
 
