@@ -208,7 +208,9 @@ void position::stop ()
 
     // send goal pose to cps controller
     pose_pub.publish(goal);
-
+    ROS_INFO("Stopping in [%.2f, %.2f]", goal.pose.position.x, goal.pose.position.y);
+    // Sleep to guarantee that stop is correctly sent
+    sleep(0.01);
 }
 
 double position::get_yaw (geometry_msgs::Pose pose) const
