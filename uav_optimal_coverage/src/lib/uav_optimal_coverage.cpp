@@ -51,8 +51,7 @@ behavior_state_t uav_optimal_coverage::step ()
     goal.position.y = waypoint.y;
 
     // move to new position
-    if (pos.move(goal) == false)
-        return STATE_ABORTED;
+    pos.move(goal);
 
     // return state to action server
     return STATE_ACTIVE;
