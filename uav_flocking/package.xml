@@ -25,8 +25,8 @@
   <depend>actionlib</depend>
   <depend>geometry_msgs</depend>
   <depend>cpswarm_msgs</depend>
-  <depend>position</depend>
-  <depend>velocity</depend>
+  <depend>swarm_behaviors_position</depend>
+  <depend>swarm_behaviors_velocity</depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

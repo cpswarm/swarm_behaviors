@@ -1,9 +1,9 @@
 #include "lib/uav_flocking_tracking.h"
 
-uav_flocking_tracking::uav_flocking_tracking(unsigned int target)
+uav_flocking_tracking::uav_flocking_tracking(unsigned int target, double altitude) : pos(altitude), vel(altitude)
 {
     this->target.id = target;
-    flock = new uav_flocking();
+    flock = new uav_flocking(altitude);
     NodeHandle nh;
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);

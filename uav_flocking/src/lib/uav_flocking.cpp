@@ -1,8 +1,8 @@
 #include "lib/uav_flocking.h"
 
-uav_flocking::uav_flocking ()
+uav_flocking::uav_flocking (double altitude) : pos(altitude), vel(altitude)
 {
-    // read parameters
+    // read parameterss
     NodeHandle nh;
     double loop_rate;
     nh.param(this_node::getName() + "/loop_rate", loop_rate, 5.0);

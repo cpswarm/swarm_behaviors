@@ -26,8 +26,9 @@ class uav_flocking
 public:
     /**
      * @brief Constructor that initializes the private member variables.
+     * @param altitude: The altitude at which the CPS operates.
      */
-    uav_flocking ();
+    uav_flocking (double altitude);
 
     /**
      * @brief Compute the velocity to perform coverage with a flock of UAVs.

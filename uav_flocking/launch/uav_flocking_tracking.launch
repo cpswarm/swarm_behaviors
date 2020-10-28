@@ -7,8 +7,8 @@
     <!-- Flocking tracking algorithm -->
     <node pkg="uav_flocking" type="uav_flocking_tracking" name="uav_tracking_$(arg id)" output="$(arg output)" required="true">
         <rosparam file="$(find uav_flocking)/param/uav_flocking.yaml" command="load" />
-        <rosparam file="$(find position)/param/position.yaml" command="load" />
-        <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
+        <rosparam file="$(find swarm_behaviors_position)/param/position.yaml" command="load" />
+        <rosparam file="$(find swarm_behaviors_velocity)/param/velocity.yaml" command="load" />
     </node>
 
 </launch>

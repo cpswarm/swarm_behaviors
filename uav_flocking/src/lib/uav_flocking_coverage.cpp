@@ -1,9 +1,9 @@
 #include "lib/uav_flocking_coverage.h"
 
-uav_flocking_coverage::uav_flocking_coverage ()
+uav_flocking_coverage::uav_flocking_coverage (double altitude) : pos(altitude), vel(altitude)
 {
     NodeHandle nh;
-    flock = new uav_flocking();
+    flock = new uav_flocking(altitude);
     nh.param(this_node::getName() + "/flock_vel", flock_vel, 0.5);
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);

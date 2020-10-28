@@ -26,8 +26,9 @@ public:
     /**
      * @brief Constructor that initializes the private member variables.
      * @param target The ID of the target being tracked by this UAV.
+     * @param altitude: The altitude at which the CPS operates.
      */
-    uav_flocking_tracking (unsigned int target);
+    uav_flocking_tracking (unsigned int target, double altitude);
 
     /**
      * @brief Destructor that deletes the private member objects.

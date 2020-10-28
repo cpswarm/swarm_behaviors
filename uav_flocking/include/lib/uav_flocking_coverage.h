@@ -25,8 +25,9 @@ class uav_flocking_coverage
 public:
     /**
      * @brief Constructor that initializes the private member variables.
+     * @param altitude: The altitude at which the CPS operates.
      */
-    uav_flocking_coverage ();
+    uav_flocking_coverage (double altitude);
 
     /**
      * @brief Destructor that deletes the private member objects.
