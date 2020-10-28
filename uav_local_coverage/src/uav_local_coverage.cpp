@@ -1,5 +1,4 @@
 #include <ros/ros.h>
-#include <ros/console.h>
 #include <actionlib/server/simple_action_server.h>
 #include <cpswarm_msgs/CoverageAction.h>
 #include <cpswarm_msgs/TargetPositionEvent.h>
@@ -97,14 +96,6 @@ int main (int argc, char** argv)
     // init ros node
     init(argc, argv, "uav_local_coverage");
     NodeHandle nh;
-
-    // define which log messages are shown
-    if (console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, console::levels::Info)) {
-        console::notifyLoggerLevelsChanged();
-    }
-    else{
-        ROS_ERROR("Could not set logger level!");
-    }
 
     // stop covering once a target has been found
     int queue_size;
