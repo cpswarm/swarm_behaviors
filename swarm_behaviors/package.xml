@@ -23,6 +23,7 @@
     <buildtool_depend>catkin</buildtool_depend>
     <exec_depend>swarm_behaviors_position</exec_depend>
     <exec_depend>swarm_behaviors_velocity</exec_depend>
+    <exec_depend>uav_flocking</exec_depend>
     <exec_depend>uav_local_coverage</exec_depend>
     <exec_depend>uav_optimal_coverage</exec_depend>
     <exec_depend>uav_random_direction</exec_depend>

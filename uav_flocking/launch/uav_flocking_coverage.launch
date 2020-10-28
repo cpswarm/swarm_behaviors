@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="1" />
+    <arg name="output" default="log" />
+
+    <!-- Flocking coverage algorithm -->
+    <node pkg="uav_flocking" type="uav_flocking_coverage" name="uav_coverage_$(arg id)" output="$(arg output)" required="true">
+        <rosparam file="$(find uav_flocking)/param/uav_flocking.yaml" command="load" />
+        <rosparam file="$(find position)/param/position.yaml" command="load" />
+        <rosparam file="$(find velocity)/param/velocity.yaml" command="load" />
+    </node>
+
+</launch>
