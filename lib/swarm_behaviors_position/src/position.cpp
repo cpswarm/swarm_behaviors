@@ -174,15 +174,18 @@ bool position::out_of_bounds (geometry_msgs::Pose pose)
     }
 }
 
-bool position::reached ()
+bool position::reached (geometry_msgs::PoseStamped goal)
 {
+    // invalid goal
+    if (goal.header.stamp.isZero()) {
+        goal = this->goal;
+        if (goal.header.stamp.isZero())
+            return true;
+    }
+
     ROS_DEBUG("Yaw %.2f --> %.2f", get_yaw(pose), get_yaw(goal.pose));
     ROS_DEBUG("Pose (%.2f,%.2f) --> (%.2f,%.2f)", pose.position.x, pose.position.y, goal.pose.position.x, goal.pose.position.y);
     ROS_DEBUG("%.2f > %.2f", dist(pose, goal.pose), goal_tolerance);
-
-    // invalid goal
-    if (goal.header.stamp.isZero())
-        return true;
 
     // time out
     if (goal.header.stamp + move_timeout < Time::now()) {

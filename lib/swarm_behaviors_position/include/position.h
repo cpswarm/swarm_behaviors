@@ -107,9 +107,10 @@ public:
 
     /**
      * @brief Check whether the CPS has reached the current goal.
+     * @param goal An optional goal to check instead of the class variable. Make sure time stamp is set.
      * @return True if the CPS is close to the current goal, false otherwise.
      */
-    bool reached ();
+    bool reached (geometry_msgs::PoseStamped goal = geometry_msgs::PoseStamped());
 
     /**
      * @brief Stop moving by publishing the current position as goal.
