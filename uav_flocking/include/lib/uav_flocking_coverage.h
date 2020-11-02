@@ -3,6 +3,7 @@
 
 #include <position.h>
 #include <velocity.h>
+#include <cpswarm_msgs/GetWaypoint.h>
 #include "uav_flocking.h"
 
 using namespace std;
@@ -62,19 +63,24 @@ private:
     uav_flocking* flock;
 
     /**
-     * @brief The path object to compute the boustrophedon coverage path.
+     * @brief Service client to get the current waypoint to navigate to.
      */
-//     boustrophedon_path* path;
+    ServiceClient wp_getter;
+
+    /**
+     * @brief Service message to get the current waypoint.
+     */
+    cpswarm_msgs::GetWaypoint get_wp;
+
+    /**
+     * @brief Current waypoint to navigate to.
+     */
+    geometry_msgs::Point waypoint;
 
     /**
      * @brief Target velocity of the flock.
      */
     double flock_vel;
-
-    /**
-     * @brief Publisher to visualize waypoints.
-     */
-    Publisher pub_vis_wp;
 };
 
 #endif // UAV_FLOCKING_COVERAGE_H

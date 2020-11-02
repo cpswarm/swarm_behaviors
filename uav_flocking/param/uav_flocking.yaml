@@ -1,16 +1,25 @@
-loop_rate:      5.0  # The frequency in Hz at which to run the swarm behavior loops.
-queue_size:     1    # The size of the message queue used for publishing and subscribing to topics.
-single_target:  true # Whether the algorithm will succeed / terminate once a target has been found.
-equi_dist:      1.0  # Equilibrium distance between CPSs in meter.
-flock_vel:      0.5  # Target velocity of the flock in meter per second.
-form_vel:       0.5  # Maximum velocity during formation flight in meter per second.
-repulse_spring: 1.0  # Repulsion spring constant of half-spring per square second.
-repulse_max:    1.0  # Maximum repulsion between CPSs in meter in order to avoid over excitation. TODO: get correct value
-align_frict:    3.0  # Velocity alignment viscous friction coefficient in square meter per second. Higher values result in slower but more stable flocks.
-align_slope:    1.0  # Constant slope around equilibrium distance in meter. TODO: get correct value
-align_min:      1.0  # Minimum alignment between CPS in meter in order to avoid over excitation. TODO: get correct value
-wall_frict:     20.0 # Bounding area viscous friction coefficient in square meter per second. TODO: unit seems wrong
-wall_decay:     1.0  # Softness of wall as decay width in meter.
-form_shape:     1.0  # Strength of the shape forming velocity component in formation flight.
-form_track:     1.0  # Strength of the tracking velocity component in formation flight.
-accel_time:     1.0  # Characteristic time needed by the CPS to reach the target velocity in seconds.
+loop_rate:        5.0  # The frequency in Hz at which to run the swarm behavior loops.
+queue_size:       1    # The size of the message queue used for publishing and subscribing to topics.
+
+coverage:
+  single_target:  true # Whether the algorithm will succeed / terminate once a target has been found.
+
+flocking:
+  start_delay:    1.0  # Time in seconds to wait during startup for other CPSs.
+  equi_dist:      1.0  # Equilibrium distance between CPSs in meter.
+  repulse_spring: 1.0  # Repulsion spring constant of half-spring per square second.
+  repulse_max:    1.0  # Maximum repulsion between CPSs in meter in order to avoid over excitation. TODO: get correct value
+  align_frict:    10.0 # Velocity alignment viscous friction coefficient in square meter per second. Higher values result in slower but more stable flocks.
+  align_slope:    1.0  # Constant slope around equilibrium distance in meter. TODO: get correct value
+  align_min:      1.0  # Minimum alignment between CPS in meter in order to avoid over excitation. TODO: get correct value
+  wall_frict:     20.0 # Bounding area viscous friction coefficient in square meter per second. TODO: unit seems wrong
+  wall_decay:     1.0  # Softness of wall as decay width in meter.
+  accel_time:     1.0  # Characteristic time needed by the CPS to reach the target velocity in seconds.
+
+  coverage:
+    flock_vel:    1.0  # Target velocity of the flock in meter per second.
+
+  tracking:
+    form_vel:     0.5  # Maximum velocity during formation flight in meter per second.
+    form_shape:   1.0  # Strength of the shape forming velocity component in formation flight.
+    form_track:   1.0  # Strength of the tracking velocity component in formation flight.

@@ -101,7 +101,7 @@ int main (int argc, char** argv)
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
     bool single_target;
-    nh.param(this_node::getName() + "/single_target", single_target, true);
+    nh.param(this_node::getName() + "/coverage/single_target", single_target, true);
     Subscriber found_sub;
     if (single_target)
         found_sub = nh.subscribe("target_found", queue_size, found_callback);

@@ -9,22 +9,25 @@ uav_flocking::uav_flocking (double altitude) : pos(altitude), vel(altitude)
     dt = 1 / loop_rate;
     int queue_size;
     nh.param(this_node::getName() + "/queue_size", queue_size, 1);
-    nh.param(this_node::getName() + "/equi_dist", equi_dist, 10.0);
-    nh.param(this_node::getName() + "/flock_vel", flock_vel, 0.5);
-    nh.param(this_node::getName() + "/form_vel", form_vel, 0.5);
-    nh.param(this_node::getName() + "/repulse_spring", repulse_spring, 1.0);
-    nh.param(this_node::getName() + "/repulse_max", repulse_max, 1.0);
-    nh.param(this_node::getName() + "/align_frict", align_frict, 20.0);
-    nh.param(this_node::getName() + "/align_slope", align_slope, 1.0);
-    nh.param(this_node::getName() + "/align_min", align_min, 1.0);
-    nh.param(this_node::getName() + "/wall_frict", wall_frict, 20.0);
-    nh.param(this_node::getName() + "/wall_decay", wall_decay, 1.0);
-    nh.param(this_node::getName() + "/form_shape", form_shape, 1.0);
-    nh.param(this_node::getName() + "/form_track", form_track, 1.0);
-    nh.param(this_node::getName() + "/accel_time", accel_time, 1.0);
+    double start_delay;
+    nh.param(this_node::getName() + "/flocking/start_delay", start_delay, 1.0);
+    nh.param(this_node::getName() + "/flocking/equi_dist", equi_dist, 10.0);
+    nh.param(this_node::getName() + "/flocking/repulse_spring", repulse_spring, 1.0);
+    nh.param(this_node::getName() + "/flocking/repulse_max", repulse_max, 1.0);
+    nh.param(this_node::getName() + "/flocking/align_frict", align_frict, 20.0);
+    nh.param(this_node::getName() + "/flocking/align_slope", align_slope, 1.0);
+    nh.param(this_node::getName() + "/flocking/align_min", align_min, 1.0);
+    nh.param(this_node::getName() + "/flocking/wall_frict", wall_frict, 20.0);
+    nh.param(this_node::getName() + "/flocking/wall_decay", wall_decay, 1.0);
+    nh.param(this_node::getName() + "/flocking/accel_time", accel_time, 1.0);
+    nh.param(this_node::getName() + "/flocking/coverage/flock_vel", flock_vel, 0.5);
+    nh.param(this_node::getName() + "/flocking/tracking/form_shape", form_shape, 1.0);
+    nh.param(this_node::getName() + "/flocking/tracking/form_track", form_track, 1.0);
+    nh.param(this_node::getName() + "/flocking/tracking/form_vel", form_vel, 0.5);
 
     // init subscribers
     swarm_pose_sub = nh.subscribe("swarm_position_rel", queue_size, &uav_flocking::swarm_pose_callback, this);
+    swarm_pose_abs_sub = nh.subscribe("swarm_position", queue_size, &uav_flocking::swarm_pose_abs_callback, this);
     swarm_vel_sub = nh.subscribe("swarm_velocity_rel", queue_size, &uav_flocking::swarm_vel_callback, this);
 
     // init service clients
@@ -47,6 +50,30 @@ uav_flocking::uav_flocking (double altitude) : pos(altitude), vel(altitude)
     v_formation.x = 0;
     v_formation.y = 0;
     v_formation.z = 0;
+
+    // wait for initial swarm information
+    Duration(start_delay).sleep();
+    spinOnce();
+}
+
+geometry_msgs::Point uav_flocking::center ()
+{
+    // get coordinates of other uavs
+    geometry_msgs::Point center;
+    for (auto pos : swarm_pos_abs) {
+        center.x += pos.pose.position.x;
+        center.y += pos.pose.position.y;
+    }
+
+    // add this uav
+    center.x += pos.get_pose().position.x;
+    center.y += pos.get_pose().position.y;
+
+    // normalize
+    center.x /= swarm_pos.size() + 1;
+    center.y /= swarm_pos.size() + 1;
+
+    return center;
 }
 
 geometry_msgs::Vector3 uav_flocking::coverage (geometry_msgs::Vector3 velocity)
@@ -69,7 +96,7 @@ geometry_msgs::Vector3 uav_flocking::coverage (geometry_msgs::Vector3 velocity)
     vel_new.x = vel_cur.x + 1 / accel_time * (v_flock.x - vel_cur.x) * dt + (a_repulsion.x + a_alignment.x + a_wall.x) * dt;
     vel_new.y = vel_cur.y + 1 / accel_time * (v_flock.y - vel_cur.y) * dt + (a_repulsion.y + a_alignment.y + a_wall.y) * dt;
 
-    ROS_ERROR("%.2f = cur %.2f + flock %.2f + repulse %.2f + align %.2f + wall %.2f", hypot(vel_new.x, vel_new.y), hypot(vel_cur.x, vel_cur.x), hypot(1 / accel_time * (v_flock.x - vel_cur.x) * dt, 1 / accel_time * (v_flock.y - vel_cur.y)), hypot(a_repulsion.x * dt, a_repulsion.y*dt), hypot(a_alignment.x * dt, a_alignment.y * dt), hypot(a_wall.x * dt, a_wall.y * dt));
+    ROS_DEBUG_THROTTLE(2, "%.2f = cur %.2f + flock %.2f + repulse %.2f + align %.2f + wall %.2f", hypot(vel_new.x, vel_new.y), hypot(vel_cur.x, vel_cur.x), hypot(1 / accel_time * (v_flock.x - vel_cur.x) * dt, 1 / accel_time * (v_flock.y - vel_cur.y)), hypot(a_repulsion.x * dt, a_repulsion.y*dt), hypot(a_alignment.x * dt, a_alignment.y * dt), hypot(a_wall.x * dt, a_wall.y * dt));
 
     return vel_new;
 
@@ -318,6 +345,11 @@ void uav_flocking::wall ()
 void uav_flocking::swarm_pose_callback (const cpswarm_msgs::ArrayOfVectors::ConstPtr& msg)
 {
     swarm_pos = msg->vectors;
+}
+
+void uav_flocking::swarm_pose_abs_callback (const cpswarm_msgs::ArrayOfPositions::ConstPtr& msg)
+{
+    swarm_pos_abs = msg->positions;
 }
 
 void uav_flocking::swarm_vel_callback (const cpswarm_msgs::ArrayOfVectors::ConstPtr& msg)

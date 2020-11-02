@@ -5,6 +5,7 @@
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Vector3.h>
 #include <cpswarm_msgs/ArrayOfVectors.h>
+#include <cpswarm_msgs/ArrayOfPositions.h>
 #include "cpswarm_msgs/GetPoints.h"
 #include "position.h"
 #include "velocity.h"
@@ -29,6 +30,12 @@ public:
      * @param altitude: The altitude at which the CPS operates.
      */
     uav_flocking (double altitude);
+
+    /**
+     * @brief Get the center of the swarm.
+     * @return The arithmetic mean of all UAV positions.
+     */
+    geometry_msgs::Point center ();
 
     /**
      * @brief Compute the velocity to perform coverage with a flock of UAVs.
@@ -100,18 +107,29 @@ private:
     void swarm_pose_callback (const cpswarm_msgs::ArrayOfVectors::ConstPtr& msg);
 
     /**
+     * @brief Callback function to receive the absolute positions of the other CPSs.
+     * @param msg Coordinates of the other CPSs.
+     */
+    void swarm_pose_abs_callback (const cpswarm_msgs::ArrayOfPositions::ConstPtr& msg);
+
+    /**
      * @brief Callback function to receive the relative velocities of the other CPSs.
      * @param msg Distance and bearing of the other CPSs.
      */
     void swarm_vel_callback (const cpswarm_msgs::ArrayOfVectors::ConstPtr& msg);
 
     /**
-     * @brief Subscriber for the absolute positions of the other CPSs.
+     * @brief Subscriber for the relative positions of the other CPSs.
      */
     Subscriber swarm_pose_sub;
 
     /**
-     * @brief Subscriber for the absolute velocities of the other CPSs.
+     * @brief Subscriber for the absolute positions of the other CPSs.
+     */
+    Subscriber swarm_pose_abs_sub;
+
+    /**
+     * @brief Subscriber for the relative velocities of the other CPSs.
      */
     Subscriber swarm_vel_sub;
 
@@ -139,6 +157,11 @@ private:
      * @brief The relative positions of the other swarm members (distance and bearing).
      */
     vector<cpswarm_msgs::VectorStamped> swarm_pos;
+
+    /**
+     * @brief The absolute positions of the other swarm members.
+     */
+    vector<cpswarm_msgs::Position> swarm_pos_abs;
 
     /**
      * @brief The relative velocities of the other swarm members (distance and bearing).
