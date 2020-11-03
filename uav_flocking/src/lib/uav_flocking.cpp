@@ -128,8 +128,6 @@ void uav_flocking::alignment ()
     a_alignment.x = 0;
     a_alignment.y = 0;
 
-    // TODO: fix this term: over excitation of uav!
-
     // compute damped velocity differences for all neighbors
     for (auto pose : swarm_pos) {
         // compute damping

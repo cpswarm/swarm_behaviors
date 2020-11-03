@@ -27,10 +27,6 @@ behavior_state_t uav_flocking_coverage::step ()
     // update position information
     spinOnce();
 
-    // compute distance reached within next few cycles
-    int cycles = 10; // TODO: make param
-    double delta = 10;//cycles * flock_vel * rate->expectedCycleTime().toSec();
-
     // reached current waypoint of path
     geometry_msgs::PoseStamped wpp;
     wpp.header.stamp = ros::Time::now();
