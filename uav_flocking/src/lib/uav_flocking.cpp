@@ -21,9 +21,11 @@ uav_flocking::uav_flocking (double altitude) : pos(altitude), vel(altitude)
     nh.param(this_node::getName() + "/flocking/wall_decay", wall_decay, 1.0);
     nh.param(this_node::getName() + "/flocking/accel_time", accel_time, 1.0);
     nh.param(this_node::getName() + "/flocking/coverage/flock_vel", flock_vel, 0.5);
+    nh.getParam(this_node::getName() + "/flocking/tracking/formation", form);
+    nh.param(this_node::getName() + "/flocking/tracking/form_vel", form_vel, 0.5);
     nh.param(this_node::getName() + "/flocking/tracking/form_shape", form_shape, 1.0);
     nh.param(this_node::getName() + "/flocking/tracking/form_track", form_track, 1.0);
-    nh.param(this_node::getName() + "/flocking/tracking/form_vel", form_vel, 0.5);
+    nh.param(this_node::getName() + "/flocking/tracking/form_decay", form_decay, 1.0);
 
     // init subscribers
     swarm_pose_sub = nh.subscribe("swarm_position_rel", queue_size, &uav_flocking::swarm_pose_callback, this);
@@ -116,8 +118,8 @@ geometry_msgs::Vector3 uav_flocking::tracking (geometry_msgs::Pose target)
     // add up individual velocities and accelerations
     geometry_msgs::Vector3 vel_cur = vel.get_velocity();
     geometry_msgs::Vector3 vel_new;
-    vel_new.x = vel_cur.x + 1 / accel_time * (v_formation.x - vel_cur.x) * dt + (a_repulsion.x + a_alignment.x) * dt;
-    vel_new.y = vel_cur.y + 1 / accel_time * (v_formation.y - vel_cur.y) * dt + (a_repulsion.y + a_alignment.y) * dt;
+    vel_new.x = vel_cur.x + 1 / accel_time * (v_formation.x - vel_cur.x) * dt + (a_repulsion.x + a_alignment.x + a_wall.x) * dt;
+    vel_new.y = vel_cur.y + 1 / accel_time * (v_formation.y - vel_cur.y) * dt + (a_repulsion.y + a_alignment.y + a_wall.y) * dt;
 
     return vel_new;
 }
@@ -219,45 +221,57 @@ void uav_flocking::formation (geometry_msgs::Point target)
 
     // define shape position depending on formation
     geometry_msgs::Vector3 x_shp;
-    switch (form) {
-        case FORM_GRID:
-            // TODO also define R
-            x_shp.x = 0;
-            x_shp.y = 0;
-            break;
-        case FORM_RING:
-            // TODO
-            x_shp.x = 0;
-            x_shp.y = 0;
-            break;
-        case FORM_LINE:
-            // TODO
-            x_shp.x = 0;
-            x_shp.y = 0;
-            break;
-        default:
-            ROS_FATAL("Unknown flocking formation");
-            return;
+    double dist;
+    if (form == "grid") {
+        x_shp.x = center().x;
+        x_shp.y = center().y;
+        // circle packing, use function fitted from data available at http://hydra.nat.uni-magdeburg.de/packing/cci/cci.html
+        dist = equi_dist / 2 * 0.8135 * pow(swarm_pos.size(), -0.4775) - equi_dist / 2;
+    }
+    else if (form == "ring") {
+        double rad = equi_dist / 2.0 / sin(M_PI / swarm_pos.size());
+        cpswarm_msgs::Vector n1,n2;
+        for (auto n : swarm_pos) {
+            if (n.vector.magnitude < n1.magnitude) {
+                // TODO
+            }
+        }
+        x_shp.x = 0; // TODO
+        x_shp.y = 0; // TODO
+        dist = 0;
+    }
+    else if (form == "line") {
+        x_shp.x = 0; // TODO
+        x_shp.y = 0; // TODO
+        dist = 0;
+    }
+    else {
+        ROS_FATAL("Unknown flocking formation");
+        return;
     }
     double shp_mag = hypot(x_shp.x - pose.position.x, x_shp.y - pose.position.y);
 
     // compute shape velocity
-    double tf_shp = transfer(shp_mag, 0, 0); // TODO use R defined above, what about decay?
+    double tf_shp = transfer(shp_mag, dist, form_decay);
     geometry_msgs::Vector3 v_shp;
-    v_shp.x = form_shape * form_vel * tf_shp * (x_shp.x - pose.position.x) / shp_mag;
-    v_shp.y = form_shape * form_vel * tf_shp * (x_shp.y - pose.position.y) / shp_mag;
+    if (shp_mag > 0.01) {
+        v_shp.x = form_shape * form_vel * tf_shp * (x_shp.x - pose.position.x) / shp_mag;
+        v_shp.y = form_shape * form_vel * tf_shp * (x_shp.y - pose.position.y) / shp_mag;
+    }
 
-    // target position
+    // compute distance between center of mass and target
     geometry_msgs::Vector3 x_com;
-    x_com.x = target.x;
-    x_com.y = target.y;
-    double trg_mag = hypot(x_com.x, x_com.y);
+    x_com.x = target.x - center().x;
+    x_com.y = target.y - center().y;
+    double com_mag = hypot(x_com.x, x_com.y);
 
     // compute target tracking velocity
-    double tf_track = transfer(trg_mag, 0, 0); // TODO
+    double tf_track = transfer(com_mag, dist, form_decay);
     geometry_msgs::Vector3 v_trg;
-    v_trg.x = - form_track * form_vel * tf_track * x_com.x / trg_mag;
-    v_trg.y = - form_track * form_vel * tf_track * x_com.y / trg_mag;
+    if (com_mag > 0.01) {
+        v_trg.x = form_track * form_vel * tf_track * x_com.x / com_mag;
+        v_trg.y = form_track * form_vel * tf_track * x_com.y / com_mag;
+    }
 
     // combine velocities
     v_formation.x = v_shp.x + v_trg.x;

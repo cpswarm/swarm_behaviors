@@ -11,15 +11,6 @@
 #include "velocity.h"
 
 /**
- * @brief An enumeration for the formation of the flock used for tracking.
- */
-typedef enum {
-    FORM_GRID = 0,
-    FORM_RING,
-    FORM_LINE
-} formation_t;
-
-/**
  * @brief A behavior library that allows to perform flocking with a swarm of unmanned areal vehicles (UAVs).
  */
 class uav_flocking
@@ -141,7 +132,7 @@ private:
     /**
      * @brief The type of formation the UAVs should take on.
      */
-    formation_t form;
+    string form;
 
     /**
      * @brief A helper object for position related tasks.
@@ -257,6 +248,11 @@ private:
      * @brief Strength of the tracking velocity component in formation flight.
      */
     double form_track;
+
+    /**
+     * @brief Softness of shape.
+     */
+    double form_decay;
 
     /**
      * @brief Characteristic time needed by the UAV to reach the target velocity.

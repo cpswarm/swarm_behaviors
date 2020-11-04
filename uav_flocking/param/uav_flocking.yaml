@@ -20,6 +20,8 @@ flocking:
     flock_vel:    2.0  # Target velocity of the flock in meter per second.
 
   tracking:
+    formation:    grid # The type of formation to fly. Can be grid, ring, or line.
     form_vel:     0.5  # Maximum velocity during formation flight in meter per second.
     form_shape:   1.0  # Strength of the shape forming velocity component in formation flight.
     form_track:   1.0  # Strength of the tracking velocity component in formation flight.
+    form_decay:   1.0  # Softness of shape in meter.
