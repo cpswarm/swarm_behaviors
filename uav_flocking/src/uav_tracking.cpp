@@ -45,7 +45,6 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
     // execute coverage until state changes
     behavior_state_t state = STATE_ACTIVE;
     while (ok() && !as->isPreemptRequested() && state == STATE_ACTIVE) {
-        ROS_DEBUG("Tracking step");
         behavior_state_t result = uav_tracking.step();
         if (state == STATE_ACTIVE)
             state = result;
