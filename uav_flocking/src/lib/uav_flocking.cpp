@@ -222,27 +222,109 @@ void uav_flocking::formation (geometry_msgs::Point target)
     // define shape position depending on formation
     geometry_msgs::Vector3 x_shp;
     double dist;
+
+    // grid formation
     if (form == "grid") {
-        x_shp.x = center().x;
-        x_shp.y = center().y;
+        x_shp.x = target.x;
+        x_shp.y = target.y;
         // circle packing, use function fitted from data available at http://hydra.nat.uni-magdeburg.de/packing/cci/cci.html
         dist = equi_dist / 2 * 0.8135 * pow(swarm_pos.size(), -0.4775) - equi_dist / 2;
     }
+
+    // ring formation
     else if (form == "ring") {
+        // radius of ring
         double rad = equi_dist / 2.0 / sin(M_PI / swarm_pos.size());
-        cpswarm_msgs::Vector n1,n2;
+
+        // two neighbors on ring
+        cpswarm_msgs::VectorStamped n1,n2;
+        // find closest neighbors
         for (auto n : swarm_pos) {
-            if (n.vector.magnitude < n1.magnitude) {
-                // TODO
+            if (n.vector.magnitude < n1.vector.magnitude || n1.vector.magnitude == 0) {
+                n2 = n1;
+                n1 = n;
+            }
+            else if (n.vector.magnitude < n2.vector.magnitude || n2.vector.magnitude == 0) {
+                n2 = n;
             }
         }
-        x_shp.x = 0; // TODO
-        x_shp.y = 0; // TODO
+        // get absolute positions
+        geometry_msgs::Point n1_p, n2_p;
+        for (auto n : swarm_pos_abs) {
+            if (n.swarmio.node == n1.swarmio.node) {
+                n1_p = n.pose.position;
+            }
+            if (n.swarmio.node == n2.swarmio.node) {
+                n2_p = n.pose.position;
+            }
+            if ((n1_p.x != 0 || n1_p.y != 0) && (n2_p.x != 0 || n2_p.y != 0)) {
+                break;
+            }
+        }
+
+        // angle bisector
+        geometry_msgs::Vector3 bis;
+        // vectors from center to neighbors
+        geometry_msgs::Vector3 n1_v, n2_v;
+        n1_v.x = n1_p.x - target.x;
+        n1_v.y = n1_p.y - target.y;
+        n2_v.x = n2_p.x - target.x;
+        n2_v.y = n2_p.y - target.y;
+        // normalize
+        double n1_n = hypot(n1_v.x, n1_v.y);
+        n1_v.x /= n1_n;
+        n1_v.y /= n1_n;
+        double n2_n = hypot(n2_v.x, n2_v.y);
+        n2_v.x /= n2_n;
+        n2_v.y /= n2_n;
+        // dot product of vectors
+        double dot = n1_v.x * n2_v.x + n1_v.y * n2_v.y;
+        // obtuse angle needs special handling for numeric precision
+        if (dot < 0) {
+            // difference of neighbor vectors
+            geometry_msgs::Vector3 bis_t;
+            bis_t.x = n1_v.x - n2_v.x;
+            bis_t.x = n1_v.y - n2_v.y;
+            // normalize
+            double bis_n = hypot(bis_t.x, bis_t.y);
+            bis_t.x /= bis_n;
+            bis_t.y /= bis_n;
+            // determine direction
+            double dir = n1_v.x * n2_v.y - n1_v.y * n2_v.x; // rotated n2_v by 90°
+            // rotate by 90°
+            if (dir < 0) {
+                bis.x = bis_t.y;
+                bis.y = -bis_t.x;
+            }
+            // rotate by 270°
+            else {
+                bis.x = -bis_t.y;
+                bis.y = bis_t.x;
+            }
+        }
+        // acute angle
+        else {
+            // sum of neighbor vectors
+            bis.x = n1_v.x + n2_v.x;
+            bis.y = n1_v.y + n2_v.y;
+            // normalize
+            double bis_n = hypot(bis.x, bis.y);
+            bis.x /= bis_n;
+            bis.y /= bis_n;
+        }
+
+        // intersect angle bisector and ring
+        x_shp.x = target.x + bis.x * rad;
+        x_shp.y = target.y + bis.y * rad;
+
+        // no distance required
         dist = 0;
     }
     else if (form == "line") {
         x_shp.x = 0; // TODO
         x_shp.y = 0; // TODO
+
+        // no distance required
         dist = 0;
     }
     else {
