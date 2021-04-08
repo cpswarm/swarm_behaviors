@@ -262,7 +262,7 @@ void uav_flocking::formation (geometry_msgs::Point target)
             }
         }
 
-        // angle bisector
+        // angle bisector: https://stackoverflow.com/questions/43435055/numerically-stable-angle-bisector-algorithm
         geometry_msgs::Vector3 bis;
         // vectors from center to neighbors
         geometry_msgs::Vector3 n1_v, n2_v;
@@ -284,7 +284,7 @@ void uav_flocking::formation (geometry_msgs::Point target)
             // difference of neighbor vectors
             geometry_msgs::Vector3 bis_t;
             bis_t.x = n1_v.x - n2_v.x;
-            bis_t.x = n1_v.y - n2_v.y;
+            bis_t.y = n1_v.y - n2_v.y;
             // normalize
             double bis_n = hypot(bis_t.x, bis_t.y);
             bis_t.x /= bis_n;
@@ -323,6 +323,15 @@ void uav_flocking::formation (geometry_msgs::Point target)
     else if (form == "line") {
         x_shp.x = 0; // TODO
         x_shp.y = 0; // TODO
+
+        ROS_FATAL("Flocking formation not yet implemented");
+
+        // 1. do a linear regression through the target: https://stats.stackexchange.com/questions/12484/constrained-linear-regression-through-a-specified-point
+        // 2. project each uav position on that line
+        // 3. move uav positions on that line to have equilibrium spacing
+        //    a. for odd number of uavs, one is directly above target
+        //    b. for even number of uavs, two are 1/2 eq. dist. away
+        //    c. uavs at the edge only have one neighbor
 
         // no distance required
         dist = 0;
