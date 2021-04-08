@@ -43,7 +43,6 @@ void ActionCallback(const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serve
     // execute coverage until state changes
     state = STATE_ACTIVE;
     while (ok() && !as->isPreemptRequested() && state == STATE_ACTIVE) {
-        ROS_DEBUG("Coverage step");
         behavior_state_t result = uav_coverage.step();
         if (state == STATE_ACTIVE)
             state = result;

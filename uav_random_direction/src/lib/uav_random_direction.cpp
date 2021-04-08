@@ -43,6 +43,9 @@ behavior_state_t uav_random_direction::step ()
     // update position information
     spinOnce();
 
+    // move to goal position
+    pos.move(goal);
+
     // at boundary
     if (pos.reached()) {
         if (new_direction() == false)
@@ -60,9 +63,6 @@ behavior_state_t uav_random_direction::step ()
         if (select_goal() == false)
             return STATE_ABORTED;
     }
-
-    // move to new position
-    pos.move(goal);
 
     return STATE_ACTIVE;
 }
