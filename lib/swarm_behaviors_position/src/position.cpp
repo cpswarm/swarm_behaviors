@@ -107,13 +107,6 @@ bool position::move (geometry_msgs::Pose goal)
         return false;
     }
 
-    // obstacle in direction of goal
-    else if (occupied(goal)) {
-        ROS_ERROR("Obstacle ahead, stop moving!");
-        stop();
-        return false;
-    }
-
     // goal changed
     if (this->goal.header.stamp.isZero() || this->goal.pose.position.x != goal.position.x || this->goal.pose.position.y != goal.position.y) {
         // visualize goal
