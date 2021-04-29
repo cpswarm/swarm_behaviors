@@ -15,6 +15,7 @@ using namespace ros;
 typedef enum {
     STATE_ACTIVE = 0,
     STATE_SUCCEEDED,
+    STATE_PREEMPTED,
     STATE_ABORTED
 } behavior_state_t;
 

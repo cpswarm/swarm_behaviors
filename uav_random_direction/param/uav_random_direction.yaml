@@ -2,3 +2,4 @@ loop_rate:     5.0  # The frequency in Hz at which to run the swarm behavior loo
 queue_size:    1    # The size of the message queue used for publishing and subscribing to topics.
 single_target: true # Whether the algorithm will succeed / terminate once a target has been found.
 margin:        0.5  # The distance in meter to keep to the environment boundary.
+help_range:    10.0 # The distance in meter within which help calls of other CPSs are considered.
