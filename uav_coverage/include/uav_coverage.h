@@ -12,8 +12,6 @@
 #include "lib/uav_random_coverage.h"
 #include "lib/uav_systematic_coverage.h"
 
-using namespace ros;
-
 /**
  * @brief An action server type that allows to start and stop the coverage task.
  */
@@ -47,6 +45,11 @@ random_numbers::RandomNumberGenerator* rng;
 /**
  * @brief The distance in meter within which help calls of other CPSs are considered.
  */
-double help_range;
+double help_range_max;
+
+/**
+ * @brief The distance in meter below which help calls of other CPSs are answered for sure.
+ */
+double help_range_min;
 
 #endif // UAV_COVERAGE_H

@@ -117,18 +117,30 @@ void pose_callback (const geometry_msgs::PoseStamped::ConstPtr& msg)
  */
 void help_callback (const cpswarm_msgs::TargetHelp::ConstPtr& msg)
 {
+    // probability for helping
+    double p;
+
     // distance to target
     double dist = hypot(msg->pose.pose.position.x - pose.position.x, msg->pose.pose.position.y - pose.position.y);
 
-    // relative time the target still needs help
-    double time;
-    if (msg->time_need > 0)
-        time = msg->time_avail / msg->time_need;
-    else
-        time = 1;
+    // exponentially decreasing help probability
+    if (dist > help_range_min) {
+        // relative time the target still needs help
+        double time;
+        if (msg->time_need > 0)
+            time = msg->time_avail / msg->time_need;
+        else
+            time = 1;
 
-    // probability for helping
-    double p = exp(dist * 2 * log(0.5) / help_range * time);
+        // calculate probability
+        p = exp((dist - help_range_min) * 2 * log(0.5) / help_range_max * time);
+    }
+
+    // maximum help probability
+    else
+        p = 1;
+
+    // randomness
     double rand = rng->uniform01();
     if (rand < p) {
         state = STATE_PREEMPTED;
@@ -162,9 +174,10 @@ int main (int argc, char** argv)
         found_sub = nh.subscribe("target_found", queue_size, found_callback);
 
     // help other cpss
-    nh.param(this_node::getName() + "/help_range", help_range, 0.0);
+    nh.param(this_node::getName() + "/help_range_max", help_range_max, 0.0);
+    nh.param(this_node::getName() + "/help_range_min", help_range_min, 0.0);
     Subscriber help_sub, pose_sub;
-    if (help_range > 0) {
+    if (help_range_max > 0) {
         // subscribe to relevant topics
         help_sub = nh.subscribe("target_help", queue_size, help_callback);
         pose_sub = nh.subscribe("pos_provider/pose", queue_size, pose_callback);

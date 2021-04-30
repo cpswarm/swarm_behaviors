@@ -1,14 +1,15 @@
-loop_rate:     5.0   # The frequency in Hz at which to run the swarm behavior loops.
-queue_size:    1     # The size of the message queue used for publishing and subscribing to topics.
-single_target: true  # Whether the algorithm will succeed / terminate once a target has been found.
-help_range:    10.0  # The distance in meter within which help calls of other CPSs are considered.
+loop_rate:      5.0   # The frequency in Hz at which to run the swarm behavior loops.
+queue_size:     1     # The size of the message queue used for publishing and subscribing to topics.
+single_target:  true  # Whether the algorithm will succeed / terminate once a target has been found.
+help_range_max: 10.0  # The distance in meter within which help calls of other CPSs are considered.
+help_range_min: 0.5   # The distance in meter below which help calls of other CPSs are answered for sure.
 flocking:
-  flock_vel:   2.0   # Target velocity of the flock in meter per second.
+  flock_vel:    2.0   # Target velocity of the flock in meter per second.
 local:
-  fov_hor:     0.64  # Horizontal camera field of view in radian. It is used to compute the path of the drone.
-  fov_ver:     0.64  # Vertical camera field of view in radian. It is used to compute the path of the drone.
-  steps:       30    # Number of steps to do in the local coverage behavior.
+  fov_hor:      0.64  # Horizontal camera field of view in radian. It is used to compute the path of the drone.
+  fov_ver:      0.64  # Vertical camera field of view in radian. It is used to compute the path of the drone.
+  steps:        30    # Number of steps to do in the local coverage behavior.
   # camera specification: hor 1.236, ver 0.970
   # https://openmv.io/collections/cams/products/openmv-cam-m7
 random:
-  margin:      0.5   # The distance in meter to keep to the environment boundary.
+  margin:       0.5   # The distance in meter to keep to the environment boundary.

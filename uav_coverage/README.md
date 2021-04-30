@@ -14,14 +14,14 @@ The following library packages of the [swarm behaviors library](https://github.c
 * swarm_behaviors_velocity
 
 The following packages of the [swarm functions library](https://github.com/cpswarm/swarm_functions/) are required:
-* target_monitor (only if `single_target=true` or `help_range>0`)
+* target_monitor (only if `single_target=true` or `help_range_max>0`)
 * coverage_path (only if `behavior=flocking` or `behavior=systematic`)
 
 
 The following packages of the [sensing and actuation library](https://github.com/cpswarm/sensing_actuation) are required:
 * area_provider (only if `behavior=random`)
 * obstacle_detection (only if `behavior=random`)
-* *_pos_provider (only if `help_range>0`)
+* *_pos_provider (only if `help_range_max>0`)
 
 Further required packages are:
 * [roscpp](https://wiki.ros.org/roscpp/)
@@ -48,9 +48,22 @@ In the `param` subdirectory there is the parameter file `uav_coverage.yaml` that
 ## Nodes
 
 ### uav_coverage
-The `uav_coverage` lets a swarm of UAVs cover the environment. It provides an action server that has three outcomes: `succeeded`, `preempted`, or `aborted`. When the parameter `single_target` is set to `true`, the coverage succeeds once a target has been found and returns the target ID and position. When the parameter `help_range` is greater than zero, the coverage is preempted based on a certain probability when help calls from other CPSs are received.
+The `uav_coverage` lets a swarm of UAVs cover the environment. It provides an action server that has three outcomes: `succeeded`, `preempted`, or `aborted`. When the parameter `single_target` is set to `true`, the coverage succeeds once a target has been found and returns the target ID and position. When the parameter `help_range_max` is greater than zero, the coverage is preempted based on a certain probability when help calls from other CPSs are received. This probability is calculates as
 
 <!-- TODO: probability: -->
+    if d < help_range_min:
+      p = 1
+    else:
+      p = exp(2 ⋅ log(0.5) ⋅ t ⋅ (d - help_range_min) / help_range_max)
+
+where `d` ist the distance between the UAV and the target and t is the relative time that help is required. It is calculated as
+
+    time_need > 0:
+      t = time_avail / time_need
+    else:
+      t = 1
+
+where `time_avail` is the remaining time that the calling CPS can still work without help and `time_need` is the remaining time that is needed for the help.
 
 The coverage is performed either individually or cooperatively by employing one of the following algorithms:
 * **Flocking**: The UAVs move in a flock through the environment following the rules of cohesion, alignment, and repulsion.
@@ -71,9 +84,9 @@ The flock sweeps the environment using simple back and forth (boustrophedon) mot
 * `target_found` ([cpswarm_msgs/TargetPositionEvent](https://cpswarm.github.io/cpswarm_msgs/html/msg/TargetPositionEvent.html))
   Position and ID of a target detected by the target monitor. Only subscribed if `single_target=true`.
 * `target_help` ([cpswarm_msgs/TargetHelp](https://cpswarm.github.io/cpswarm_msgs/html/msg/TargetHelp.html))
-  Position, ID, and required time of a target where help is needed by another CPS. Only subscribed if `help_range>0`.
+  Position, ID, and required time of a target where help is needed by another CPS. Only subscribed if `help_range_max>0`.
 * `pos_provider/pose` ([geometry_msgs/PoseStamped](https://docs.ros.org/en/api/geometry_msgs/html/msg/PoseStamped.html))
-  Position of this UAV. Only subscribed if `help_range>0`.
+  Position of this UAV. Only subscribed if `help_range_max>0`.
 
 #### Services Called
 * `coverage_path/waypoint` ([cpswarm_msgs/GetWaypoint](https://cpswarm.github.io/cpswarm_msgs/html/srv/GetWaypoint.html))
@@ -90,8 +103,10 @@ The flock sweeps the environment using simple back and forth (boustrophedon) mot
   The size of the message queue used for publishing and subscribing to topics.
 * `~single_target` (boolean, default: `true`)
   Whether the algorithm will succeed / terminate once a target has been found.
-* `~help_range` (real, default: `0.0`)
+* `~help_range_max` (real, default: `0.0`)
   The distance in meter within which help calls of other CPSs are considered.
+* `~help_range_min` (real, default: `0.0`)
+  The distance in meter below which help calls of other CPSs are answered for sure.
 * `~flocking/flock_vel` (real, default: `0.5`)
   Target velocity of the flock in meter per second.
 * `~local/fov_hor` (real, default: `1.236`)
