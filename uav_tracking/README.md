@@ -19,6 +19,7 @@ The following packages of the [swarm functions library](https://github.com/cpswa
 Further required packages are:
 * [roscpp](https://wiki.ros.org/roscpp/)
 * [actionlib](https://wiki.ros.org/actionlib/)
+* [random_numbers](https://wiki.ros.org/random_numbers/)
 
 ## Execution
 Run the launch file
@@ -40,7 +41,17 @@ In the `param` subdirectory there is the parameter file `uav_tracking.yaml` that
 ## Nodes
 
 ### uav_tracking
-The `uav_tracking` lets a swarm of UAVs track a target. The position of the target is updated by the target monitor from the [swarm functions library](https://github.com/cpswarm/swarm_functions/). It provides an action server that has three outcomes: `succeeded`, `preempted`, or `aborted`. When the target is lost, i.e., the target is not in the camera field of view anymore, the tracking aborts. When the target is done, i.e., handled by another CPS, the tracking succeeds. The tracking is performed either individually or cooperatively by employing one of the following algorithms:
+The `uav_tracking` lets a swarm of UAVs track a target. The position of the target is updated by the target monitor from the [swarm functions library](https://github.com/cpswarm/swarm_functions/). It provides an action server that has three outcomes: `succeeded`, `preempted`, or `aborted`. When the target is lost, i.e., the target is not in the camera field of view anymore, the tracking aborts. When the target is done, i.e., handled by another CPS, the tracking succeeds.
+If the parameters `max_trackers` and `min_trackers` are set according to
+
+    0 <= min_trackers <= max_trackers
+    0 < max_trackers
+
+the tracking is preempted with a certain probability
+
+    p = min(1, 0.5 ⋅ log(trackers / min_trackers) / log(1.0 + (max_trackers - min_trackers) / (2 ⋅ min_trackers)))
+
+where `trackers` is the number of UAVs currently tracking the same target. The tracking is performed either individually or cooperatively by employing one of the following algorithms:
 * **Flocking**: The UAVs create a formation while tracking the target.
 * **Simple**: A single UAV moves to the position straight over the target.
 
@@ -55,12 +66,20 @@ The `uav_tracking` lets a swarm of UAVs track a target. The position of the targ
   Whether the target being tracked has been lost.
 * `target_done` ([cpswarm_msgs/TargetPositionEvent](https://cpswarm.github.io/cpswarm_msgs/html/msg/TargetPositionEvent.html))
   Whether the target being tracked has been handled by another CPS.
+* `target_trackers` ([cpswarm_msgs/TargetTrackedBy](https://cpswarm.github.io/cpswarm_msgs/html/msg/TargetTrackedBy.html))
+  The number of UAVs tracking the same target.
 
 #### Parameters
 * `~loop_rate` (real, default: `5.0`)
   The frequency in Hz at which to run the control loops.
 * `~queue_size` (integer, default: `1`)
   The size of the message queue used for publishing and subscribing to topics.
+* `~max_trackers` (integer, default: `0`)
+  The maximum number of UAVs that should be tracking the same target simultaneously. 0 disables check.
+* `~min_trackers` (integer, default: `0`)
+  The number of UAVs tracking the same target above which a UAV stops tracking with a certain probability.
+* `/rng_seed` (integer, default: `0`)
+  The seed used for random number generation. In the default case, a random seed is generated.
 
 ## Code API
 [uav_tracking package code API documentation](https://cpswarm.github.io/swarm_behaviors/uav_tracking/docs/html/files.html)

@@ -42,8 +42,24 @@ void ActionCallback(const cpswarm_msgs::TrackingGoalConstPtr& goal, action_serve
             result = flocking->step(target);
         else if (behavior == "simple")
             result = simple->step(target);
-        if (state == STATE_ACTIVE)
-            state = result;
+        if (state == STATE_ACTIVE) {
+            // stop tracking with certain probability
+            double p;
+            if (max_trackers == 0 || trackers <= min_trackers || max_trackers <  min_trackers)
+                p = 0;
+            else if (min_trackers == 0 || min_trackers == max_trackers) {
+                p = 1;
+            }
+            else {
+                p = 0.5 * log(trackers / min_trackers) / log(1.0 + (max_trackers - min_trackers) / (2 * min_trackers));
+                p = min(p, 1.0);
+            }
+
+            if (rng->uniform01() < p)
+                state = STATE_PREEMPTED;
+            else
+                state = result;
+        }
         rate.sleep();
         spinOnce();
     }
@@ -109,6 +125,16 @@ void done_callback (const cpswarm_msgs::TargetPositionEvent::ConstPtr& msg)
 }
 
 /**
+ * @brief Callback function to receive number of UAVs tracking the same target.
+ * @param msg ID number of trackers.
+ */
+void trackers_callback (const cpswarm_msgs::TargetTrackedBy::ConstPtr& msg)
+{
+    if (msg->id == target.id)
+        trackers = msg->trackers;
+}
+
+/**
  * @brief Main function to be executed by ROS.
  * @param argc Number of command line arguments.
  * @param argv Array of command line arguments.
@@ -119,6 +145,11 @@ int main (int argc, char** argv)
     // init ros node
     init(argc, argv, "uav_tracking");
     NodeHandle nh;
+
+    // simultaneously tracking uavs
+    trackers = 1;
+    nh.param(this_node::getName() + "/max_trackers", max_trackers, 0);
+    nh.param(this_node::getName() + "/min_trackers", min_trackers, 0);
 
     // tracking behavior
     nh.getParam(this_node::getName() + "/behavior", behavior);
@@ -132,6 +163,21 @@ int main (int argc, char** argv)
     Subscriber update_sub = nh.subscribe("target_update", queue_size, update_callback);
     Subscriber lost_sub = nh.subscribe("target_lost", queue_size, lost_callback);
     Subscriber done_sub = nh.subscribe("target_done", queue_size, done_callback);
+
+    // stop tracking probabilistically
+    if (max_trackers != 0 && min_trackers <= max_trackers) {
+        Subscriber trackers_sub = nh.subscribe("target_trackers", queue_size, trackers_callback);
+
+        // init random number generator
+        int seed;
+        nh.param<int>("/rng_seed", seed, 0);
+        if (seed != 0) {
+            rng = new random_numbers::RandomNumberGenerator(seed);
+        }
+        else {
+            rng = new random_numbers::RandomNumberGenerator();
+        }
+    }
 
     // start action server
     action_server_t as(nh, "uav_tracking", boost::bind(&ActionCallback, _1, &as), false);
