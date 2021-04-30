@@ -50,7 +50,6 @@ In the `param` subdirectory there is the parameter file `uav_coverage.yaml` that
 ### uav_coverage
 The `uav_coverage` lets a swarm of UAVs cover the environment. It provides an action server that has three outcomes: `succeeded`, `preempted`, or `aborted`. When the parameter `single_target` is set to `true`, the coverage succeeds once a target has been found and returns the target ID and position. When the parameter `help_range_max` is greater than zero, the coverage is preempted based on a certain probability when help calls from other CPSs are received. This probability is calculates as
 
-<!-- TODO: probability: -->
     if d < help_range_min:
       p = 1
     else:
