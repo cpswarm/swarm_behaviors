@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="id" default="1" />
+    <arg name="output" default="log" />
+    <arg name="behavior" />
+
+    <!-- Coverage algorithm -->
+    <node pkg="uav_coverage" type="uav_coverage" name="uav_$(arg id)_$(arg behavior)_coverage" output="$(arg output)" required="true">
+        <rosparam file="$(find uav_coverage)/param/uav_coverage.yaml" command="load" />
+        <rosparam file="$(find swarm_behaviors_flocking)/param/flocking.yaml" command="load" />
+        <rosparam file="$(find swarm_behaviors_position)/param/position.yaml" command="load" />
+        <rosparam file="$(find swarm_behaviors_velocity)/param/velocity.yaml" command="load" />
+        <param name="behavior" value="$(arg behavior)" />
+    </node>
+
+</launch>
