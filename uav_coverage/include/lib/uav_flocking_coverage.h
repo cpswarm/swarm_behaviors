@@ -19,11 +19,6 @@ public:
     uav_flocking_coverage (double altitude);
 
     /**
-     * @brief Destructor that deletes the private member objects.
-     */
-    ~uav_flocking_coverage ();
-
-    /**
      * @brief Move the swarm member to a new position.
      * @return Return the state of the coverage algorithm.
      */

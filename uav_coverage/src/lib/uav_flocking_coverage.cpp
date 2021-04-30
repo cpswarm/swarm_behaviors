@@ -16,11 +16,6 @@ uav_flocking_coverage::uav_flocking_coverage (double altitude) : uav_coverage_be
     ROS_DEBUG("Initial waypoint: [%.2f, %.2f]", waypoint.x, waypoint.y);
 }
 
-uav_flocking_coverage::~uav_flocking_coverage ()
-{
-    // delete flock;
-}
-
 behavior_state_t uav_flocking_coverage::step ()
 {
     // update position information
