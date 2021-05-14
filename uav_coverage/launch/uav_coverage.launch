@@ -2,8 +2,8 @@
 <launch>
 
     <arg name="id" default="1" />
+    <arg name="behavior" /> <!-- flocking, local, random, systematic -->
     <arg name="output" default="log" />
-    <arg name="behavior" />
 
     <!-- Coverage algorithm -->
     <node pkg="uav_coverage" type="uav_coverage" name="uav_$(arg id)_$(arg behavior)_coverage" output="$(arg output)" required="true">

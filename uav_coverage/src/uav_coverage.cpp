@@ -194,7 +194,7 @@ int main (int argc, char** argv)
     }
 
     // start action server
-    action_server_t as(nh, "uav_coverage", boost::bind(&ActionCallback, _1, &as), false);
+    action_server_t as(nh, "uav_" + behavior + "_coverage", boost::bind(&ActionCallback, _1, &as), false);
     as.start();
 
     // wait for action client

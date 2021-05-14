@@ -2,12 +2,12 @@
 <launch>
 
     <arg name="id" default="1" />
+    <arg name="behavior" /> <!-- flocking, simple -->
     <arg name="output" default="log" />
-    <arg name="behavior" />
 
-    <!-- Simple tracking algorithm -->
+    <!-- Tracking algorithm -->
     <node pkg="uav_tracking" type="uav_tracking" name="uav_$(arg id)_$(arg behavior)_tracking" output="$(arg output)" required="true">
-        <rosparam file="$(find uav_simple_tracking)/param/uav_tracking.yaml" command="load" />
+        <rosparam file="$(find uav_tracking)/param/uav_tracking.yaml" command="load" />
         <rosparam file="$(find swarm_behaviors_flocking)/param/flocking.yaml" command="load" />
         <rosparam file="$(find swarm_behaviors_position)/param/position.yaml" command="load" />
         <rosparam file="$(find swarm_behaviors_velocity)/param/velocity.yaml" command="load" />
