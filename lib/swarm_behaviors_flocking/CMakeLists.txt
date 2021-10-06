@@ -101,7 +101,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp tf2 geometry_msgs cpswarm_msgs sw
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES flocking
-  CATKIN_DEPENDS cpswarm_msgs
+  CATKIN_DEPENDS cpswarm_msgs swarm_behaviors_position swarm_behaviors_velocity
 #  DEPENDS system_lib
 )
 
