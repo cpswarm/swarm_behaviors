@@ -2,7 +2,7 @@
 #define UGV_RANDOM_WALK_H
 
 #include <random_numbers/random_numbers.h>
-#include "cpswarm_msgs/ClosestBound.h"
+#include "lsl_msgs/GetDist.h"
 #include "cpswarm_msgs/GetSector.h"
 #include "position.h"
 
