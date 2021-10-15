@@ -1,5 +1,5 @@
 loop_rate:       5.0  # The frequency in Hz at which to run the swarm behavior loops.
 queue_size:      1    # The size of the message queue used for publishing and subscribing to topics.
 goal_tolerance:  2.0  # The distance in meter that the CPS can be away from a goal while still being considered to have reached that goal.
-move_timeout:    10.0 # The time in seconds that reaching a waypoint is allowed to take.
+move_timeout:    20.0 # The time in seconds that reaching a waypoint is allowed to take.
 visualize:       true # Whether to publish the goal waypoint on a topic for visualization.
