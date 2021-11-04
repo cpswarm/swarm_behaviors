@@ -16,7 +16,7 @@ ugv_random_walk::ugv_random_walk () : pos(0.0)
     }
 
     // init service clients
-    bound_client = nh.serviceClient<cpswarm_msgs::ClosestBound>("area/closest_bound");
+    bound_client = nh.serviceClient<lsl_msgs::GetDist>("area/get_distance");
     bound_client.waitForExistence();
     clear_sector_client = nh.serviceClient<cpswarm_msgs::GetSector>("obstacle_detection/get_clear_sector");
     clear_sector_client.waitForExistence();
@@ -97,11 +97,11 @@ bool ugv_random_walk::reflect ()
     // get boundary
     geometry_msgs::Point b1;
     geometry_msgs::Point b2;
-    cpswarm_msgs::ClosestBound cb;
+    lsl_msgs::GetDist cb;
     cb.request.point = pos.get_pose().position;
     if (bound_client.call(cb)){
-        b1 = cb.response.coords[0];
-        b2 = cb.response.coords[1];
+        b1 = cb.response.closest_line[0];
+        b2 = cb.response.closest_line[1];
     }
     else{
         ROS_ERROR("Failed to get area boundary");

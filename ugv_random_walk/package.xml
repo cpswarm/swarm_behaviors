@@ -25,6 +25,7 @@
   <depend>actionlib</depend>
   <depend>random_numbers</depend>
   <depend>cpswarm_msgs</depend>
+  <depend>lsl_msgs</depend>
   <depend>swarm_behaviors_position</depend>
 
   <!-- The export tag contains other, unspecified, tags -->
