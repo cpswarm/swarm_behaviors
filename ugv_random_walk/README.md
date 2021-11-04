@@ -6,7 +6,6 @@ This package performs random walk coverage with an unmanned ground vehicle (UGV)
 ## Dependencies
 This package depends on the following message definitions:
 * [cpswarm_msgs](https://cpswarm.github.io/cpswarm_msgs/html/index-msg.html)
-* [lsl_msgs](https://lakeside-labs.bitbucket.io/api/lsl_msgs/html/index-msg.html)
 
 The following library packages of the [swarm behaviors library](https://github.com/cpswarm/swarm_behaviors) are required:
 * swarm_behaviors_position
@@ -58,7 +57,7 @@ The `ugv_random_walk` performs coverage using the random walk algorithm. The ran
 #### Services Called
 * `obstacle_detection/get_clear_sector` ([cpswarm_msgs/GetSector](https://cpswarm.github.io/cpswarm_msgs/html/srv/GetSector.html))
   Get the circular sector that is clear of obstacles.
-* `area/get_distance` ([lsl_msgs/GetDist](https://lakeside-labs.bitbucket.io/api/lsl_msgs/html/srv/GetDist.html))
+* `area/get_distance` ([cpswarm_msgs/GetDist](https://lakeside-labs.bitbucket.io/api/cpswarm_msgs/html/srv/GetDist.html))
   Get the coordinates of the closest boundary in order to reflect from it.
 
 #### Parameters
