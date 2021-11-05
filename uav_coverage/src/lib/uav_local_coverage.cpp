@@ -33,7 +33,7 @@ behavior_state_t uav_local_coverage::step ()
         // reached maximum number of steps, stop local coverage
         if (steps >= max_steps) {
             ROS_INFO("Reached maximum coverage steps!");
-            return STATE_ABORTED;
+            return STATE_SUCCEEDED;
         }
     }
 

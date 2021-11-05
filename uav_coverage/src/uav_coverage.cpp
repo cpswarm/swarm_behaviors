@@ -73,8 +73,10 @@ void ActionCallback (const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serv
 
     // coverage succeeded
     if (state == STATE_SUCCEEDED) {
-        ROS_INFO("Coverage succeeded, found target %d at [%f, %f]", result.target_id, result.target_pose.pose.position.x, result.target_pose.pose.position.y);
-
+        if (result.target_pose.header.stamp.isValid())
+            ROS_INFO("Coverage succeeded, found target %d at [%f, %f]", result.target_id, result.target_pose.pose.position.x, result.target_pose.pose.position.y);
+        else
+            ROS_INFO("Coverage terminated successfully");
         as->setSucceeded(result);
     }
 
@@ -85,7 +87,7 @@ void ActionCallback (const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serv
     }
 
     // coverage was preempted
-    else{
+    else if (state == STATE_PREEMPTED){
         ROS_INFO("Coverage preempted, help with target %d at [%f, %f]", result.target_id, result.target_pose.pose.position.x, result.target_pose.pose.position.y);
         as->setPreempted();
     }

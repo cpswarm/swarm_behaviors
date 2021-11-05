@@ -37,7 +37,7 @@ behavior_state_t uav_flocking_coverage::step ()
         // finished path
         if (get_wp.response.valid == false) {
             ROS_INFO("Path completely traversed, stop coverage!");
-            return STATE_ABORTED;
+            return STATE_SUCCEEDED;
         }
 
         waypoint = get_wp.response.point;
