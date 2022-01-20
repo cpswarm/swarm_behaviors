@@ -113,7 +113,7 @@ bool position::move (geometry_msgs::Pose goal)
         if (visualize) {
             geometry_msgs::PointStamped wp;
             wp.header.stamp = Time::now();
-            wp.header.frame_id = "local_origin_ned";
+            wp.header.frame_id = "map";
             wp.point = goal.position;
             visualize_pub.publish(wp);
         }
