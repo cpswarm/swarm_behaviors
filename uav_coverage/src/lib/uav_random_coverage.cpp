@@ -27,7 +27,6 @@ uav_random_coverage::uav_random_coverage (double altitude) : uav_coverage_behavi
     direction = pos.get_yaw();
 
     // initialize goal
-    goal = pos.get_pose();
     select_goal();
 
     ROS_INFO("Initial direction %.2f", direction);

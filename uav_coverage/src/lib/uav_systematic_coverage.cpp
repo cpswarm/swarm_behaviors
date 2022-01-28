@@ -42,7 +42,7 @@ behavior_state_t uav_systematic_coverage::step ()
     }
 
     // convert waypoint to pose
-    geometry_msgs::Pose goal = pos.get_pose();
+    geometry_msgs::Pose goal;
     goal.position.x = waypoint.x;
     goal.position.y = waypoint.y;
 
