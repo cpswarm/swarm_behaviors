@@ -13,3 +13,4 @@ local:
   # https://openmv.io/collections/cams/products/openmv-cam-m7
 random:
   margin:       0.5   # The distance in meter to keep to the environment boundary.
+  max_tries:    10    # The maximum number of tries for finding a new goal in a random direction until giving up.

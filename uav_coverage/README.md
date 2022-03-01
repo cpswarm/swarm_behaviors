@@ -116,6 +116,8 @@ The flock sweeps the environment using simple back and forth (boustrophedon) mot
   Number of steps to do in the local coverage behavior.
 * `~random/margin` (real, default: `0.5`)
   The distance in meter to keep to the environment boundary.
+* `~random/max_tries` (integer, default: `10`)
+  The maximum number of tries for finding a new goal in a random direction until giving up.
 * `/rng_seed` (integer, default: `0`)
   The seed used for random number generation. In the default case, a random seed is generated.
 

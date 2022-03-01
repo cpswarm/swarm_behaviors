@@ -71,6 +71,11 @@ private:
      * @brief The distance in meter to keep to the environment boundary.
      */
     double margin;
+
+    /**
+     * @brief The maximum number of tries for finding a new goal in a random direction until giving up.
+     */
+    int max_tries;
 };
 
 #endif // UAV_RANDOM_COVERAGE_H
