@@ -24,7 +24,7 @@ behavior_state_t uav_simple_tracking::step (cpswarm_msgs::TargetPositionEvent ta
         }
     }
     else {
-        ROS_WARN_ONCE("No pose received for target %d, holding position!", target.id);
+        ROS_WARN_ONCE("No pose received for target %s, holding position!", target.id.c_str());
     }
 
     // return state to action server

@@ -155,7 +155,7 @@ int main (int argc, char** argv)
     nh.getParam(this_node::getName() + "/behavior", behavior);
 
     // initially, no targets being tracked
-    target.id = -1;
+    target.id = "";
 
     // subscribers
     int queue_size;
