@@ -6,6 +6,7 @@ uav_random_coverage::uav_random_coverage (double altitude) : uav_coverage_behavi
 
     // read parameters
     nh.param(this_node::getName() + "/random/margin", margin, 0.5);
+    nh.param(this_node::getName() + "/random/max_tries", max_tries, 10);
 
     // init random number generator
     int seed;
@@ -26,10 +27,10 @@ uav_random_coverage::uav_random_coverage (double altitude) : uav_coverage_behavi
     // inititial direction as drone is placed
     direction = pos.get_yaw();
 
+    ROS_INFO("Initial direction %.2f", direction);
+
     // initialize goal
     select_goal();
-
-    ROS_INFO("Initial direction %.2f", direction);
 }
 
 uav_random_coverage::~uav_random_coverage ()
@@ -49,8 +50,6 @@ behavior_state_t uav_random_coverage::step ()
     if (pos.reached()) {
         if (new_direction() == false)
             return STATE_ABORTED;
-        if (select_goal() == false)
-            return STATE_ABORTED;
     }
 
     // obstacle in direction of new goal
@@ -58,8 +57,6 @@ behavior_state_t uav_random_coverage::step ()
         ROS_DEBUG("Obstacle ahead!");
         // change direction
         if (new_direction() == false)
-            return STATE_ABORTED;
-        if (select_goal() == false)
             return STATE_ABORTED;
     }
 
@@ -88,6 +85,8 @@ bool uav_random_coverage::select_goal ()
             v3.x = -sin(direction);
             v3.y = cos(direction);
 
+            ROS_DEBUG("Calculate intersection with boundary (%.2f,%.2f)--(%.2f,%.2f)", coords[i].x, coords[i].y, coords[(i+1)%coords.size()].x, coords[(i+1)%coords.size()].y);
+
             double dot1 = v1.x*v3.x + v1.y*v3.y;
             double dot2 = v2.x*v3.x + v2.y*v3.y;
             double cross = v2.x*v1.y - v1.x*v2.y;
@@ -98,6 +97,7 @@ bool uav_random_coverage::select_goal ()
             if (t1 >= 0.0 && t2 >= 0.0 && t2 <= 1.0) {
                 goal.position.x += (t1 - margin) * cos(direction);
                 goal.position.y += (t1 - margin) * sin(direction);
+                ROS_DEBUG("Selected goal (%.2f,%2.f)", goal.position.x, goal.position.y);
                 return true;
             }
         }
@@ -123,12 +123,15 @@ bool uav_random_coverage::new_direction ()
     ROS_DEBUG("Clear [%.2f, %.2f] size %.2f", clear.response.min, clear.response.max, clear.response.max - clear.response.min);
 
     // generate random direction until one is found inside of area not occupied by obstacles
-    geometry_msgs::Pose goal;
-    do {
+    for (int i=0; i<max_tries; ++i) {
+        // change direction
         direction = rng->uniformReal(clear.response.min, clear.response.max);
-        select_goal();
-        ROS_DEBUG_THROTTLE(1, "Checking goal [%.2f, %.2f, %.2f] in direction %.2f...", goal.position.x, goal.position.y, goal.position.z, direction);
-    } while (pos.out_of_bounds(goal));
+        ROS_DEBUG("Checking direction %.2f...", direction);
+
+        // try selecting goal in that direction
+        if (select_goal() && pos.out_of_bounds(goal) == false)
+            break;
+    }
 
     ROS_INFO("Changing direction %.2f", direction);
 

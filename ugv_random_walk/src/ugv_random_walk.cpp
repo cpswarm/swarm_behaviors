@@ -56,7 +56,7 @@ void ActionCallback(const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serve
 
     // coverage succeeded
     if (state == STATE_SUCCEEDED) {
-        ROS_INFO("Coverage succeeded, found target %d at [%f, %f]", result.target_id, result.target_pose.pose.position.x, result.target_pose.pose.position.y);
+        ROS_INFO("Coverage succeeded, found target %s at [%f, %f]", result.target_id.c_str(), result.target_pose.pose.position.x, result.target_pose.pose.position.y);
 
         as->setSucceeded(result);
     }
