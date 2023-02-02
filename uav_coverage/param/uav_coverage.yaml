@@ -5,10 +5,10 @@ help_range_max: 10.0  # The distance in meter within which help calls of other C
 help_range_min: 0.5   # The distance in meter below which help calls of other CPSs are answered for sure.
 flocking:
   flock_vel:    2.0   # Target velocity of the flock in meter per second.
-local:
+spiral:
   fov_hor:      0.64  # Horizontal camera field of view in radian. It is used to compute the path of the drone.
   fov_ver:      0.64  # Vertical camera field of view in radian. It is used to compute the path of the drone.
-  steps:        30    # Number of steps to do in the local coverage behavior.
+  steps:        30    # Number of steps to do in the spiral coverage behavior.
   # camera specification: hor 1.236, ver 0.970
   # https://openmv.io/collections/cams/products/openmv-cam-m7
 random:

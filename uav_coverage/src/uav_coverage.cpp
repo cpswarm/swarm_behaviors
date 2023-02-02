@@ -18,13 +18,13 @@ void ActionCallback (const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serv
 
     // coverage library
     uav_flocking_coverage* flocking;
-    uav_local_coverage* local;
+    uav_spiral_coverage* spiral;
     uav_random_coverage* random;
     uav_systematic_coverage* systematic;
     if (behavior == "flocking")
         flocking = new uav_flocking_coverage(goal->altitude);
-    else if (behavior == "local")
-        local = new uav_local_coverage(goal->altitude);
+    else if (behavior == "spiral")
+        spiral = new uav_spiral_coverage(goal->altitude);
     else if (behavior == "random")
         random = new uav_random_coverage(goal->altitude);
     else if (behavior == "systematic")
@@ -41,8 +41,8 @@ void ActionCallback (const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serv
         behavior_state_t result;
         if (behavior == "flocking")
             result = flocking->step();
-        else if (behavior == "local")
-            result = local->step();
+        else if (behavior == "spiral")
+            result = spiral->step();
         else if (behavior == "random")
             result = random->step();
         else if (behavior == "systematic")
@@ -58,9 +58,9 @@ void ActionCallback (const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serv
         flocking->stop();
         delete flocking;
     }
-    else if (behavior == "local") {
-        local->stop();
-        delete local;
+    else if (behavior == "spiral") {
+        spiral->stop();
+        delete spiral;
     }
     else if (behavior == "random") {
         random->stop();

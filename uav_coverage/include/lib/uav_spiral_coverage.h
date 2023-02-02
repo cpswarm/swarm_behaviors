@@ -1,19 +1,19 @@
-#ifndef UAV_LOCAL_COVERAGE_H
-#define UAV_LOCAL_COVERAGE_H
+#ifndef UAV_SPIRAL_COVERAGE_H
+#define UAV_SPIRAL_COVERAGE_H
 
 #include "uav_coverage_behavior.h"
 
 /**
  * @brief A class that allows to cover a given area using a local search algorithm. The local search performs a spiral movement pattern according to the circle involute (http://mathworld.wolfram.com/CircleInvolute.html).
  */
-class uav_local_coverage : public uav_coverage_behavior
+class uav_spiral_coverage : public uav_coverage_behavior
 {
 public:
     /**
      * @brief Constructor that initializes the private member variables.
      * @param altitude: The altitude at which the CPS operates.
      */
-    uav_local_coverage (double altitude);
+    uav_spiral_coverage (double altitude);
 
     /**
      * @brief Move the swarm member to a new position.
@@ -56,14 +56,14 @@ private:
     geometry_msgs::Pose origin;
 
     /**
-     * @brief Number of steps performed in the local search.
+     * @brief Number of steps performed in the spiral search.
      */
     unsigned int steps;
 
     /**
-     * @brief Maximum number of steps to do in the local search.
+     * @brief Maximum number of steps to do in the spiral search.
      */
     int max_steps;
 };
 
-#endif // UAV_LOCAL_COVERAGE_H
+#endif // UAV_SPIRAL_COVERAGE_H

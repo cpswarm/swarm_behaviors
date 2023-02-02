@@ -67,7 +67,7 @@ where `time_avail` is the remaining time that the calling CPS can still work wit
 The coverage is performed either individually or cooperatively by employing one of the following algorithms:
 * **Flocking**: The UAVs move in a flock through the environment following the rules of cohesion, alignment, and repulsion.
 The flock sweeps the environment using simple back and forth (boustrophedon) motion. Once the environment has been sweeped completely, the UAVs abort the coverage. The coverage path generation is provided by the [swarm functions library](https://github.com/cpswarm/swarm_functions/).
-* **Local**: A single UAV performs coverage locally around its current position. This is achieved by generating a spiral movement pattern according to the [circle involute](http://mathworld.wolfram.com/CircleInvolute.html). The shape of the circle involute is computed based on the characteristics of the camera of the UAV. It is computed in such a way that a downward facing camera completely covers the area around the current position of the UAV. The UAV follows this path for a predefined number of steps and then aborts the coverage.
+* **Spiral**: A single UAV performs coverage locally around its current position. This is achieved by generating a spiral movement pattern according to the [circle involute](http://mathworld.wolfram.com/CircleInvolute.html). The shape of the circle involute is computed based on the characteristics of the camera of the UAV. It is computed in such a way that a downward facing camera completely covers the area around the current position of the UAV. The UAV follows this path for a predefined number of steps and then aborts the coverage.
 * **Random**: The UAVs perform coverage using the random direction algorithm. The random direction is a mathematical movement model, where an agent moves straight forward until it reaches an obstacle or the environment boundary. There, it changes its direction randomly into a direction that is clear of obstacles. The random algorithm does not abort automatically.
 * **Systematic**: The UAVs perform coverage cooperatively. The environment to be covered is divided among the UAVs to avoid overlapping regions to be covered multiple times. Within each region, the assigned UAV sweeps the environment using simple back and forth (boustrophedon) motion. Once the region has been sweeped completely, it aborts the coverage. The area division and coverage path generation are provided by the [swarm functions library](https://github.com/cpswarm/swarm_functions/).
 
@@ -108,12 +108,12 @@ The flock sweeps the environment using simple back and forth (boustrophedon) mot
   The distance in meter below which help calls of other CPSs are answered for sure.
 * `~flocking/flock_vel` (real, default: `0.5`)
   Target velocity of the flock in meter per second.
-* `~local/fov_hor` (real, default: `1.236`)
+* `~spiral/fov_hor` (real, default: `1.236`)
   Horizontal camera field of view in radian. It is used to compute the path of the UAV.
-* `~local/fov_ver` (real, default: `0.970`)
+* `~spiral/fov_ver` (real, default: `0.970`)
   Vertical camera field of view in radian. It is used to compute the path of the UAV.
-* `~local/steps` (integer, default: `20`)
-  Number of steps to do in the local coverage behavior.
+* `~spiral/steps` (integer, default: `20`)
+  Number of steps to do in the spiral coverage behavior.
 * `~random/margin` (real, default: `0.5`)
   The distance in meter to keep to the environment boundary.
 * `~random/max_tries` (integer, default: `10`)

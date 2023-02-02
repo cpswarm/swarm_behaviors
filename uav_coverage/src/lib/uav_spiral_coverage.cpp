@@ -1,12 +1,12 @@
-#include "lib/uav_local_coverage.h"
+#include "lib/uav_spiral_coverage.h"
 
-uav_local_coverage::uav_local_coverage (double altitude) : uav_coverage_behavior(altitude)
+uav_spiral_coverage::uav_spiral_coverage (double altitude) : uav_coverage_behavior(altitude)
 {
     // read parameters
     NodeHandle nh;
-    nh.param(this_node::getName() + "/local/fov_hor", fov_hor, 1.236);
-    nh.param(this_node::getName() + "/local/fov_ver", fov_ver, 0.970);
-    nh.param(this_node::getName() + "/local/steps", max_steps, 20);
+    nh.param(this_node::getName() + "/spiral/fov_hor", fov_hor, 1.236);
+    nh.param(this_node::getName() + "/spiral/fov_ver", fov_ver, 0.970);
+    nh.param(this_node::getName() + "/spiral/steps", max_steps, 20);
 
     // init number of search steps
     steps = 0;
@@ -21,7 +21,7 @@ uav_local_coverage::uav_local_coverage (double altitude) : uav_coverage_behavior
     origin = pos.get_pose();
 }
 
-behavior_state_t uav_local_coverage::step ()
+behavior_state_t uav_spiral_coverage::step ()
 {
     // update position information
     spinOnce();
@@ -30,7 +30,7 @@ behavior_state_t uav_local_coverage::step ()
     if (pos.reached()) {
         ++steps;
 
-        // reached maximum number of steps, stop local coverage
+        // reached maximum number of steps, stop spiral coverage
         if (steps >= max_steps) {
             ROS_INFO("Reached maximum coverage steps!");
             return STATE_SUCCEEDED;
@@ -48,7 +48,7 @@ behavior_state_t uav_local_coverage::step ()
     return STATE_ACTIVE;
 }
 
-void uav_local_coverage::compute_involute (double &distance, double &direction)
+void uav_spiral_coverage::compute_involute (double &distance, double &direction)
 {
     // parameters for circle involute
     double a = altitude * tan(fov_hor / 2) / M_PI; // radius
@@ -65,7 +65,7 @@ void uav_local_coverage::compute_involute (double &distance, double &direction)
     direction = atan2(y, x);
 }
 
-geometry_msgs::Pose uav_local_coverage::select_goal ()
+geometry_msgs::Pose uav_spiral_coverage::select_goal ()
 {
     // compute heading and distance for current step
     double distance, direction;
