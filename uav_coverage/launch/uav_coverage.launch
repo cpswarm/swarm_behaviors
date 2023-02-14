@@ -2,7 +2,7 @@
 <launch>
 
     <arg name="id" default="1" />
-    <arg name="behavior" /> <!-- flocking, local, random, systematic -->
+    <arg name="behavior" /> <!-- flocking, local, circular, random, systematic -->
     <arg name="output" default="log" />
 
     <!-- Coverage algorithm -->

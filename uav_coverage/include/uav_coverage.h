@@ -9,6 +9,7 @@
 #include <cpswarm_msgs/TargetHelp.h>
 #include "lib/uav_flocking_coverage.h"
 #include "lib/uav_local_coverage.h"
+#include "lib/uav_circular_coverage.h"
 #include "lib/uav_random_coverage.h"
 #include "lib/uav_systematic_coverage.h"
 

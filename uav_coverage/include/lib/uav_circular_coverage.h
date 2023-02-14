@@ -1,19 +1,19 @@
-#ifndef UAV_LOCAL_COVERAGE_H
-#define UAV_LOCAL_COVERAGE_H
+#ifndef UAV_CIRCULAR_COVERAGE_H
+#define UAV_CIRCULAR_COVERAGE_H
 
 #include "uav_coverage_behavior.h"
 
 /**
- * @brief A class that allows to cover a given area using a local search algorithm. The local search performs a spiral movement pattern according to the circle involute (http://mathworld.wolfram.com/CircleInvolute.html).
+ * @brief A class that allows to cover a given area using a circular search algorithm. The circular search performs a spiral movement pattern according to the circle involute (http://mathworld.wolfram.com/CircleInvolute.html).
  */
-class uav_local_coverage : public uav_coverage_behavior
+class uav_circular_coverage : public uav_coverage_behavior
 {
 public:
     /**
      * @brief Constructor that initializes the private member variables.
      * @param altitude: The altitude at which the CPS operates.
      */
-    uav_local_coverage (double altitude);
+    uav_circular_coverage (double altitude);
 
     /**
      * @brief Move the swarm member to a new position.
@@ -23,11 +23,11 @@ public:
 
 private:
     /**
-     * @brief Compute local coordinates on circle involute for current step.
-     * @param distance Returns distance from local origin.
-     * @param direction Returns direction from local origin.
+     * @brief Compute circular coordinates for current step.
+     * @param distance Returns distance from circular origin.
+     * @param direction Returns direction from circular origin.
      */
-    void compute_involute (double &distance, double &direction);
+    //void compute_involute (double &distance, double &direction);
     
     void compute_circle (double &radius, double steps);
 
@@ -58,14 +58,14 @@ private:
     geometry_msgs::Pose origin;
 
     /**
-     * @brief Number of steps performed in the local search.
+     * @brief Number of steps performed in the circular search.
      */
     unsigned int steps;
 
     /**
-     * @brief Maximum number of steps to do in the local search.
+     * @brief Maximum number of steps to do in the circular search.
      */
     int max_steps;
 };
 
-#endif // UAV_LOCAL_COVERAGE_H
+#endif // UAV_CIRCULAR_COVERAGE_H
