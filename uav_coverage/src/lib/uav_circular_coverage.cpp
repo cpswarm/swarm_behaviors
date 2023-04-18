@@ -16,10 +16,10 @@ uav_circular_coverage::uav_circular_coverage (double altitude) : uav_coverage_be
     double distance, direction;
 
 
-    
 
 
-    compute_involute(distance, direction);
+
+    compute_circle(distance, direction);
     // invert direction to reach origin from current pose
     // the current pose is the 0th step on the involute (x = radius a, y = 0)
     direction += M_PI;
@@ -58,15 +58,15 @@ behavior_state_t uav_circular_coverage::step ()
     return STATE_ACTIVE;
 }
 
-void uav_circular_coverage::compute_involute (double &distance, double &direction)
+void uav_circular_coverage::compute_circle (double &distance, double &direction)
 {
     altitude = 50; // =============Samira: Don't know why I am receiving altitude as zero here
     // parameters for circle involute
     double a = altitude * tan(fov_hor / 2) / M_PI; // radius
     double b = altitude * tan(fov_ver / 2) * 2;    // step size
 
-    
-    
+
+
 
     // compute circular coordinates using involute
     double s = b * steps; // arc length
@@ -88,14 +88,14 @@ void uav_circular_coverage::compute_involute (double &distance, double &directio
     distance = hypot(x, y);
     direction = atan2(y, x);
 
-    
+
 }
 
 geometry_msgs::Pose uav_circular_coverage::select_goal ()
 {
     // compute heading and distance for current step
     double distance, direction;
-    compute_involute(distance, direction);
+    compute_circle(distance, direction);
 
     // compute gps coordinats of goal position
     return pos.compute_goal(origin, distance, direction);

@@ -18,25 +18,17 @@ void ActionCallback (const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serv
 
     // coverage library
     uav_flocking_coverage* flocking;
-
-  //  uav_local_coverage* local;
     uav_circular_coverage* circular;
-
     uav_spiral_coverage* spiral;
-
     uav_random_coverage* random;
     uav_systematic_coverage* systematic;
+
     if (behavior == "flocking")
         flocking = new uav_flocking_coverage(goal->altitude);
-
- //   else if (behavior == "local")
- //       local = new uav_local_coverage(goal->altitude);
     else if (behavior == "circular")
         circular = new uav_circular_coverage(goal->altitude);
-
     else if (behavior == "spiral")
         spiral = new uav_spiral_coverage(goal->altitude);
-
     else if (behavior == "random")
         random = new uav_random_coverage(goal->altitude);
     else if (behavior == "systematic")
@@ -51,27 +43,21 @@ void ActionCallback (const cpswarm_msgs::CoverageGoalConstPtr& goal, action_serv
     state = STATE_ACTIVE;
     while (ok() && !as->isPreemptRequested() && state == STATE_ACTIVE) {
         behavior_state_t result;
+
         if (behavior == "flocking")
             result = flocking->step();
-
- //       else if (behavior == "local"){
- //           result = local->step();
-            }
-        else if (behavior == "circular"){
+        else if (behavior == "circular")
             result = circular->step();
-            }
-
         else if (behavior == "spiral")
             result = spiral->step();
-
         else if (behavior == "random")
             result = random->step();
-        else if (behavior == "systematic"){
-            ROS_INFO("Coverage is of type SYSTEMATIC");
+        else if (behavior == "systematic")
             result = systematic->step();
-            }
+
         if (state == STATE_ACTIVE)
             state = result;
+
         rate.sleep();
         spinOnce();
     }

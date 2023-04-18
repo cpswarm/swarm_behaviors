@@ -126,6 +126,10 @@ add_library(
   src/lib/uav_flocking_coverage.cpp
 )
 add_library(
+  uav_circular_coverage
+  src/lib/uav_circular_coverage.cpp
+)
+add_library(
   uav_spiral_coverage
   src/lib/uav_spiral_coverage.cpp
 )
@@ -166,6 +170,7 @@ target_link_libraries(
   ${PROJECT_NAME}
   uav_coverage_behavior
   uav_flocking_coverage
+  uav_circular_coverage
   uav_spiral_coverage
   uav_random_coverage
   uav_systematic_coverage

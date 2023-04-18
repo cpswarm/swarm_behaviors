@@ -27,9 +27,7 @@ private:
      * @param distance Returns distance from circular origin.
      * @param direction Returns direction from circular origin.
      */
-    //void compute_involute (double &distance, double &direction);
-    
-    void compute_circle (double &radius, double steps);
+    void compute_circle (double &distance, double &direction);
 
     /**
      * @brief Compute goal position.
