@@ -27,15 +27,13 @@ behavior_state_t uav_circular_coverage::step ()
 
     // next search step
     if (pos.reached()) {
-        ros::Duration(1).sleep(); // Here is where we can insert the command to take a picture for instance
         if (steps == 0)
-            ROS_INFO("Ready to start circle");
+            ROS_DEBUG("Ready to start circle");
         ++steps;
-
-        ROS_INFO("Number of steps is %d", steps);
+        ROS_DEBUG("Number of steps is %d", steps);
 
         // reached maximum number of steps, stop circular coverage
-        if (steps >= max_steps+3) {                         //=========Samira: I have more than max step sizes here so we have the circle complete.
+        if (steps >= max_steps+3) { // add three steps to complete the circle
             ROS_INFO("Reached maximum coverage steps. Circle complete!");
             return STATE_SUCCEEDED;
         }
