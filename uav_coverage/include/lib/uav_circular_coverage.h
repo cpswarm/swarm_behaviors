@@ -4,7 +4,7 @@
 #include "uav_coverage_behavior.h"
 
 /**
- * @brief A class that allows to cover a given area using a circular search algorithm. The circular search performs a spiral movement pattern according to the circle involute (http://mathworld.wolfram.com/CircleInvolute.html).
+ * @brief A class that allows to cover a given area using a circular search algorithm.
  */
 class uav_circular_coverage : public uav_coverage_behavior
 {
