@@ -13,6 +13,8 @@ position::position (double altitude) : altitude(altitude)
     nh.param(this_node::getName() + "/move_timeout", d_move_timeout, 10.0);
     move_timeout = Duration(d_move_timeout);
     nh.param(this_node::getName() + "/visualize", visualize, false);
+    bool check_occupied;
+    nh.param(this_node::getName() + "/check_occupied", check_occupied, false);
 
     // no pose received yet
     pose_valid = false;
@@ -20,8 +22,10 @@ position::position (double altitude) : altitude(altitude)
     // init ros communication
     out_of_bounds_client = nh.serviceClient<cpswarm_msgs::OutOfBounds>("area/out_of_bounds");
     out_of_bounds_client.waitForExistence();
-    occupied_sector_client = nh.serviceClient<cpswarm_msgs::GetSector>("obstacle_detection/get_occupied_sector");
-    occupied_sector_client.waitForExistence();
+    if (check_occupied) {
+        occupied_sector_client = nh.serviceClient<cpswarm_msgs::GetSector>("obstacle_detection/get_occupied_sector");
+        occupied_sector_client.waitForExistence();
+    }
     pose_sub = nh.subscribe("pos_provider/pose", queue_size, &position::pose_callback, this);
     pose_pub = nh.advertise<geometry_msgs::PoseStamped>("pos_controller/goal_position", queue_size, true);
     if (visualize)

@@ -12,6 +12,7 @@ The following packages of the [sensing and actuation library](https://github.com
 * area_provider
 * *_pos_provider
 * *_pos_controller
+* obstacle_detection (only if `check_occupied=true`)
 
 Further required packages are:
 * [roscpp](https://wiki.ros.org/roscpp/)
@@ -43,6 +44,8 @@ The `position` library provides position related functionalities. These function
   The distance in meter that the CPS can be away from a goal while still being considered to have reached that goal.
 * `~visualize` (boolean, default: `false`)
   Whether to publish the goal waypoint on a topic for visualization.
+* `~check_occupied` (boolean, default: `false`)
+  Whether to provide a function to check if a goal position is occupied.
 
 ## Code API
 [swarm_behaviors_position package code API documentation](https://cpswarm.github.io/swarm_behaviors/lib/swarm_behaviors_position/docs/html/files.html)
